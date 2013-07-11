@@ -1,7 +1,7 @@
 NSObject+ObjectMap
 =============
 
-This is a drop-in category of NSObject that makes it easy to initialize custom objects from JSON or XML (SOAP included), and to serialize those objects back into JSON/XML. It only requires a little bit of set-up - and then you never have to fuss with creating your own serialization and initialization methods for each custom NSObject ever again.
+This is a drop-in category of NSObject that makes it easy to initialize custom objects from JSON or XML (SOAP included), and to serialize those objects back into JSON/XML(SOAP). It only requires a little bit of set-up - and then you never have to fuss with creating your own serialization and initialization methods for each custom NSObject ever again.
 
 --------------------
 ## Set-Up ##
