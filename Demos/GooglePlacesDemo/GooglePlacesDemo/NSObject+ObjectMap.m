@@ -640,19 +640,31 @@ static const char * getPropertyType(objc_property_t property) {
     return [formatter stringFromDate:date];
 }
 
-#pragma mark - SOAP/XML Serialization
-
--(NSData *)SOAPData{
-    NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
-    return [self soapDataFroDictionary:dict];
-}
+#pragma mark - XML/SOAP Serialization
 
 -(NSData *)XMLData{
     NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
-    return [self xmlDataForDictionary:dict];
+    NSString *xmlString = [self xmlStringFromDictionary:dict];
+    return [xmlString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
--(NSData *)soapDataFroDictionary:(NSDictionary *)dict{
+-(NSString *)XMLString{
+    NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
+    return [self xmlStringFromDictionary:dict];
+}
+
+-(NSData *)SOAPData{
+    NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
+    NSString *soapString = [self soapStringFromDictionary:dict];
+    return [soapString dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+-(NSString *)SOAPString{
+    NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
+    return [self soapStringFromDictionary:dict];
+}
+
+-(NSString *)soapStringFromDictionary:(NSDictionary *)dict{
     SOAPObject *soapObject = (SOAPObject *)self;
     
     NSMutableString *soapString = [[NSMutableString alloc] initWithString:@""];
@@ -685,11 +697,7 @@ static const char * getPropertyType(objc_property_t property) {
             [soapString appendFormat:@"</%s>", class_getName([soapObject.Header class])];
             [soapString appendString:@"</soap:Header>"];
         }
-        
-        
-        
     }
-    
     
     if ([dict valueForKey:@"Body"]) {
         [soapString appendString:@"<soap:Body>"];
@@ -719,29 +727,29 @@ static const char * getPropertyType(objc_property_t property) {
     //Close Envelope
     [soapString appendString:@"</soap:Envelope>"];
     
-    return [soapString dataUsingEncoding:NSUTF8StringEncoding];
+    return soapString;
 }
 
--(NSData *)xmlDataForDictionary:(NSDictionary *)dict{
-    NSMutableString *soapString = [[NSMutableString alloc] initWithString:@""];
+-(NSString *)xmlStringFromDictionary:(NSDictionary *)dict{
+    NSMutableString *xmlString = [[NSMutableString alloc] initWithString:@""];
     
     //Document Header
-    [soapString appendString:@"<?xml version=\"1.0\"?>"];
+    [xmlString appendString:@"<?xml version=\"1.0\"?>"];
     
     //Append containing class name
-    [soapString appendFormat:@"<%s>", class_getName([self class])];
+    [xmlString appendFormat:@"<%s>", class_getName([self class])];
     
     //Fill in all values
     for (id key in dict) {
-        [soapString appendFormat:@"<%@>", (NSString *)key];
-        [soapString appendFormat:@"%@", [self xmlStringForDictionary:dict key:key]];
-        [soapString appendFormat:@"</%@>", (NSString *)key];
+        [xmlString appendFormat:@"<%@>", (NSString *)key];
+        [xmlString appendFormat:@"%@", [self xmlStringForDictionary:dict key:key]];
+        [xmlString appendFormat:@"</%@>", (NSString *)key];
     }
     
     //Close containing class name
-    [soapString appendFormat:@"</%s>", class_getName([self class])];
+    [xmlString appendFormat:@"</%s>", class_getName([self class])];
     
-    return [soapString dataUsingEncoding:NSUTF8StringEncoding];
+    return xmlString;
 }
 
 
