@@ -7,6 +7,6 @@ Pod::Spec.new do |s|
   s.author       = { "uacaps" => "care@cs.ua.edu" }
   s.source       = { :git => "https://github.com/uacaps/NSObject-ObjectMap.git", :tag => "1.0.0" }
   s.platform     = :ios, '5.0'
-  s.source_files = '/NSObject-ObjectMap/*.{h,m}'
+  s.source_files = 'NSObject-ObjectMap/*.{h,m}'
   s.requires_arc = true
 end
