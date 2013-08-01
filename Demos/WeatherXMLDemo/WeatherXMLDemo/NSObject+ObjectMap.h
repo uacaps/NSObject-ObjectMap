@@ -60,7 +60,9 @@
 
 // XML-SOAP
 -(NSData *)XMLData;
+-(NSString *)XMLString;
 -(NSData *)SOAPData;
+-(NSString *)SOAPString;
 
 // For mapping an array to properties
 -(NSMutableDictionary *)getPropertyArrayMap;
