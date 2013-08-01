@@ -1,3 +1,5 @@
+![screenshot](https://raw.github.com/uacaps/NSObject-ObjectMap/master/Screenshots/google_screen.png)
+
 ## Set Up ##
 
 To run the demo, first you need to obtain a **[Google Places](https://accounts.google.com/ServiceLogin?service=androiddeveloper&passive=1209600&continue=https://play.google.com/apps/publish/&followup=https://play.google.com/apps/publish/)** API Key from their site. If you already have one, just plug it in, delete our warning message and run!
