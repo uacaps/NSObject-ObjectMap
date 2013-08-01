@@ -8,7 +8,7 @@ This is a drop-in category of NSObject that makes it easy to initialize custom o
 --------------------
 ## Set-Up ##
 
-The first step is to add NSObject+ObjectMap.{h,m} into your project. Once that's done you're ready to start creating your custom objects.
+The only step is to add NSObject+ObjectMap.{h,m} into your project. That's really it.
 
 --------------------
 ## Working with JSON ##
