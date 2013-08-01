@@ -22,6 +22,10 @@
     self.cityZipLabel.text = @"";
     self.tempLabel.text = @"";
     self.itIsCurrentlyLabel.alpha = 0;
+    self.precipitationLabel.alpha = 0;
+    self.humidityLabel.alpha = 0;
+    self.visibilityLabel.alpha = 0;
+    self.windSpeedLabel.alpha = 0;
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,7 +44,16 @@
 -(void)makeWeatherRequest {
     [self.Service getWeatherDataForSearchTerm:self.cityZipTextField.text success:^(data *weatherData){
         self.cityZipLabel.text = weatherData.request.query;
-        self.tempLabel.text = weatherData.current_condition.temp_F;
+        self.tempLabel.text = [NSString stringWithFormat:@"%@˚ F", weatherData.current_condition.temp_F];
+        self.windSpeedLabel.text = [NSString stringWithFormat:@"Wind Speed: %@, %@ mph", weatherData.current_condition.winddir16Point, weatherData.current_condition.windspeedMiles];
+        self.precipitationLabel.text = [NSString stringWithFormat:@"Precipitation: %@mm", weatherData.current_condition.precipMM];
+        self.humidityLabel.text = [NSString stringWithFormat:@"Humidity: %@", weatherData.current_condition.humidity];
+        self.visibilityLabel.text = [NSString stringWithFormat:@"Visibility: %@mm", weatherData.current_condition.visibility];
+        
+        self.precipitationLabel.alpha = 1;
+        self.humidityLabel.alpha = 1;
+        self.visibilityLabel.alpha = 1;
+        self.windSpeedLabel.alpha = 1;
         self.itIsCurrentlyLabel.alpha = 1;
     } failure:^{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failed!" message:@"Either the internet doesn't work, or your search terms failed to yield results. Try again." delegate:nil cancelButtonTitle:@"Got it." otherButtonTitles:nil];

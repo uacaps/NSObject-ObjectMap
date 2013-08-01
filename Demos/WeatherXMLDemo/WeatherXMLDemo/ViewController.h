@@ -19,5 +19,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *cityZipTextField;
 @property (weak, nonatomic) IBOutlet UILabel *itIsCurrentlyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
+@property (weak, nonatomic) IBOutlet UILabel *windSpeedLabel;
+@property (weak, nonatomic) IBOutlet UILabel *precipitationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *humidityLabel;
+@property (weak, nonatomic) IBOutlet UILabel *visibilityLabel;
 
 @end
