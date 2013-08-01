@@ -42,7 +42,7 @@ The beautiful thing about this class is that, beyond basic Objective-C classes l
 ```objc
 // JSON snippet
 {
-	Name : "Bryant-Denney",
+	Name : "Bryant-Denny",
 	CreatedByUser : {
 		Username : "Big Al",
 		Password : "r0llt1d3",
