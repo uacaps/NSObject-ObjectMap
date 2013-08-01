@@ -167,6 +167,29 @@ Because of the caveats listed earlier, here's a list of items to check and consi
 
 **Creating your Objects**
 
+This step requires knowing what the XML coming back will look like. Examine your data source and create your custom NSObject classes to match this. For instance, say you have XML coming back like this:
+
+```
+<MyObject>
+	<Username>Big Al</Username>
+	<Password>r0llt1d3</Password>
+	<Color>Crimson</Color>
+	<Location>Tuscaloosa, AL</Location>
+	<Championships>15</Championships>
+<MyObject>
+```
+
+If this were the case, you'd create your custom NSObject named <code>MyObject</code> where its properties match this:
+
+```objc
+@property (nonatomic, retain) NSString *Username;
+@property (nonatomic, retain) NSString *Password;
+@property (nonatomic, retain) NSString *Color;
+@property (nonatomic, retain) NSString *Location;
+@property (nonatomic, retain) NSNumber *Championships;
+
+```
+
 --------------------
 ## Demos ##
 
