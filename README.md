@@ -187,10 +187,19 @@ If this were the case, you would create your custom NSObject named <code>MyObjec
 @property (nonatomic, retain) NSString *Color;
 @property (nonatomic, retain) NSString *Location;
 @property (nonatomic, retain) NSNumber *Championships;
-
 ```
 
-Just like the JSON side of things, nested complex objects are supported in xml. Also, there is no need to specify array types, so working with XML is arguably more simple.
+Just like the JSON side of things, nested complex objects are supported in xml. Also, there is no need to specify array types, so working with XML is arguably more simple. To serialize an object to XML, simply do the following
+
+```objc
+MyObject *object = [[MyObject alloc] init];
+
+//*** Fill in object properties with data here***
+
+NSData *xmlData = [object XMLData];
+
+//*** Send data over web ***
+```
 
 --------------------
 ## Demos ##
