@@ -194,7 +194,7 @@ Just like the JSON side of things, nested complex objects are supported in xml. 
 ```objc
 MyObject *object = [[MyObject alloc] init];
 
-//*** Fill in object properties with data here***
+//*** Fill in object properties with data here ***
 
 NSData *xmlData = [object XMLData];
 
