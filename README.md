@@ -201,6 +201,8 @@ NSData *xmlData = [object XMLData];
 //*** Send data over web ***
 ```
 
+**Note on SOAP** At this point, only simple, tag-driven SOAP is supported. Support for more complex namespace and attribute handling will come if the need arises. Feel free to make a pull request if you find a great way to handle more complex SOAP.
+
 --------------------
 ## Demos ##
 
