@@ -172,6 +172,8 @@ Because of the caveats listed earlier, here's a list of items to check and consi
 
 To see NSObject+ObjectMap in action, check out one of our many sample Xcode projects under the <code>Demos</code> folder in the top-level. The **Google Places** demo illustrates NSObject+ObjectMap's JSON handling while the **Weather** demo takes care of XML. Make sure to check out their READMEs to figure out any setup work before running.
 
+![screenshot](https://raw.github.com/uacaps/NSObject-ObjectMap/master/Screenshots/google_screen.png)
+
 --------------------
 ## Cocoapods ##
 
