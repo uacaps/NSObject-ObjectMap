@@ -227,7 +227,7 @@ In the <code>NSObject+ObjectMap.h</code> file there are two #define constants re
 
 To see NSObject+ObjectMap in action, check out one of our many sample Xcode projects under the <code>Demos</code> folder in the top-level. The **Google Places** demo illustrates NSObject+ObjectMap's JSON handling while the **Weather** demo takes care of XML. Make sure to check out their READMEs to figure out any setup work before running.
 
-![screenshot](https://raw.github.com/uacaps/NSObject-ObjectMap/master/Screenshots/google_screen.png)
+![screenshot](https://raw.github.com/uacaps/NSObject-ObjectMap/master/Screenshots/google_screen.png)   ![screenshot](https://raw.github.com/uacaps/NSObject-ObjectMap/master/Screenshots/weather_screen.png)
 
 --------------------
 ## Cocoapods ##
