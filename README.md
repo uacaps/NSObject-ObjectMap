@@ -99,13 +99,6 @@ Unfortunately with JSON you're flying blind with regards to the type of objects 
 
 So in this example, we have a JSON string that represents a Person. This Person has a name and two array properties, FavoriteColors and FavoritePeople. FavoriteColors is an array of strings and FavoritePeople is an array of Person objects. As you can tell, the custom init method we created for Person.m sets the <code>propertyArrayMap</code> up to handle what type of object should be contained (in the setValue) and what key to match it to (forKeyPath). As with the other properties and keys mentioned earlier, make sure that these are spelled correctly for proper deserialization and object creation.
 
-**Working with NSDates**
-
-In the <code>NSObject+ObjectMap.h</code> file there are two #define constants representing the format/timezone information for NSDate deserialization. Match these to the JSON you are getting back so that NSDateFormatter creates the NSDate objects correctly. These properties are:
-
-* OMDateFormat
-* OMTimeZone
-
 **Going from JSON to Object**
 
 At this point, you should have your custom NSObjects created and your JSON data returning from a webservice, ready to be turned directly into those objects. Now for the easy part. Use the built in NSJSONSerialization methods to turn your JSON data into an NSDictionary or an NSArray, then we're going to pass that into a method that will return your custom NSObject from that. We're going to use the Person JSON snippet from earlier to illustrate this:
@@ -189,7 +182,9 @@ If this were the case, you would create your custom NSObject named <code>MyObjec
 @property (nonatomic, retain) NSNumber *Championships;
 ```
 
-Just like the JSON side of things, nested complex objects are supported in xml. Also, there is no need to specify array types, so working with XML is arguably more simple. To serialize an object to XML, simply do the following
+**Serialization/Deserialization**
+
+Just like the JSON side of things, nested complex objects are supported in XML. Also, there is no need to specify array types, so working with XML is arguably more simple. To serialize an object to XML, simply do the following:
 
 ```objc
 MyObject *object = [[MyObject alloc] init];
@@ -201,7 +196,31 @@ NSData *xmlData = [object XMLData];
 //*** Send data over web ***
 ```
 
-**Note on SOAP** At this point, only simple, tag-driven SOAP is supported. Support for more complex namespace and attribute handling will come if the need arises. Feel free to make a pull request if you find a great way to handle more complex SOAP.
+Deserializing back from XML is just as easy:
+
+```objc
+// XML String of Object
+NSString *xmlString = @"<MyObject>
+	<Username>Big Al</Username>
+	<Password>r0llt1d3</Password>
+	<Color>Crimson</Color>
+	<Location>Tuscaloosa, AL</Location>
+	<Championships>15</Championships>
+<MyObject>";
+
+// Create MyObject
+MyObject *customObject = [NSObject objectOfClass:@"MyObject" fromXML:xmlString];
+```
+
+**Note on SOAP:** At this point, only simple, tag-driven SOAP is supported. Support for more complex namespace and attribute handling will come if the need arises. Feel free to make a pull request if you find a great way to handle more complex SOAP.
+
+--------------------
+## Working with NSDates ##
+
+In the <code>NSObject+ObjectMap.h</code> file there are two #define constants representing the format/timezone information for NSDate deserialization. Match these to the JSON/XML you are getting back so that NSDateFormatter creates the NSDate objects correctly. These properties are:
+
+* OMDateFormat
+* OMTimeZone
 
 --------------------
 ## Demos ##
