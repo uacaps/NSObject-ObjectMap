@@ -206,7 +206,7 @@ NSString *xmlString = @"<MyObject>
 	<Color>Crimson</Color>
 	<Location>Tuscaloosa, AL</Location>
 	<Championships>15</Championships>
-<MyObject>";
+<MyObject>
 
 // Create MyObject
 MyObject *customObject = [NSObject objectOfClass:@"MyObject" fromXML:xmlString];
