@@ -27,7 +27,7 @@ This step requires knowing what the JSON coming back will look like. Examine you
 }
 ```
 
-If this were the case, you'd create your custom NSObject where its properties match this:
+If this were the case, you would create your custom NSObject where its properties match this:
 
 ```objc
 @property (nonatomic, retain) NSString *Username;
@@ -179,7 +179,7 @@ This step requires knowing what the XML coming back will look like. Examine your
 <MyObject>
 ```
 
-If this were the case, you'd create your custom NSObject named <code>MyObject</code> where its properties match this:
+If this were the case, you would create your custom NSObject named <code>MyObject</code> where its properties match this:
 
 ```objc
 @property (nonatomic, retain) NSString *Username;
@@ -189,6 +189,8 @@ If this were the case, you'd create your custom NSObject named <code>MyObject</c
 @property (nonatomic, retain) NSNumber *Championships;
 
 ```
+
+Just like the JSON side of things, nested complex objects are supported in xml. Also, there is no need to specify array types, so working with XML is arguably more simple.
 
 --------------------
 ## Demos ##
