@@ -20,12 +20,18 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    NSString *xmlString = @"<?xml version=\"1.0\"?><TestObject><TestString2 /><TestString>asdf</TestString></TestObject></xml>";
+    //A sample XML string
+    NSString *xmlString = @"<?xml version=\"1.0\"?><TestObject><TestString2 /><TestString>asdf</TestString><TestObject><TestString2 /><TestString>asdf</TestString></TestObject></TestObject></xml>";
     
+    //Parse back object
     TestObject *object = [[TestObject alloc] init];
     object = [NSObject objectOfClass:@"TestObject" fromXML:xmlString];
+    
+    //Print out results
     NSLog(@"Test String: %@", object.TestString);
     NSLog(@"Test String2: %@", object.TestString2);
+    NSLog(@"Nested Object Test String: %@", object.TestObject.TestString);
+    NSLog(@"Nested Object Test String2: %@", object.TestObject.TestString2);
 }
 
 - (void)didReceiveMemoryWarning

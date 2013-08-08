@@ -12,4 +12,5 @@
 @interface TestObject : NSObject
 @property (nonatomic, retain) NSString *TestString;
 @property (nonatomic, retain) NSString *TestString2;
+@property (nonatomic, retain) TestObject *TestObject;
 @end
