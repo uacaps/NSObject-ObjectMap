@@ -77,9 +77,10 @@ static const short _base64DecodingTable[256] = {
         scanPos = [self scanLocation];
         [self scanUpToString:@"<" intoString:&trash];
         [self scanString:@"<" intoString:&trash];
-    }
+	}
     [self scanUpToString:@">" intoString:&tag];
     [self setScanLocation:scanPos];
+	tag = [tag stringByReplacingOccurrencesOfString:@"/" withString:@""];
     return tag;
 }
 
@@ -93,11 +94,16 @@ static const short _base64DecodingTable[256] = {
 
 -(void)skipTag:(NSString *)tag {
     NSString *trash = @"";
-    if ([tag rangeOfString:@" /"].location != NSNotFound) {
+    if ([tag rangeOfString:@" "].location != NSNotFound) {
         [self scanUpToString:@">" intoString:&trash];
         [self scanString:@">" intoString:&trash];
     }
-    else {
+	else if([tag rangeOfString:@"/"].location != NSNotFound){
+        [self scanUpToString:@"/" intoString:&trash];
+        [self scanString:@"/" intoString:&trash];
+	}
+	else
+	{
         [self scanUpToString:[NSString stringWithFormat:@"</%@", tag] intoString:&trash];
         [self scanString:[NSString stringWithFormat:@"</%@", tag] intoString:&trash];
         [self scanUpToString:@">" intoString:&trash];
