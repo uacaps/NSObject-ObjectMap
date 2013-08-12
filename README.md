@@ -234,7 +234,7 @@ To see NSObject+ObjectMap in action, check out one of our many sample Xcode proj
 
 Cocoapods is a dependency manager for Objective-C code, and is wonderful for setting up your projects from the start and maintaing them through different versions. When NSObject+ObjectMap.{h,m} updates, you can always get the newest version by changing your podspec file to include the following line to make sure your project stays up to date:
 
-<code>pod 'NSObject-ObjectMap', '~> 1.0.1'</code>
+<code>pod 'NSObject-ObjectMap', '~> 1.0.2'</code>
 
 --------------------
 ## License ##
