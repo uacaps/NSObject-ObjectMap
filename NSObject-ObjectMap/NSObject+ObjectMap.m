@@ -523,16 +523,19 @@ static const char * getPropertyType(objc_property_t property) {
     return [[NSString alloc] initWithData:JSONData encoding:NSUTF8StringEncoding];
 }
 
-+(NSDictionary *) dictionaryWithPropertiesOfObject:(id)obj
++(NSMutableDictionary *) dictionaryWithPropertiesOfObject:(id)obj
 {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
     unsigned count;
     objc_property_t *properties = class_copyPropertyList([obj class], &count);
     
-    for (int i = 0; i < count; i++) {
+    // Add all superclass properties as well, until it hits NSObject
+    NSMutableArray *propertiesArray = [NSObject propertiesArrayFromObject:obj];
+    
+    for (int i = 0; i < propertiesArray.count; i++) {
         @autoreleasepool {
-            NSString *key = [NSString stringWithUTF8String:property_getName(properties[i])];
+            NSString *key = propertiesArray[i];
             
             if ([self isArray:obj key:key]) {
                 [dict setObject:[self arrayForObject:[obj valueForKey:key]] forKey:key];
@@ -554,7 +557,23 @@ static const char * getPropertyType(objc_property_t property) {
     
     free(properties);
     
-    return [NSDictionary dictionaryWithDictionary:dict];
+    return dict;
+}
+
++(NSMutableArray *)propertiesArrayFromObject:(id)obj {
+    NSMutableArray *props = [NSMutableArray array];
+    unsigned count;
+    objc_property_t *properties = class_copyPropertyList([obj class], &count);
+    for (int i = 0; i < count; i++) {
+        [props addObject:[NSString stringWithUTF8String:property_getName(properties[i])]];
+    }
+    
+    NSString *superClassName = [[obj superclass] nameOfClass];
+    if (![superClassName isEqualToString:@"NSObject"]) {
+        [props addObjectsFromArray:[NSObject propertiesArrayFromObject:[[NSClassFromString(superClassName) alloc] init]]];
+    }
+    
+    return props;
 }
 
 -(BOOL)isSystemObject:(id)obj key:(NSString *)key{
