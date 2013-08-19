@@ -1,31 +1,10 @@
-//  Copyright (c) 2012 The Board of Trustees of The University of Alabama
-//  All rights reserved.
 //
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions
-//  are met:
+//  NSObject+JSONMap.m
+//  TenEight
 //
-//  1. Redistributions of source code must retain the above copyright
-//  notice, this list of conditions and the following disclaimer.
-//  2. Redistributions in binary form must reproduce the above copyright
-//  notice, this list of conditions and the following disclaimer in the
-//  documentation and/or other materials provided with the distribution.
-//  3. Neither the name of the University nor the names of the contributors
-//  may be used to endorse or promote products derived from this software
-//  without specific prior written permission.
+//  Created by Benjamin Gordon on 5/8/13.
+//  Copyright (c) 2013 Matthew York. All rights reserved.
 //
-//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-//  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-//  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-//  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
-//  THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-//  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-//  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-//   SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-//  HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-//  STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-//  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-//  OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "NSObject+ObjectMap.h"
 
@@ -49,215 +28,138 @@ static const short _base64DecodingTable[256] = {
     -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2
 };
 
-///////////
-
-@implementation NSScanner (XMLScan)
-
--(BOOL)isAtEndOfTag:(NSString *)tag {
-    int scanPos = [self scanLocation];
-    NSString *trash = @"";
-    [self scanUpToString:[NSString stringWithFormat:@"</%@", tag] intoString:&trash];
-    if (trash.length > 0) {
-        [self setScanLocation:scanPos];
-        return NO;
-    }
-    else {
-        [self setScanLocation:scanPos];
-        return YES;
-    }
-}
-
--(NSString *)nextXMLTag {
-    NSString *trash = @"", *tag = @"";
-    int scanPos = [self scanLocation];
-    [self scanUpToString:@"<" intoString:&trash];
-    [self scanString:@"<" intoString:&trash];
-    if ([[self nextCharacter] isEqualToString:@"/"]) {
-        [self scanUpToString:@">" intoString:&trash];
-        scanPos = [self scanLocation];
-        [self scanUpToString:@"<" intoString:&trash];
-        [self scanString:@"<" intoString:&trash];
-	}
-    [self scanUpToString:@">" intoString:&tag];
-    [self setScanLocation:scanPos];
-	tag = [tag stringByReplacingOccurrencesOfString:@"/" withString:@""];
-    return tag;
-}
-
--(NSString *)nextCharacter {
-    int scanPos = [self scanLocation];
-    if (scanPos < [self string].length - 1) {
-        return [[self string] substringWithRange:NSMakeRange(scanPos+1, 1)];
-    }
-    return nil;
-}
-
--(void)skipTag:(NSString *)tag {
-    NSString *trash = @"";
-    if ([tag rangeOfString:@" "].location != NSNotFound) {
-        [self scanUpToString:@">" intoString:&trash];
-        [self scanString:@">" intoString:&trash];
-    }
-	else if([tag rangeOfString:@"/"].location != NSNotFound){
-        [self scanUpToString:@"/" intoString:&trash];
-        [self scanString:@"/" intoString:&trash];
-	}
-	else
-	{
-        [self scanUpToString:[NSString stringWithFormat:@"</%@", tag] intoString:&trash];
-        [self scanString:[NSString stringWithFormat:@"</%@", tag] intoString:&trash];
-        [self scanUpToString:@">" intoString:&trash];
-        [self scanString:@">" intoString:&trash];
-    }
-}
-
--(NSString *)getNextValue {
-    NSString *trash = @"", *value = @"";
-    [self scanUpToString:@">" intoString:&trash];
-    [self scanString:@">" intoString:&trash];
-    [self scanUpToString:@"<" intoString:&value];
-    return value;
-}
-
-@end
-
-//////////
-
 
 @implementation NSObject (ObjectMap)
 
 #pragma mark - XML to Object
 +(id)objectOfClass:(NSString *)object fromXML:(NSString *)xml {
-    // Create your object
     id newObject = [[NSClassFromString(object) alloc] init];
     
-    // Create NSScanner from XML
-    // - Use it to remove crap from beginning
-    NSScanner *scanner = [NSScanner scannerWithString:xml];
-    NSString *trash = @"";
-    [scanner scanUpToString:[NSString stringWithFormat:@"%@", object] intoString:&trash];
-    [scanner scanUpToString:@">" intoString:&trash];
-    [scanner scanString:@">" intoString:&trash];
+    NSDictionary *mapDictionary = [newObject propertyDictionary];
     
-    // Create your object from the XML using the scanner
-    newObject = [newObject newObjectFromXMLScanner:scanner];
+    for (NSString *key in [mapDictionary allKeys]) {
+        objc_property_t property = class_getProperty([newObject class], [key UTF8String]);
+        NSString *className = [[newObject typeFromProperty:property] substringWithRange:NSMakeRange(3, [newObject typeFromProperty:property].length - 4)];
+        id objForKey;
+        
+        // Check Types
+        if ([className isEqualToString:@"NSString"]) {
+            objForKey = [[NSString alloc] init];
+        }
+        else if ([className isEqualToString:@"NSDate"]) {
+            objForKey = [NSDate date];
+        }
+        else if ([className isEqualToString:@"NSNumber"]) {
+            objForKey = [[NSNumber alloc] initWithFloat:0.00];
+        }
+        else if ([className isEqualToString:@"NSArray"]) {
+            objForKey = [[NSArray alloc] init];
+        }
+        else if ([className isEqualToString:@"NSData"]){
+            objForKey = [[NSData alloc] init];
+        }
+        else {
+            objForKey = [[NSClassFromString(className) alloc] init];
+        }
+        
+        // Create
+        [newObject setValue:[objForKey getNodeValue:key fromXML:xml] forKey:key];
+    }
     
-    // Return the object
     return newObject;
 }
 
--(id)newObjectFromXMLScanner:(NSScanner *)scanner {
-    // Scan the object and create properties of the object
-    // until the scanner has reached the end tag
-    while (![scanner isAtEndOfTag:[self nameOfClass]]) {
-        NSDictionary *mapDictionary = [self propertyDictionary];
-        NSString *nextTag = [scanner nextXMLTag];
+-(id)getNodeValue:(NSString *)node fromXML:(NSString *)xml {
+    NSString *trash = @"";
+    NSString *value = @"";
+    NSScanner *xmlScanner = [NSScanner scannerWithString:xml];
+    [xmlScanner scanUpToString:[NSString stringWithFormat:@"<%@", node] intoString:&trash];
+    [xmlScanner scanUpToString:@">" intoString:&trash];
+    [xmlScanner scanString:@">" intoString:&trash];
+    
+    // Check property type
+    if ([self isKindOfClass:[NSArray class]]) {
+        // Set up a new scanner for xml substring
+        [xmlScanner scanUpToString:[NSString stringWithFormat:@"</%@", node] intoString:&value];
+        NSString *filteredArrayObj = @"";
+        NSScanner *checkTypeScanner = [NSScanner scannerWithString:value];
+        [checkTypeScanner scanString:@"<" intoString:&trash];
+        [checkTypeScanner scanUpToString:@">" intoString:&filteredArrayObj];
+        NSScanner *insideArrayScanner = [NSScanner scannerWithString:value];
+        NSString *newValue = @"";
+        NSMutableArray *objArray = [@[] mutableCopy];
         
-        // If the upcoming tag is a property of the object: create it.
-        // Else: Skip it.
-        if (mapDictionary[nextTag]) {
-            if ([nextTag rangeOfString:@" /"].location != NSNotFound) {
-                [scanner skipTag:nextTag];
-                continue;
+        // Scan and create objects until you can't no mo'
+        while (![insideArrayScanner isAtEnd]) {
+            [insideArrayScanner scanUpToString:[NSString stringWithFormat:@"<%@", filteredArrayObj] intoString:&trash];
+            [insideArrayScanner scanUpToString:@">" intoString:&trash];
+            [insideArrayScanner scanString:@">" intoString:&trash];
+            [insideArrayScanner scanUpToString:[NSString stringWithFormat:@"</%@", filteredArrayObj] intoString:&newValue];
+            
+            // Create Object
+            //id objForKey = [[NSClassFromString(filteredArrayObj) alloc] init];
+            if ([filteredArrayObj isEqualToString:@"string"]) {
+                [objArray addObject:(NSString *)newValue];
             }
-            [self setValue:[self nextXMLValueForTag:nextTag withScanner:scanner] forKey:nextTag];
+            else {
+                id object = [NSObject objectOfClass:filteredArrayObj fromXML:newValue];
+                if (object){
+                    [objArray addObject:object];
+                }
+            }
+            
+            // Scan until nextNode
+            [insideArrayScanner scanString:[NSString stringWithFormat:@"</%@", filteredArrayObj] intoString:&trash];
+            [insideArrayScanner scanUpToString:@">" intoString:&trash];
+            [insideArrayScanner scanString:@">" intoString:&trash];
         }
-        else {
-            [scanner skipTag:nextTag];
-        }
+        
+        // Return the array
+        return objArray;
     }
     
-    return self;
-}
-
--(id)nextXMLValueForTag:(NSString *)tag withScanner:(NSScanner *)scanner {
-    // Get the name of the class to check type
-    objc_property_t property = class_getProperty([self class], [tag UTF8String]);
-    NSString *className = [[self typeFromProperty:property] substringWithRange:NSMakeRange(3, [self typeFromProperty:property].length - 4)];
-    
-    // Get the value from the Scanner
-    NSString *value = [scanner getNextValue];
-    
-    // Create your object
-    id objForKey;
-    
-    // Check Types / Assign *value accordingly
-    if ([className isEqualToString:@"NSString"]) {
-        objForKey = value;
+    else if ([self isKindOfClass:[NSNumber class]]) {
+        [xmlScanner scanUpToString:@"</" intoString:&value];
+        if ([value isEqualToString:@"true"]) {
+            return [NSNumber numberWithBool:YES];
+        }
+        else if ([value isEqualToString:@"false"]){
+            return [NSNumber numberWithBool:NO];
+        }
+        
+        return [NSNumber numberWithFloat:[value floatValue]];
     }
-    else if ([className isEqualToString:@"NSDate"]) {
+    
+    else if ([self isKindOfClass:[NSString class]]) {
+        [xmlScanner scanUpToString:@"</" intoString:&value];
+        return value;
+    }
+    
+    else if ([self isKindOfClass:[NSDate class]]) {
+        [xmlScanner scanUpToString:@"</" intoString:&value];
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:OMDateFormat];
         [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:OMTimeZone]];
-        objForKey = [formatter dateFromString:value];
+        return [formatter dateFromString:value];
     }
-    else if ([className isEqualToString:@"NSNumber"]) {
-        if ([value isEqualToString:@"true"]) {
-            objForKey = @(YES);
-        }
-        else if ([value isEqualToString:@"false"]){
-            objForKey = @(NO);
-        }
-        else {
-            objForKey = @([value floatValue]);
-        }
+    else if ([self isKindOfClass:[NSData class]]){
+        [xmlScanner scanUpToString:@"</" intoString:&value];
+        return [NSObject base64DataFromString:value];
     }
-    else if ([className isEqualToString:@"NSArray"]) {
-        NSMutableArray *oArray = [@[] mutableCopy];
-        NSString *nextTag = [scanner nextXMLTag];
-        while (![scanner isAtEndOfTag:tag]) {
-            [oArray addObject:[self nextArrayValueForTag:nextTag fromScanner:scanner]];
-        }
-        objForKey = oArray;
+    
+    // Custom NSObject
+    //If it has the same name as the object type
+    else if ([self isKindOfClass:[NSClassFromString(node) class]]) {
+        [xmlScanner scanUpToString:[NSString stringWithFormat:@"</%@", node] intoString:&value];
+        return [NSObject objectOfClass:node fromXML:value];
     }
-    else if ([className isEqualToString:@"NSData"]){
-        objForKey = [NSObject base64DataFromString:value];
-    }
+    //If the type name is different from the object name
     else {
-        objForKey = [[NSClassFromString(className) alloc] init];
-        objForKey = [objForKey newObjectFromXMLScanner:scanner];
+        [xmlScanner scanUpToString:[NSString stringWithFormat:@"</%@", node] intoString:&value];
+        return [NSObject objectOfClass:NSStringFromClass([self class]) fromXML:value];
     }
     
-    
-    // Scan until start of next Tag
-    [scanner skipTag:tag];
-    
-    // Return the object
-    return objForKey;
-}
-
--(id)nextArrayValueForTag:(NSString *)tag fromScanner:(NSScanner *)scanner {
-    // Get the value from the Scanner
-    NSString *value = [scanner getNextValue];
-    
-    // Create the object
-    id returnObj;
-    
-    // Check types / Assign *value to object
-    if ([tag isEqualToString:@"string"]) {
-        returnObj = (NSString *)value;
-    }
-    else if ([tag isEqualToString:@"boolean"]) {
-        if ([value isEqualToString:@"true"]) {
-            returnObj = @(YES);
-        }
-        else {
-            returnObj = @(NO);
-        }
-    }
-    else if ([tag isEqualToString:@"decimal"] || [tag isEqualToString:@"float"] || [tag isEqualToString:@"double"]) {
-        returnObj = @([value floatValue]);
-    }
-    else {
-        returnObj = [[NSClassFromString(tag) alloc] init];
-        returnObj = [returnObj newObjectFromXMLScanner:scanner];
-    }
-    
-    // Scan until start of next Tag
-    [scanner skipTag:tag];
-    
-    // Return the object
-    return returnObj;
+    return nil;
 }
 
 #pragma mark - Dictionary to Object
@@ -267,47 +169,46 @@ static const short _base64DecodingTable[256] = {
     NSDictionary *mapDictionary = [newObject propertyDictionary];
     
     for (NSString *key in [dict allKeys]) {
-        @autoreleasepool {
-            NSString *propertyName = [mapDictionary objectForKey:key];
+        NSString *propertyName = [mapDictionary objectForKey:key];
+        
+        if (!propertyName) {
+            continue;
+        }
+        
+        // If it's a Dictionary, make into object
+        if ([[dict objectForKey:key] isKindOfClass:[NSDictionary class]]) {
+            //id newObjectProperty = [newObject valueForKey:propertyName];
+            NSString *propertyType = [newObject classOfPropertyNamed:propertyName];
+            id nestedObj = [NSObject objectOfClass:propertyType fromJSON:[dict objectForKey:key]];
+            [newObject setValue:nestedObj forKey:propertyName];
+        }
+        
+        // If it's an array, check for each object in array -> make into object/id
+        else if ([[dict objectForKey:key] isKindOfClass:[NSArray class]]) {
+            NSArray *nestedArray = [dict objectForKey:key];
+            NSString *propertyType = [newObject valueForKeyPath:[NSString stringWithFormat:@"propertyArrayMap.%@", key]];
+            [newObject setValue:[NSObject arrayMapFromArray:nestedArray forPropertyName:propertyType] forKey:propertyName];
+        }
+        
+        // Add to property name, because it is a type already
+        else {
+            objc_property_t property = class_getProperty([newObject class], [propertyName UTF8String]);
+            NSString *classType = [newObject typeFromProperty:property];
             
-            if (!propertyName) {
-                continue;
+            // check if NSDate or not
+            if ([classType isEqualToString:@"T@\"NSDate\""]) {
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                [formatter setDateFormat:OMDateFormat];
+                [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:OMTimeZone]];
+                NSString *dateString = [[dict objectForKey:key] stringByReplacingOccurrencesOfString:@"T" withString:@" "];
+                [newObject setValue:[formatter dateFromString:dateString] forKey:propertyName];
             }
-            
-            // If it's a Dictionary, make into object
-            if ([[dict objectForKey:key] isKindOfClass:[NSDictionary class]]) {
-                NSString *propertyType = [newObject classOfPropertyNamed:propertyName];
-                id nestedObj = [NSObject objectOfClass:propertyType fromJSON:[dict objectForKey:key]];
-                [newObject setValue:nestedObj forKey:propertyName];
-            }
-            
-            // If it's an array, check for each object in array -> make into object/id
-            else if ([[dict objectForKey:key] isKindOfClass:[NSArray class]]) {
-                NSArray *nestedArray = [dict objectForKey:key];
-                NSString *propertyType = [newObject valueForKeyPath:[NSString stringWithFormat:@"propertyArrayMap.%@", key]];
-                [newObject setValue:[NSObject arrayMapFromArray:nestedArray forPropertyName:propertyType] forKey:propertyName];
-            }
-            
-            // Add to property name, because it is a type already
             else {
-                objc_property_t property = class_getProperty([newObject class], [propertyName UTF8String]);
-                NSString *classType = [newObject typeFromProperty:property];
-                
-                // check if NSDate or not
-                if ([classType isEqualToString:@"T@\"NSDate\""]) {
-                    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                    [formatter setDateFormat:OMDateFormat];
-                    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:OMTimeZone]];
-                    NSString *dateString = [[dict objectForKey:key] stringByReplacingOccurrencesOfString:@"T" withString:@" "];
-                    [newObject setValue:[formatter dateFromString:dateString] forKey:propertyName];
+                if ([dict objectForKey:key] != [NSNull null]) {
+                    [newObject setValue:[dict objectForKey:key] forKey:propertyName];
                 }
                 else {
-                    if ([dict objectForKey:key] != [NSNull null]) {
-                        [newObject setValue:[dict objectForKey:key] forKey:propertyName];
-                    }
-                    else {
-                        [newObject setValue:nil forKey:propertyName];
-                    }
+                    [newObject setValue:nil forKey:propertyName];
                 }
             }
         }
@@ -321,12 +222,10 @@ static const short _base64DecodingTable[256] = {
     objc_property_t *properties = class_copyPropertyList([self class], &count);
     
     for (int xx = 0; xx < count; xx++) {
-        @autoreleasepool {
-            if ([[NSString stringWithUTF8String:property_getName(properties[xx])] isEqualToString:propName]) {
-                NSString *className = [NSString stringWithFormat:@"%s", getPropertyType(properties[xx])];
-                free(properties);
-                return className;
-            }
+        if ([[NSString stringWithUTF8String:property_getName(properties[xx])] isEqualToString:propName]) {
+            NSString *className = [NSString stringWithFormat:@"%s", getPropertyType(properties[xx])];
+            free(properties);
+            return className;
         }
     }
     
@@ -336,12 +235,18 @@ static const short _base64DecodingTable[256] = {
 
 static const char * getPropertyType(objc_property_t property) {
     const char *attributes = property_getAttributes(property);
+    printf("attributes=%s\n", attributes);
     char buffer[1 + strlen(attributes)];
     strcpy(buffer, attributes);
     char *state = buffer, *attribute;
     while ((attribute = strsep(&state, ",")) != NULL) {
         if (attribute[0] == 'T' && attribute[1] != '@') {
-            // it's a primitive type
+            // it's a C primitive type:
+            /*
+             if you want a list of what will be returned for these primitives, search online for
+             "objective-c" "Property Attribute Description Examples"
+             apple docs list plenty of examples of what you get for int "i", long "l", unsigned "I", struct, etc.
+             */
             return (const char *)[[NSData dataWithBytes:(attribute + 1) length:strlen(attribute) - 1] bytes];
         }
         else if (attribute[0] == 'T' && attribute[1] == '@' && strlen(attribute) == 2) {
@@ -357,6 +262,7 @@ static const char * getPropertyType(objc_property_t property) {
 }
 
 +(NSArray *)arrayFromJSON:(NSArray *)jsonArray ofObjects:(NSString *)obj {
+    //NSString *filteredObject = [NSString stringWithFormat:@"%@s",obj];
     return [NSObject arrayMapFromArray:jsonArray forPropertyName:obj];
 }
 
@@ -367,62 +273,62 @@ static const char * getPropertyType(objc_property_t property) {
 +(NSArray *)arrayMapFromArray:(NSArray *)nestedArray forPropertyName:(NSString *)propertyName {
     // Set Up
     NSMutableArray *objectsArray = [@[] mutableCopy];
-
+    
+    // Removes "ArrayOf(PropertyName)s" to get to the meat
+    //NSString *filteredProperty = [propertyName substringWithRange:NSMakeRange(0, propertyName.length - 1)]; /* TenEight */
+    //NSString *filteredProperty = [propertyName substringWithRange:NSMakeRange(7, propertyName.length - 8)]; /* AlaCop */
+    
     // Create objects
     for (int xx = 0; xx < nestedArray.count; xx++) {
-        @autoreleasepool {
-            // If it's an NSDictionary
-            if ([nestedArray[xx] isKindOfClass:[NSDictionary class]]) {
-                // Create object of filteredProperty type
-                id nestedObj = [[NSClassFromString(propertyName) alloc] init];
-                
-                // Iterate through each key, create objects for each
-                for (NSString *newKey in [nestedArray[xx] allKeys]) {
-                    @autoreleasepool {
-                        // If it's an Array, recur
-                        if ([[nestedArray[xx] objectForKey:newKey] isKindOfClass:[NSArray class]]) {
-                            NSString *propertyType = [nestedObj valueForKeyPath:[NSString stringWithFormat:@"propertyArrayMap.%@", newKey]];
-                            [nestedObj setValue:[NSObject arrayMapFromArray:[nestedArray[xx] objectForKey:newKey]  forPropertyName:propertyType] forKey:newKey];
-                        }
-                        // If it's a Dictionary, create an object, and send to [self objectFromJSON]
-                        else if ([[nestedArray[xx] objectForKey:newKey] isKindOfClass:[NSDictionary class]]) {
-                            NSString *type = [nestedObj classOfPropertyNamed:newKey];
-                            
-                            id nestedDictObj = [NSObject objectOfClass:type fromJSON:[nestedArray[xx] objectForKey:newKey]];
-                            [nestedObj setValue:nestedDictObj forKey:newKey];
-                        }
-                        // Else, it is an object
-                        else {
-                            objc_property_t property = class_getProperty([NSClassFromString(propertyName) class], [newKey UTF8String]);
-                            NSString *classType = [self typeFromProperty:property];
-                            // check if NSDate or not
-                            if ([classType isEqualToString:@"T@\"NSDate\""]) {
-                                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                                [formatter setDateFormat:OMDateFormat];
-                                [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:OMTimeZone]];
-                                NSString *dateString = [[nestedArray[xx] objectForKey:newKey] stringByReplacingOccurrencesOfString:@"T" withString:@" "];
-                                [nestedObj setValue:[formatter dateFromString:dateString] forKey:newKey];
-                            }
-                            else {
-                                [nestedObj setValue:[nestedArray[xx] objectForKey:newKey] forKey:newKey];
-                            }
-                        }
+        // If it's an NSDictionary
+        if ([nestedArray[xx] isKindOfClass:[NSDictionary class]]) {
+            // Create object of filteredProperty type
+            id nestedObj = [[NSClassFromString(propertyName) alloc] init];
+            
+            // Iterate through each key, create objects for each
+            for (NSString *newKey in [nestedArray[xx] allKeys]) {
+                // If it's an Array, recur
+                if ([[nestedArray[xx] objectForKey:newKey] isKindOfClass:[NSArray class]]) {
+                    NSString *propertyType = [nestedObj valueForKeyPath:[NSString stringWithFormat:@"propertyArrayMap.%@", newKey]];
+                    [nestedObj setValue:[NSObject arrayMapFromArray:[nestedArray[xx] objectForKey:newKey]  forPropertyName:propertyType] forKey:newKey];
+                }
+                // If it's a Dictionary, create an object, and send to [self objectFromJSON]
+                else if ([[nestedArray[xx] objectForKey:newKey] isKindOfClass:[NSDictionary class]]) {
+                    NSString *type = [nestedObj classOfPropertyNamed:newKey];
+                    
+                    id nestedDictObj = [NSObject objectOfClass:type fromJSON:[nestedArray[xx] objectForKey:newKey]];
+                    [nestedObj setValue:nestedDictObj forKey:newKey];
+                }
+                // Else, it is an object
+                else {
+                    objc_property_t property = class_getProperty([NSClassFromString(propertyName) class], [newKey UTF8String]);
+                    NSString *classType = [self typeFromProperty:property];
+                    // check if NSDate or not
+                    if ([classType isEqualToString:@"T@\"NSDate\""]) {
+                        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                        [formatter setDateFormat:OMDateFormat];
+                        [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:OMTimeZone]];
+                        NSString *dateString = [[nestedArray[xx] objectForKey:newKey] stringByReplacingOccurrencesOfString:@"T" withString:@" "];
+                        [nestedObj setValue:[formatter dateFromString:dateString] forKey:newKey];
+                    }
+                    else {
+                        [nestedObj setValue:[nestedArray[xx] objectForKey:newKey] forKey:newKey];
                     }
                 }
-                
-                // Finally add that object
-                [objectsArray addObject:nestedObj];
             }
             
-            // If it's an NSArray, recur
-            else if ([nestedArray[xx] isKindOfClass:[NSArray class]]) {
-                [objectsArray addObject:[NSObject arrayMapFromArray:nestedArray[xx] forPropertyName:propertyName]];
-            }
-            
-            // Else, add object directly
-            else {
-                [objectsArray addObject:nestedArray[xx]];
-            }
+            // Finally add that object
+            [objectsArray addObject:nestedObj];
+        }
+        
+        // If it's an NSArray, recur
+        else if ([nestedArray[xx] isKindOfClass:[NSArray class]]) {
+            [objectsArray addObject:[NSObject arrayMapFromArray:nestedArray[xx] forPropertyName:propertyName]];
+        }
+        
+        // Else, add object directly
+        else {
+            [objectsArray addObject:nestedArray[xx]];
         }
     }
     
@@ -447,9 +353,7 @@ static const char * getPropertyType(objc_property_t property) {
     NSString *superClassName = [[self superclass] nameOfClass];
     if (![superClassName isEqualToString:@"NSObject"]) {
         for (NSString *property in [[[self superclass] propertyDictionary] allKeys]) {
-            @autoreleasepool {
-                [dict setObject:property forKey:property];
-            }
+            [dict setObject:property forKey:property];
         }
     }
     
@@ -487,9 +391,7 @@ static const char * getPropertyType(objc_property_t property) {
     
     if ([newClassName isEqualToString:oldClassName]) {
         for (NSString *propertyKey in [[oldObject propertyDictionary] allKeys]) {
-            @autoreleasepool {
-                [self setValue:[oldObject valueForKey:propertyKey] forKey:propertyKey];
-            }
+            [self setValue:[oldObject valueForKey:propertyKey] forKey:propertyKey];
         }
     }
     else {
@@ -505,9 +407,7 @@ static const char * getPropertyType(objc_property_t property) {
 -(NSDictionary *)objectDictionary {
     NSMutableDictionary *objectDict = [@{} mutableCopy];
     for (NSString *key in [[self propertyDictionary] allKeys]) {
-        @autoreleasepool {
-            [objectDict setValue:[self valueForKey:key] forKey:key];
-        }
+        [objectDict setValue:[self valueForKey:key] forKey:key];
     }
     return objectDict;
 }
@@ -527,34 +427,53 @@ static const char * getPropertyType(objc_property_t property) {
 {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
+    NSMutableArray *propertiesArray = [NSObject propertiesArrayFromObject:obj];
+    
+    for (int i = 0; i < propertiesArray.count; i++) {
+        NSString *key = propertiesArray[i];
+        
+        if ([self isArray:obj key:key]) {
+            [dict setObject:[self arrayForObject:[obj valueForKey:key]] forKey:key];
+        }
+        else if ([self isDate:[obj valueForKey:key]]){
+            [dict setObject:[self dateForObject:[obj valueForKey:key]] forKey:key];
+        }
+        else if ([self isSystemObject:obj key:key]) {
+            [dict setObject:[obj valueForKey:key] forKey:key];
+        }
+        else if ([NSObject isData:[obj valueForKey:key]]){
+            [dict setObject:[NSObject encodeBase64WithData:[obj valueForKey:key]] forKey:key];
+        }
+        else {
+            [dict setObject:[self dictionaryWithPropertiesOfObject:[obj valueForKey:key]] forKey:key];
+        }
+    }
+    
+    return [NSDictionary dictionaryWithDictionary:dict];
+}
+
++(NSMutableArray *)propertiesArrayFromObject:(id)obj {
+    
+    NSMutableArray *props = [NSMutableArray array];
+    
+    if (!obj) {
+        return props;
+    }
+    
     unsigned count;
     objc_property_t *properties = class_copyPropertyList([obj class], &count);
-    
     for (int i = 0; i < count; i++) {
-        @autoreleasepool {
-            NSString *key = [NSString stringWithUTF8String:property_getName(properties[i])];
-            
-            if ([self isArray:obj key:key]) {
-                [dict setObject:[self arrayForObject:[obj valueForKey:key]] forKey:key];
-            }
-            else if ([self isDate:[obj valueForKey:key]]){
-                [dict setObject:[self dateForObject:[obj valueForKey:key]] forKey:key];
-            }
-            else if ([self isSystemObject:obj key:key]) {
-                [dict setObject:[obj valueForKey:key] forKey:key];
-            }
-            else if ([NSObject isData:[obj valueForKey:key]]){
-                [dict setObject:[NSObject encodeBase64WithData:[obj valueForKey:key]] forKey:key];
-            }
-            else {
-                [dict setObject:[self dictionaryWithPropertiesOfObject:[obj valueForKey:key]] forKey:key];
-            }
-        }
+        [props addObject:[NSString stringWithUTF8String:property_getName(properties[i])]];
     }
     
     free(properties);
     
-    return [NSDictionary dictionaryWithDictionary:dict];
+    NSString *superClassName = [[obj superclass] nameOfClass];
+    if (![superClassName isEqualToString:@"NSObject"]) {
+        [props addObjectsFromArray:[NSObject propertiesArrayFromObject:[[NSClassFromString(superClassName) alloc] init]]];
+    }
+    
+    return props;
 }
 
 -(BOOL)isSystemObject:(id)obj key:(NSString *)key{
@@ -617,20 +536,19 @@ static const char * getPropertyType(objc_property_t property) {
     NSArray *ContentArray = (NSArray *)obj;
     NSMutableArray *objectsArray = [[NSMutableArray alloc] init];
     for (int ii = 0; ii < ContentArray.count; ii++) {
-        @autoreleasepool {
-            if ([self isArray:ContentArray[ii]]) {
-                [objectsArray addObject:[self arrayForObject:[ContentArray objectAtIndex:ii]]];
-            }
-            else if ([self isDate:ContentArray[ii]]){
-                [objectsArray addObject:[self dateForObject:[ContentArray objectAtIndex:ii]]];
-            }
-            else if ([self isSystemObject:[ContentArray objectAtIndex:ii]]) {
-                [objectsArray addObject:[ContentArray objectAtIndex:ii]];
-            }
-            else {
-                [objectsArray addObject:[self dictionaryWithPropertiesOfObject:[ContentArray objectAtIndex:ii]]];
-            }
+        if ([self isArray:ContentArray[ii]]) {
+            [objectsArray addObject:[self arrayForObject:[ContentArray objectAtIndex:ii]]];
         }
+        else if ([self isDate:ContentArray[ii]]){
+            [objectsArray addObject:[self dateForObject:[ContentArray objectAtIndex:ii]]];
+        }
+        else if ([self isSystemObject:[ContentArray objectAtIndex:ii]]) {
+            [objectsArray addObject:[ContentArray objectAtIndex:ii]];
+        }
+        else {
+            [objectsArray addObject:[self dictionaryWithPropertiesOfObject:[ContentArray objectAtIndex:ii]]];
+        }
+        
     }
     
     return objectsArray;
@@ -646,31 +564,19 @@ static const char * getPropertyType(objc_property_t property) {
     return [formatter stringFromDate:date];
 }
 
-#pragma mark - XML/SOAP Serialization
-
--(NSData *)XMLData{
-    NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
-    NSString *xmlString = [self xmlStringFromDictionary:dict];
-    return [xmlString dataUsingEncoding:NSUTF8StringEncoding];
-}
-
--(NSString *)XMLString{
-    NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
-    return [self xmlStringFromDictionary:dict];
-}
+#pragma mark - SOAP/XML Serialization
 
 -(NSData *)SOAPData{
     NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
-    NSString *soapString = [self soapStringFromDictionary:dict];
-    return [soapString dataUsingEncoding:NSUTF8StringEncoding];
+    return [self soapDataFroDictionary:dict];
 }
 
--(NSString *)SOAPString{
+-(NSData *)XMLData{
     NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
-    return [self soapStringFromDictionary:dict];
+    return [self xmlDataForDictionary:dict];
 }
 
--(NSString *)soapStringFromDictionary:(NSDictionary *)dict{
+-(NSData *)soapDataFroDictionary:(NSDictionary *)dict{
     SOAPObject *soapObject = (SOAPObject *)self;
     
     NSMutableString *soapString = [[NSMutableString alloc] initWithString:@""];
@@ -681,11 +587,11 @@ static const char * getPropertyType(objc_property_t property) {
     //Request Header
     if ([dict valueForKey:@"Header"]) {
         
-        
+       
         
         //Append containing class name
         if (soapObject.Header) {
-            [soapString appendString:@"<soap:Header>"];
+             [soapString appendString:@"<soap:Header>"];
             [soapString appendFormat:@"<%s>", class_getName([soapObject.Header class])];
         }
         
@@ -703,7 +609,11 @@ static const char * getPropertyType(objc_property_t property) {
             [soapString appendFormat:@"</%s>", class_getName([soapObject.Header class])];
             [soapString appendString:@"</soap:Header>"];
         }
+        
+        
+        
     }
+    
     
     if ([dict valueForKey:@"Body"]) {
         [soapString appendString:@"<soap:Body>"];
@@ -733,29 +643,29 @@ static const char * getPropertyType(objc_property_t property) {
     //Close Envelope
     [soapString appendString:@"</soap:Envelope>"];
     
-    return soapString;
+    return [soapString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
--(NSString *)xmlStringFromDictionary:(NSDictionary *)dict{
-    NSMutableString *xmlString = [[NSMutableString alloc] initWithString:@""];
+-(NSData *)xmlDataForDictionary:(NSDictionary *)dict{
+    NSMutableString *soapString = [[NSMutableString alloc] initWithString:@""];
     
     //Document Header
-    [xmlString appendString:@"<?xml version=\"1.0\"?>"];
+    [soapString appendString:@"<?xml version=\"1.0\"?>"];
     
     //Append containing class name
-    [xmlString appendFormat:@"<%s>", class_getName([self class])];
+    [soapString appendFormat:@"<%s>", class_getName([self class])];
     
     //Fill in all values
     for (id key in dict) {
-        [xmlString appendFormat:@"<%@>", (NSString *)key];
-        [xmlString appendFormat:@"%@", [self xmlStringForDictionary:dict key:key]];
-        [xmlString appendFormat:@"</%@>", (NSString *)key];
+        [soapString appendFormat:@"<%@>", (NSString *)key];
+        [soapString appendFormat:@"%@", [self xmlStringForDictionary:dict key:key]];
+        [soapString appendFormat:@"</%@>", (NSString *)key];
     }
     
     //Close containing class name
-    [xmlString appendFormat:@"</%s>", class_getName([self class])];
+    [soapString appendFormat:@"</%s>", class_getName([self class])];
     
-    return xmlString;
+    return [soapString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 
@@ -777,7 +687,7 @@ static const char * getPropertyType(objc_property_t property) {
         NSArray *childArray = [dict valueForKey:key];
         for (int ii = 0; ii < childArray.count; ii++) {
             NSString *className = [key stringByReplacingOccurrencesOfString:@"ArrayOf" withString:@""];
-            
+
             if ([childArray[ii] isKindOfClass:[NSString class]]) {
                 [soapString appendString:@"<string>"];
                 [soapString appendFormat:@"%@", childArray[ii]];
