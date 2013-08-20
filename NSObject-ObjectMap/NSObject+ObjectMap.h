@@ -29,7 +29,9 @@
 
 // XML-SOAP
 -(NSData *)XMLData;
+-(NSString *)XMLString;
 -(NSData *)SOAPData;
+-(NSString *)SOAPString;
 +(id)objectOfClass:(NSString *)object fromXML:(NSString *)xml;
 
 

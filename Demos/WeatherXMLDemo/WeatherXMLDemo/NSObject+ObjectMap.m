@@ -568,15 +568,25 @@ static const char * getPropertyType(objc_property_t property) {
 
 -(NSData *)SOAPData{
     NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
-    return [self soapDataFroDictionary:dict];
+    return [[self soapStringFroDictionary:dict] dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 -(NSData *)XMLData{
     NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
-    return [self xmlDataForDictionary:dict];
+    return [[self xmlStringForSelfDictionary:dict] dataUsingEncoding:NSUTF8StringEncoding];
 }
 
--(NSData *)soapDataFroDictionary:(NSDictionary *)dict{
+-(NSString *)XMLString{
+    NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
+    return [self xmlStringForSelfDictionary:dict];
+}
+
+-(NSString *)SOAPString{
+     NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
+    return [self soapStringFroDictionary:dict];
+}
+
+-(NSString *)soapStringFroDictionary:(NSDictionary *)dict{
     SOAPObject *soapObject = (SOAPObject *)self;
     
     NSMutableString *soapString = [[NSMutableString alloc] initWithString:@""];
@@ -587,11 +597,11 @@ static const char * getPropertyType(objc_property_t property) {
     //Request Header
     if ([dict valueForKey:@"Header"]) {
         
-       
+        
         
         //Append containing class name
         if (soapObject.Header) {
-             [soapString appendString:@"<soap:Header>"];
+            [soapString appendString:@"<soap:Header>"];
             [soapString appendFormat:@"<%s>", class_getName([soapObject.Header class])];
         }
         
@@ -643,29 +653,29 @@ static const char * getPropertyType(objc_property_t property) {
     //Close Envelope
     [soapString appendString:@"</soap:Envelope>"];
     
-    return [soapString dataUsingEncoding:NSUTF8StringEncoding];
+    return soapString;
 }
 
--(NSData *)xmlDataForDictionary:(NSDictionary *)dict{
-    NSMutableString *soapString = [[NSMutableString alloc] initWithString:@""];
+-(NSString *)xmlStringForSelfDictionary:(NSDictionary *)dict{
+    NSMutableString *xmlString = [[NSMutableString alloc] initWithString:@""];
     
     //Document Header
-    [soapString appendString:@"<?xml version=\"1.0\"?>"];
+    [xmlString appendString:@"<?xml version=\"1.0\"?>"];
     
     //Append containing class name
-    [soapString appendFormat:@"<%s>", class_getName([self class])];
+    [xmlString appendFormat:@"<%s>", class_getName([self class])];
     
     //Fill in all values
     for (id key in dict) {
-        [soapString appendFormat:@"<%@>", (NSString *)key];
-        [soapString appendFormat:@"%@", [self xmlStringForDictionary:dict key:key]];
-        [soapString appendFormat:@"</%@>", (NSString *)key];
+        [xmlString appendFormat:@"<%@>", (NSString *)key];
+        [xmlString appendFormat:@"%@", [self xmlStringForDictionary:dict key:key]];
+        [xmlString appendFormat:@"</%@>", (NSString *)key];
     }
     
     //Close containing class name
-    [soapString appendFormat:@"</%s>", class_getName([self class])];
+    [xmlString appendFormat:@"</%s>", class_getName([self class])];
     
-    return [soapString dataUsingEncoding:NSUTF8StringEncoding];
+    return xmlString;
 }
 
 
