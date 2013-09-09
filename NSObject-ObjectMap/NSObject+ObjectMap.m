@@ -302,17 +302,19 @@ static const char * getPropertyType(objc_property_t property) {
                 // Else, it is an object
                 else {
                     objc_property_t property = class_getProperty([NSClassFromString(propertyName) class], [newKey UTF8String]);
-                    NSString *classType = [self typeFromProperty:property];
-                    // check if NSDate or not
-                    if ([classType isEqualToString:@"T@\"NSDate\""]) {
-                        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                        [formatter setDateFormat:OMDateFormat];
-                        [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:OMTimeZone]];
-                        NSString *dateString = [[nestedArray[xx] objectForKey:newKey] stringByReplacingOccurrencesOfString:@"T" withString:@" "];
-                        [nestedObj setValue:[formatter dateFromString:dateString] forKey:newKey];
-                    }
-                    else {
-                        [nestedObj setValue:[nestedArray[xx] objectForKey:newKey] forKey:newKey];
+                    if (property != NULL) {
+                        NSString *classType = [self typeFromProperty:property];
+                        // check if NSDate or not
+                        if ([classType isEqualToString:@"T@\"NSDate\""]) {
+                            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                            [formatter setDateFormat:OMDateFormat];
+                            [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:OMTimeZone]];
+                            NSString *dateString = [[nestedArray[xx] objectForKey:newKey] stringByReplacingOccurrencesOfString:@"T" withString:@" "];
+                            [nestedObj setValue:[formatter dateFromString:dateString] forKey:newKey];
+                        }
+                        else {
+                            [nestedObj setValue:[nestedArray[xx] objectForKey:newKey] forKey:newKey];
+                        }
                     }
                 }
             }
