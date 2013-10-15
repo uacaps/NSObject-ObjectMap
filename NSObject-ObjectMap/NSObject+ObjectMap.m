@@ -1,10 +1,31 @@
+//  Copyright (c) 2013 The Board of Trustees of The University of Alabama
+//  All rights reserved.
 //
-//  NSObject+JSONMap.m
-//  TenEight
+//  Redistribution and use in source and binary forms, with or without
+//  modification, are permitted provided that the following conditions
+//  are met:
 //
-//  Created by Benjamin Gordon on 5/8/13.
-//  Copyright (c) 2013 Matthew York. All rights reserved.
+//  1. Redistributions of source code must retain the above copyright
+//  notice, this list of conditions and the following disclaimer.
+//  2. Redistributions in binary form must reproduce the above copyright
+//  notice, this list of conditions and the following disclaimer in the
+//  documentation and/or other materials provided with the distribution.
+//  3. Neither the name of the University nor the names of the contributors
+//  may be used to endorse or promote products derived from this software
+//  without specific prior written permission.
 //
+//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+//  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+//  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+//  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+//  THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+//  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+//  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+//   SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+//  HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+//  STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+//  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+//  OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "NSObject+ObjectMap.h"
 
@@ -97,7 +118,6 @@ static const short _base64DecodingTable[256] = {
             [insideArrayScanner scanUpToString:[NSString stringWithFormat:@"</%@", filteredArrayObj] intoString:&newValue];
             
             // Create Object
-            //id objForKey = [[NSClassFromString(filteredArrayObj) alloc] init];
             if ([filteredArrayObj isEqualToString:@"string"]) {
                 [objArray addObject:(NSString *)newValue];
             }
@@ -118,6 +138,7 @@ static const short _base64DecodingTable[256] = {
         return objArray;
     }
     
+    // Self is a number
     else if ([self isKindOfClass:[NSNumber class]]) {
         [xmlScanner scanUpToString:@"</" intoString:&value];
         if ([value isEqualToString:@"true"]) {
@@ -130,11 +151,13 @@ static const short _base64DecodingTable[256] = {
         return [NSNumber numberWithFloat:[value floatValue]];
     }
     
+    // Self is a string
     else if ([self isKindOfClass:[NSString class]]) {
         [xmlScanner scanUpToString:@"</" intoString:&value];
         return value;
     }
     
+    // Self is a date
     else if ([self isKindOfClass:[NSDate class]]) {
         [xmlScanner scanUpToString:@"</" intoString:&value];
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -142,6 +165,8 @@ static const short _base64DecodingTable[256] = {
         [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:OMTimeZone]];
         return [formatter dateFromString:value];
     }
+    
+    // Self is Data
     else if ([self isKindOfClass:[NSData class]]){
         [xmlScanner scanUpToString:@"</" intoString:&value];
         return [NSObject base64DataFromString:value];
@@ -165,7 +190,6 @@ static const short _base64DecodingTable[256] = {
 #pragma mark - Dictionary to Object
 +(id)objectOfClass:(NSString *)object fromJSON:(NSDictionary *)dict {
     id newObject = [[NSClassFromString(object) alloc] init];
-    
     NSDictionary *mapDictionary = [newObject propertyDictionary];
     
     for (NSString *key in [dict allKeys]) {
@@ -200,8 +224,7 @@ static const short _base64DecodingTable[256] = {
                 NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
                 [formatter setDateFormat:OMDateFormat];
                 [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:OMTimeZone]];
-                NSString *dateString = [[dict objectForKey:key] stringByReplacingOccurrencesOfString:@"T" withString:@" "];
-                [newObject setValue:[formatter dateFromString:dateString] forKey:propertyName];
+                [newObject setValue:[formatter dateFromString:[dict objectForKey:key]] forKey:propertyName];
             }
             else {
                 if ([dict objectForKey:key] != [NSNull null]) {
@@ -274,10 +297,6 @@ static const char * getPropertyType(objc_property_t property) {
     // Set Up
     NSMutableArray *objectsArray = [@[] mutableCopy];
     
-    // Removes "ArrayOf(PropertyName)s" to get to the meat
-    //NSString *filteredProperty = [propertyName substringWithRange:NSMakeRange(0, propertyName.length - 1)]; /* TenEight */
-    //NSString *filteredProperty = [propertyName substringWithRange:NSMakeRange(7, propertyName.length - 8)]; /* AlaCop */
-    
     // Create objects
     for (int xx = 0; xx < nestedArray.count; xx++) {
         // If it's an NSDictionary
@@ -302,19 +321,16 @@ static const char * getPropertyType(objc_property_t property) {
                 // Else, it is an object
                 else {
                     objc_property_t property = class_getProperty([NSClassFromString(propertyName) class], [newKey UTF8String]);
-                    if (property != NULL) {
-                        NSString *classType = [self typeFromProperty:property];
-                        // check if NSDate or not
-                        if ([classType isEqualToString:@"T@\"NSDate\""]) {
-                            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                            [formatter setDateFormat:OMDateFormat];
-                            [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:OMTimeZone]];
-                            NSString *dateString = [[nestedArray[xx] objectForKey:newKey] stringByReplacingOccurrencesOfString:@"T" withString:@" "];
-                            [nestedObj setValue:[formatter dateFromString:dateString] forKey:newKey];
-                        }
-                        else {
-                            [nestedObj setValue:[nestedArray[xx] objectForKey:newKey] forKey:newKey];
-                        }
+                    NSString *classType = [self typeFromProperty:property];
+                    // check if NSDate or not
+                    if ([classType isEqualToString:@"T@\"NSDate\""]) {
+                        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                        [formatter setDateFormat:OMDateFormat];
+                        [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:OMTimeZone]];
+                        [nestedObj setValue:[formatter dateFromString:[nestedArray[xx] objectForKey:newKey]] forKey:newKey];
+                    }
+                    else {
+                        [nestedObj setValue:[nestedArray[xx] objectForKey:newKey] forKey:newKey];
                     }
                 }
             }
@@ -339,11 +355,10 @@ static const char * getPropertyType(objc_property_t property) {
 }
 
 -(NSDictionary *)propertyDictionary {
+    // Add properties of Self
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    
     unsigned count;
     objc_property_t *properties = class_copyPropertyList([self class], &count);
-    
     for (int i = 0; i < count; i++) {
         NSString *key = [NSString stringWithUTF8String:property_getName(properties[i])];
         [dict setObject:key forKey:key];
@@ -351,7 +366,7 @@ static const char * getPropertyType(objc_property_t property) {
     
     free(properties);
     
-    // Add all superclass properties as well, until it hits NSObject
+    // Add all superclass properties of Self as well, until it hits NSObject
     NSString *superClassName = [[self superclass] nameOfClass];
     if (![superClassName isEqualToString:@"NSObject"]) {
         for (NSString *property in [[[self superclass] propertyDictionary] allKeys]) {
@@ -359,6 +374,7 @@ static const char * getPropertyType(objc_property_t property) {
         }
     }
     
+    // Return the Dict
     return dict;
 }
 
@@ -425,7 +441,7 @@ static const char * getPropertyType(objc_property_t property) {
     return [[NSString alloc] initWithData:JSONData encoding:NSUTF8StringEncoding];
 }
 
-+(NSDictionary *) dictionaryWithPropertiesOfObject:(id)obj
++(NSDictionary *)dictionaryWithPropertiesOfObject:(id)obj
 {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
@@ -569,87 +585,54 @@ static const char * getPropertyType(objc_property_t property) {
 #pragma mark - SOAP/XML Serialization
 
 -(NSData *)SOAPData{
-    NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
-    return [[self soapStringFroDictionary:dict] dataUsingEncoding:NSUTF8StringEncoding];
+    return [[self SOAPString] dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 -(NSData *)XMLData{
-    NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
-    return [[self xmlStringForSelfDictionary:dict] dataUsingEncoding:NSUTF8StringEncoding];
+    return [[self XMLString] dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 -(NSString *)XMLString{
-    NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
-    return [self xmlStringForSelfDictionary:dict];
+    NSMutableString *xmlString = [@"<?xml version=\"1.0\"?>" mutableCopy];
+    [xmlString appendString:[self xmlStringForSelfNamed:nil]];
+    return xmlString;
 }
 
 -(NSString *)SOAPString{
-     NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
-    return [self soapStringFroDictionary:dict];
+    return [self soapStringForDictionary:(SOAPObject *)self];
 }
 
--(NSString *)soapStringFroDictionary:(NSDictionary *)dict{
-    SOAPObject *soapObject = (SOAPObject *)self;
+-(NSString *)soapStringForDictionary:(SOAPObject *)obj{
+    // No object, return blank
+    if (!obj) {
+        return @"";
+    }
     
+    // Build object
+    SOAPObject *soapObject = (SOAPObject *)self;
     NSMutableString *soapString = [[NSMutableString alloc] initWithString:@""];
     
     //Open Envelope
     [soapString appendString:@"<?xml version=\"1.0\" encoding=\"utf-8\"?><soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns=\"http://tempuri.org/\">"];
     
     //Request Header
-    if ([dict valueForKey:@"Header"]) {
-        
-        
-        
-        //Append containing class name
+    if (obj.Header) {
         if (soapObject.Header) {
+            // Add SoapHeader
             [soapString appendString:@"<soap:Header>"];
-            [soapString appendFormat:@"<%s>", class_getName([soapObject.Header class])];
-        }
-        
-        
-        NSDictionary *headerDict = [dict valueForKey:@"Header"];
-        //Append object contents
-        for (id key in headerDict) {
-            [soapString appendFormat:@"<%@>", (NSString *)key];
-            [soapString appendFormat:@"%@", [self xmlStringForDictionary:headerDict key:key]];
-            [soapString appendFormat:@"</%@>", (NSString *)key];
-        }
-        
-        //Close containing class name
-        if (soapObject.Header) {
-            [soapString appendFormat:@"</%s>", class_getName([soapObject.Header class])];
+            [soapString appendString:[soapObject.Header xmlStringForSelfNamed:nil]];
             [soapString appendString:@"</soap:Header>"];
         }
-        
-        
-        
     }
     
     
-    if ([dict valueForKey:@"Body"]) {
-        [soapString appendString:@"<soap:Body>"];
-        
-        //Append containing class name
+    if (obj.Body) {
         if (soapObject.Body) {
-            [soapString appendFormat:@"<%s>", class_getName([soapObject.Body class])];
+            // Add SoapBody
+            [soapString appendString:@"<soap:Body>"];
+            [soapString appendString:[obj.Body xmlStringForSelfNamed:nil]];
+            [soapString appendString:@"</soap:Body>"];
         }
-        
-        NSDictionary *bodyDict = [dict valueForKey:@"Body"];
-        //NSLog(@"\n\nSOAP Body: %@\n\n", bodyDict);
-        //Append object contents
-        for (id key in bodyDict) {
-            [soapString appendFormat:@"<%@>", (NSString *)key];
-            [soapString appendFormat:@"%@", [self xmlStringForDictionary:bodyDict key:key]];
-            [soapString appendFormat:@"</%@>", (NSString *)key];
-        }
-        
-        //Close containing class name
-        if (soapObject.Body) {
-            [soapString appendFormat:@"</%s>", class_getName([soapObject.Body class])];
-        }
-        
-        [soapString appendString:@"</soap:Body>"];
     }
     
     //Close Envelope
@@ -658,95 +641,66 @@ static const char * getPropertyType(objc_property_t property) {
     return soapString;
 }
 
--(NSString *)xmlStringForSelfDictionary:(NSDictionary *)dict{
+#pragma mark - XMLString for Self (The Meat of the Operation)
+// Doesn't include <xml> or <soap> cruft - just the inside material
+- (NSString *)xmlStringForSelfNamed:(NSString *)name {
     NSMutableString *xmlString = [[NSMutableString alloc] initWithString:@""];
+    NSString *className = name ? name : [NSString stringWithFormat:@"%s", class_getName([self class])];
+    className = [className stringByReplacingOccurrencesOfString:@"ArrayOf" withString:@""];
     
-    //Document Header
-    [xmlString appendString:@"<?xml version=\"1.0\"?>"];
+    // Make opening tag
+    [xmlString appendFormat:@"<%@>", className];
     
-    //Append containing class name
-    [xmlString appendFormat:@"<%s>", class_getName([self class])];
-    
-    //Fill in all values
-    for (id key in dict) {
-        [xmlString appendFormat:@"<%@>", (NSString *)key];
-        [xmlString appendFormat:@"%@", [self xmlStringForDictionary:dict key:key]];
-        [xmlString appendFormat:@"</%@>", (NSString *)key];
-    }
-    
-    //Close containing class name
-    [xmlString appendFormat:@"</%s>", class_getName([self class])];
-    
-    return xmlString;
-}
-
-
--(NSString *)xmlStringForDictionary:(NSDictionary *)dict key:(NSString *)key{
-    NSMutableString *soapString = [[NSMutableString alloc] initWithString:@""];
-    
-    if ([[dict valueForKey:key] isKindOfClass:[NSDate class]]) {
+    // self is a Date
+    if ([self isKindOfClass:[NSDate class]]) {
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:OMDateFormat];
         [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:OMTimeZone]];
-        return [formatter stringFromDate:[dict valueForKey:key]];
-        
-        return [dict valueForKey:key];
+        [xmlString appendString:[formatter stringFromDate:(NSDate *)self]];
     }
-    else if ([[dict valueForKey:key] isKindOfClass:[NSData class]]){
-        return [NSObject encodeBase64WithData:[dict valueForKey:key]];
+    
+    // self is a String or Number
+    else if ([self isKindOfClass:[NSString class]] || [self isKindOfClass:[NSNumber class]]) {
+        [xmlString appendFormat:@"%@", self];
     }
-    else if ([[dict valueForKey:key] isKindOfClass:[NSArray class]]) {
-        NSArray *childArray = [dict valueForKey:key];
-        for (int ii = 0; ii < childArray.count; ii++) {
-            NSString *className = [key stringByReplacingOccurrencesOfString:@"ArrayOf" withString:@""];
-
-            if ([childArray[ii] isKindOfClass:[NSString class]]) {
-                [soapString appendString:@"<string>"];
-                [soapString appendFormat:@"%@", childArray[ii]];
-                [soapString appendString:@"</string>"];
+    
+    // self is an Array
+    else if ([self isKindOfClass:[NSArray class]]) {
+        for (id arrayObj in (NSArray *)self) {
+            [xmlString appendString:[arrayObj xmlStringForSelfNamed:nil]];
+        }
+    }
+    
+    // self is a Dictionary
+    else if ([self isKindOfClass:[NSDictionary class]]) {
+        for (NSString *key in [(NSDictionary *)self allKeys]) {
+            [xmlString appendString:[[(NSDictionary *)self objectForKey:key] xmlStringForSelfNamed:key]];
+        }
+    }
+    
+    // self is a custom Object
+    else {
+        NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
+        for (NSString *innerObj in dict.allKeys) {
+            // if innerObj exists, use it
+            if ([self valueForKey:innerObj]) {
+                [xmlString appendString:[[self valueForKey:innerObj] xmlStringForSelfNamed:innerObj]];
             }
             else {
-                [soapString appendFormat:@"<%@>", className];
-                [soapString appendFormat:@"%@", [self xmlStringForDictionary:childArray[ii]]];
-                [soapString appendFormat:@"</%@>", className];
+                [xmlString appendFormat:@"<%@ />", innerObj];
             }
-            
-            
-        }
-    }
-    else if ([[dict valueForKey:key] isKindOfClass:[NSDictionary class]]) {
-        NSDictionary *childDictionary = [dict valueForKey:key];
-        for (id childKey in [dict valueForKey:key]) {
-            [soapString appendFormat:@"<%@>", (NSString *)childKey];
-            [soapString appendFormat:@"%@", [self xmlStringForDictionary:childDictionary key:childKey]];
-            [soapString appendFormat:@"</%@>", (NSString *)childKey];
         }
     }
     
-    else {
-        return [dict valueForKey:key];
-    }
-    
-    return soapString;
-}
-
--(NSString *)xmlStringForDictionary:(NSDictionary *)dict{
-    NSMutableString *soapString = [[NSMutableString alloc] initWithString:@""];
-    
-    for (id key in dict) {
-        [soapString appendFormat:@"<%@>", (NSString *)key];
-        [soapString appendFormat:@"%@", [self xmlStringForDictionary:dict key:key]];
-        [soapString appendFormat:@"</%@>", (NSString *)key];
-    }
-    
-    return soapString;
+    // Append end of class name
+    [xmlString appendFormat:@"</%@>", className];
+    return xmlString;
 }
 
 
 #pragma mark - Base64 Binary Encode/Decode
 
-+(NSData *)base64DataFromString:(NSString *)string
-{
++(NSData *)base64DataFromString:(NSString *)string {
     unsigned long ixtext, lentext;
     unsigned char ch, inbuf[4], outbuf[3];
     short i, ixinbuf;
@@ -754,105 +708,79 @@ static const char * getPropertyType(objc_property_t property) {
     const unsigned char *tempcstring;
     NSMutableData *theData;
     
-    if (string == nil)
-    {
+    if (string == nil) {
         return [NSData data];
     }
     
     ixtext = 0;
-    
     tempcstring = (const unsigned char *)[string UTF8String];
-    
     lentext = [string length];
-    
     theData = [NSMutableData dataWithCapacity: lentext];
-    
     ixinbuf = 0;
     
-    while (true)
-    {
-        if (ixtext >= lentext)
-        {
+    while (true) {
+        if (ixtext >= lentext) {
             break;
         }
         
         ch = tempcstring [ixtext++];
-        
         flignore = false;
         
-        if ((ch >= 'A') && (ch <= 'Z'))
-        {
+        if ((ch >= 'A') && (ch <= 'Z')) {
             ch = ch - 'A';
         }
-        else if ((ch >= 'a') && (ch <= 'z'))
-        {
+        else if ((ch >= 'a') && (ch <= 'z')) {
             ch = ch - 'a' + 26;
         }
-        else if ((ch >= '0') && (ch <= '9'))
-        {
+        else if ((ch >= '0') && (ch <= '9')) {
             ch = ch - '0' + 52;
         }
-        else if (ch == '+')
-        {
+        else if (ch == '+') {
             ch = 62;
         }
-        else if (ch == '=')
-        {
+        else if (ch == '=') {
             flendtext = true;
         }
-        else if (ch == '/')
-        {
+        else if (ch == '/') {
             ch = 63;
         }
-        else
-        {
+        else {
             flignore = true;
         }
         
-        if (!flignore)
-        {
+        if (!flignore) {
             short ctcharsinbuf = 3;
             Boolean flbreak = false;
             
-            if (flendtext)
-            {
-                if (ixinbuf == 0)
-                {
+            if (flendtext) {
+                if (ixinbuf == 0) {
                     break;
                 }
                 
-                if ((ixinbuf == 1) || (ixinbuf == 2))
-                {
+                if ((ixinbuf == 1) || (ixinbuf == 2)) {
                     ctcharsinbuf = 1;
                 }
-                else
-                {
+                else {
                     ctcharsinbuf = 2;
                 }
-                
                 ixinbuf = 3;
-                
                 flbreak = true;
             }
             
             inbuf [ixinbuf++] = ch;
             
-            if (ixinbuf == 4)
-            {
+            if (ixinbuf == 4) {
                 ixinbuf = 0;
-                
                 outbuf[0] = (inbuf[0] << 2) | ((inbuf[1] & 0x30) >> 4);
                 outbuf[1] = ((inbuf[1] & 0x0F) << 4) | ((inbuf[2] & 0x3C) >> 2);
                 outbuf[2] = ((inbuf[2] & 0x03) << 6) | (inbuf[3] & 0x3F);
                 
-                for (i = 0; i < ctcharsinbuf; i++)
-                {
+                for (i = 0; i < ctcharsinbuf; i++) {
                     [theData appendBytes: &outbuf[i] length: 1];
                 }
             }
             
-            if (flbreak)
-            {
+            if (flbreak) {
                 break;
             }
         }
@@ -893,7 +821,8 @@ static const char * getPropertyType(objc_property_t property) {
             *objPointer++ = _base64EncodingTable[((objRawData[0] & 0x03) << 4) + (objRawData[1] >> 4)];
             *objPointer++ = _base64EncodingTable[(objRawData[1] & 0x0f) << 2];
             *objPointer++ = '=';
-        } else {
+        }
+        else {
             *objPointer++ = _base64EncodingTable[(objRawData[0] & 0x03) << 4];
             *objPointer++ = '=';
             *objPointer++ = '=';
