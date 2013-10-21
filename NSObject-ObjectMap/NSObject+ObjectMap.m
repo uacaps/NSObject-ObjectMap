@@ -678,6 +678,11 @@ static const char * getPropertyType(objc_property_t property) {
         }
     }
     
+    // self is Data
+    else if ([self isKindOfClass:[NSData class]]) {
+        [xmlString appendString:[NSObject encodeBase64WithData:(NSData *)self]];
+    }
+    
     // self is a custom Object
     else {
         NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
