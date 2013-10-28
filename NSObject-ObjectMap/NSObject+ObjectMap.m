@@ -127,7 +127,7 @@ static const short _base64DecodingTable[256] = {
             if ([filteredArrayObj isEqualToString:@"string"]) {
                 [objArray addObject:(NSString *)newValue];
             }
-            else if ([filteredArrayObj isEqualToString:@"int"] || [filteredArrayObj isEqualToString:@"float"] || [filteredArrayObj isEqualToString:@"double"]){
+            else if ([filteredArrayObj isEqualToString:@"int"] || [filteredArrayObj isEqualToString:@"float"] || [filteredArrayObj isEqualToString:@"double"] || [filteredArrayObj isEqualToString:@"long"]){
                 [objArray addObject:[NSNumber numberWithDouble:((NSString *)newValue).doubleValue]];
             }
             else {
