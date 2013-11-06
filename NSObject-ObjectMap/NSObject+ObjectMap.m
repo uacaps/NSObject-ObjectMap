@@ -55,37 +55,47 @@ static const short _base64DecodingTable[256] = {
 
 #pragma mark - XML to Object
 +(id)objectOfClass:(NSString *)object fromXML:(NSString *)xml {
+    
+    //Create new instance of desired object
     id newObject = [[NSClassFromString(object) alloc] init];
     
+    //Get all properties for that new object
     NSDictionary *mapDictionary = [newObject propertyDictionary];
     
+    //Iterate over all properties and read in their values recursively
     for (NSString *key in [mapDictionary allKeys]) {
+        //Get class name
         objc_property_t property = class_getProperty([newObject class], [key UTF8String]);
         NSString *className = [[newObject typeFromProperty:property] substringWithRange:NSMakeRange(3, [newObject typeFromProperty:property].length - 4)];
-        id objForKey;
         
-        // Check Types
-        if ([className isEqualToString:@"NSString"]) {
-            objForKey = [[NSString alloc] init];
+        //If the key is a primitive or for some reason there was a problem getting the class name, go ahead and skip this property, else get it's node value
+        if (className) {
+            //Create blank object to be filled by type
+            id objForKey;
+            
+            // Check Types
+            if ([className isEqualToString:@"NSString"]) {
+                objForKey = [[NSString alloc] init];
+            }
+            else if ([className isEqualToString:@"NSDate"]) {
+                objForKey = [NSDate date];
+            }
+            else if ([className isEqualToString:@"NSNumber"]) {
+                objForKey = [[NSNumber alloc] initWithFloat:0.00];
+            }
+            else if ([className isEqualToString:@"NSArray"]) {
+                objForKey = [[NSArray alloc] init];
+            }
+            else if ([className isEqualToString:@"NSData"]){
+                objForKey = [[NSData alloc] init];
+            }
+            else {
+                objForKey = [[NSClassFromString(className) alloc] init];
+            }
+            
+            // Create
+            [newObject setValue:[objForKey getNodeValue:key fromXML:xml] forKey:key];
         }
-        else if ([className isEqualToString:@"NSDate"]) {
-            objForKey = [NSDate date];
-        }
-        else if ([className isEqualToString:@"NSNumber"]) {
-            objForKey = [[NSNumber alloc] initWithFloat:0.00];
-        }
-        else if ([className isEqualToString:@"NSArray"]) {
-            objForKey = [[NSArray alloc] init];
-        }
-        else if ([className isEqualToString:@"NSData"]){
-            objForKey = [[NSData alloc] init];
-        }
-        else {
-            objForKey = [[NSClassFromString(className) alloc] init];
-        }
-        
-        // Create
-        [newObject setValue:[objForKey getNodeValue:key fromXML:xml] forKey:key];
     }
     
     return newObject;
