@@ -514,7 +514,7 @@ static const char * getPropertyType(objc_property_t property) {
 }
 
 -(BOOL)isSystemObject:(id)obj key:(NSString *)key{
-    if ([[obj valueForKey:key] isKindOfClass:[NSString class]] || [[obj valueForKey:key] isKindOfClass:[NSNumber class]]) {
+    if ([[obj valueForKey:key] isKindOfClass:[NSString class]] || [[obj valueForKey:key] isKindOfClass:[NSNumber class]] || [[obj valueForKey:key] isKindOfClass:[NSDictionary class]]) {
         return YES;
     }
     
@@ -522,7 +522,7 @@ static const char * getPropertyType(objc_property_t property) {
 }
 
 -(BOOL)isSystemObject:(id)obj{
-    if ([obj isKindOfClass:[NSString class]] || [obj isKindOfClass:[NSNumber class]]) {
+    if ([obj isKindOfClass:[NSString class]] || [obj isKindOfClass:[NSNumber class]] || [obj isKindOfClass:[NSDictionary class]]) {
         return YES;
     }
     
