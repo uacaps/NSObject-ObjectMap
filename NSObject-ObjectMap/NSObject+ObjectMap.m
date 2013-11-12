@@ -260,18 +260,9 @@ static const short _base64DecodingTable[256] = {
 }
 
 -(NSString *)classOfPropertyNamed:(NSString *)propName {
-    unsigned count;
-    objc_property_t *properties = class_copyPropertyList([self class], &count);
-    
-    for (int xx = 0; xx < count; xx++) {
-        if ([[NSString stringWithUTF8String:property_getName(properties[xx])] isEqualToString:propName]) {
-            NSString *className = [NSString stringWithFormat:@"%s", getPropertyType(properties[xx])];
-            free(properties);
-            return className;
-        }
-    }
-    
-    return nil;
+    objc_property_t theProperty = class_getProperty([self class], [propName UTF8String]);
+    NSString *className = [NSString stringWithFormat:@"%s", getPropertyType(theProperty)];
+    return className;
 }
 
 
