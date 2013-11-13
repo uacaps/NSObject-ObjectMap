@@ -40,7 +40,7 @@
     SingleObject *testSingleObject = [[SingleObject alloc] init];
     testSingleObject.testString = @"This is a test";
     testSingleObject.testBoolean = @YES;
-    testSingleObject.testNumber = @123;
+    testSingleObject.testNumber = @123.5;
     testSingleObject.testDate = currentDate;
     
     //Serialize object, then deserialize it back to an object
