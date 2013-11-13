@@ -69,7 +69,7 @@
 - (void)testObjectWithArrayOfObjects {
     // Create Single Object Array
     ObjectWithArray *testSingleObjectArray = [ObjectWithArray newObjectWithArrayOfSingleObjects];
-    NestedObject *deserializedSingleObjectArray = [NSObject objectOfClass:@"ObjectWithArray" fromJSONData:[testSingleObjectArray JSONData]];
+    SingleObject *deserializedSingleObjectArray = [NSObject objectOfClass:@"ObjectWithArray" fromJSONData:[testSingleObjectArray JSONData]];
     
     // Create Nested Object Array
     ObjectWithArray *testNestedObjectArray = [ObjectWithArray newObjectWithArrayOfNestedObjects];
