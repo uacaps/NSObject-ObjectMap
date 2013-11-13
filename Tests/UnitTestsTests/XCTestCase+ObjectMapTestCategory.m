@@ -1,25 +1,14 @@
 //
-//  TestHelpers.m
+//  XCTestCase+ObjectMapTestCategory.m
 //  UnitTests
 //
 //  Created by Ben Gordon on 11/13/13.
 //  Copyright (c) 2013 Center for Advanced Public Safety. All rights reserved.
 //
 
-#import "NSObject+ObjectMap.h"
-#import <XCTest/XCTest.h>
+#import "XCTestCase+ObjectMapTestCategory.h"
 
-typedef NS_ENUM(NSInteger, DataType) {
-    DataTypeXML,
-    DataTypeJSON,
-    DataTypeSOAP
-};
-
-@interface ObjectMapTestCase : XCTestCase
-
-@end
-
-@implementation ObjectMapTestCase
+@implementation XCTestCase (ObjectMapTestCategory)
 
 - (void)testObject:(id)obj withDeserializedVersion:(id)deserializedObj forMethodNamed:(NSString *)methodName dataType:(DataType)type {
     //Test all properties
@@ -50,6 +39,5 @@ typedef NS_ENUM(NSInteger, DataType) {
             break;
     }
 }
-
 
 @end

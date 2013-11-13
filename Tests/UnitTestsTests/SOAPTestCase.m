@@ -6,14 +6,12 @@
 //  Copyright (c) 2013 Center for Advanced Public Safety. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-#import "NSObject+ObjectMap.h"
+#import "XCTestCase+ObjectMapTestCategory.h"
 #import "SingleObject.h"
 #import "NestedObject.h"
 #import "ObjectWithArray.h"
-#import "ObjectMapTestCase.m"
 
-@interface SOAPTestCase : ObjectMapTestCase
+@interface SOAPTestCase : XCTestCase
 
 @end
 
