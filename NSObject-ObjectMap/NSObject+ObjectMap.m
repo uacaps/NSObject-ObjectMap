@@ -441,14 +441,32 @@ static const char * getPropertyType(objc_property_t property) {
 }
 
 -(NSData *)JSONData{
-    NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
+    id dict = [NSObject jsonDataObjects:self];
     return [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
 }
 
 -(NSString *)JSONString{
-    NSDictionary *dict = [NSObject dictionaryWithPropertiesOfObject:self];
+    id dict = [NSObject jsonDataObjects:self];
     NSData *JSONData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
     return [[NSString alloc] initWithData:JSONData encoding:NSUTF8StringEncoding];
+}
+
++(id) jsonDataObjects:(id)obj{
+    id rtn = nil;
+    if([self isArray:obj]){
+        int length =[(NSArray*) obj count];
+        rtn = [NSMutableArray arrayWithCapacity:length];
+        for(int i=0;i<length;i++){
+            [rtn addObject:[NSObject dictionaryWithPropertiesOfObject:[(NSArray*) obj objectAtIndex:i]]];
+            
+        }
+        
+    }else{
+        rtn = [NSObject dictionaryWithPropertiesOfObject:obj];
+        
+    }
+    
+    return rtn;
 }
 
 +(NSDictionary *)dictionaryWithPropertiesOfObject:(id)obj
