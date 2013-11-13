@@ -66,11 +66,11 @@
     [self testObject:testObject withDeserializedVersion:deserializedObject forMethodNamed:@"testObjectWithArrayOfObjects" dataType:DataTypeXML];
 }
 
--(void)testNilProperties{
+-(void)testMissingProperties{
     
 }
 
--(void)testMissingProperties{
+-(void)testExtraProperties{
     
 }
 
