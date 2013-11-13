@@ -14,4 +14,6 @@
 @property (nonatomic, retain) NSNumber *testBoolean;
 @property (nonatomic, retain) NSNumber *testNumber;
 @property (nonatomic, retain) NSDate *testDate;
+
++(SingleObject *)newSingleObject;
 @end

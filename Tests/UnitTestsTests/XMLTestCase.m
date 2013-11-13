@@ -9,6 +9,8 @@
 #import <XCTest/XCTest.h>
 #import "NSObject+ObjectMap.h"
 #import "SingleObject.h"
+#import "NestedObject.h"
+#import "ObjectWithArray.h"
 
 @interface XMLTestCase : XCTestCase
 
@@ -29,19 +31,8 @@
 }
 
 -(void)testSingleObject{
-    //Create date formatter for matching date
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
-    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS"];
-    
-    NSDate *currentDate = [NSDate date];
-    
     //Create object to be serialized
-    SingleObject *testSingleObject = [[SingleObject alloc] init];
-    testSingleObject.testString = @"This is a test";
-    testSingleObject.testBoolean = @YES;
-    testSingleObject.testNumber = @123.5;
-    testSingleObject.testDate = currentDate;
+    SingleObject *testSingleObject = [SingleObject newSingleObject];
     
     //Serialize object, then deserialize it back to an object
     SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromXML:[testSingleObject XMLString]];
@@ -58,7 +49,8 @@
 }
 
 -(void)testNestedObject{
-    
+    NestedObject *testObject = [[NestedObject alloc] init];
+    testObject.singleObject = [SingleObject newSingleObject];
 }
 
 -(void)testTopLevelArray{
