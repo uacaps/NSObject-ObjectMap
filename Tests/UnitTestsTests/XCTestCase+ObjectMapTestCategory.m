@@ -19,7 +19,9 @@
         id testPropertyInstance = [testObj valueForKey:propertyName];
         
         if ([deserializedPropertyInstance isKindOfClass:[NSDate class]]) {
-            XCTAssertEqualWithAccuracy([[testObj valueForKey:propertyName] timeIntervalSince1970], [[deserializedObj valueForKey:propertyName] timeIntervalSince1970], 0.01, @"Failed %@ serialization/deserialization test for method named: %@. Failed on property %@", [self stringForType:type], methodName, propertyName);
+            if (deserializedPropertyInstance && testPropertyInstance) {
+                XCTAssertEqualWithAccuracy([[testObj valueForKey:propertyName] timeIntervalSince1970], [[deserializedObj valueForKey:propertyName] timeIntervalSince1970], 0.01, @"Failed %@ serialization/deserialization test for method named: %@. Failed on property %@", [self stringForType:type], methodName, propertyName);
+            }
         }
         else if ([deserializedPropertyInstance isKindOfClass:[NSString class]] || [deserializedPropertyInstance isKindOfClass:[NSNumber class]]){
             XCTAssertEqualObjects([testObj valueForKey:propertyName], [deserializedObj valueForKey:propertyName], @"Failed %@ serialization/deserialization test for method named: %@. Failed on property %@", [self stringForType:type], methodName, propertyName);
