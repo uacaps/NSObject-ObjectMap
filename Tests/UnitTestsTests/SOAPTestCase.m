@@ -1,8 +1,8 @@
 //
-//  JSONTestCase.m
+//  SOAPTestCase.m
 //  UnitTests
 //
-//  Created by Matthew York on 11/13/13.
+//  Created by Ben Gordon on 11/13/13.
 //  Copyright (c) 2013 Center for Advanced Public Safety. All rights reserved.
 //
 
@@ -13,11 +13,11 @@
 #import "ObjectWithArray.h"
 #import "TestHelpers.h"
 
-@interface JSONTestCase : XCTestCase
+@interface SOAPTestCase : XCTestCase
 
 @end
 
-@implementation JSONTestCase
+@implementation SOAPTestCase
 
 - (void)setUp
 {
@@ -78,6 +78,5 @@
 - (void)testMissingProperties {
     
 }
-
 
 @end
