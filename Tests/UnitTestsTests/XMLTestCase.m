@@ -28,7 +28,7 @@
     [super tearDown];
 }
 
--(void)testXMLSingleObjectSerializeDeserialize{
+-(void)testSingleObject{
     //Create date formatter for matching date
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
@@ -55,6 +55,26 @@
             XCTAssertEqualObjects([testSingleObject valueForKey:propertyName], [deserializedObject valueForKey:propertyName], @"Failed single object JSON serialization/deserialization test. Failed on property %@", propertyName);
         }
     }
+}
+
+-(void)testNestedObject{
+    
+}
+
+-(void)testTopLevelArray{
+    
+}
+
+-(void)testObjectWithArrayOfObjects{
+    
+}
+
+-(void)testNilProperties{
+    
+}
+
+-(void)testMissingProperties{
+    
 }
 
 @end
