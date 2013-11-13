@@ -41,12 +41,14 @@
 }
 
 -(void)testNestedObject{
-    NestedObject *testObject = [[NestedObject alloc] init];
-    testObject.singleObject = [SingleObject newSingleObject];
+    //Create test object
+    NestedObject *testObject = [NestedObject newNestedObject];
     
+    //Serialize object, then deserialize it back to an object
     NestedObject *deserializedObject = [NSObject objectOfClass:@"NestedObject" fromXML:[testObject XMLString]];
     
-    [self testObject:testObject.singleObject withDeserializedVersion:deserializedObject.singleObject forMethodNamed:@"testNestedObject" dataType:DataTypeXML];
+    //Test all properties recursively
+    [self testObject:testObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNestedObject" dataType:DataTypeXML];
 }
 
 -(void)testTopLevelArray{
