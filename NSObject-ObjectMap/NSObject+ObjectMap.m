@@ -243,6 +243,12 @@ static const short _base64DecodingTable[256] = {
             continue;
         }
         
+        // If it's null, set to nil and continue
+        if ([dict objectForKey:key] == [NSNull null]) {
+            [newObject setValue:nil forKey:propertyName];
+            continue;
+        }
+        
         // If it's a Dictionary, make into object
         if ([[dict objectForKey:key] isKindOfClass:[NSDictionary class]]) {
             //id newObjectProperty = [newObject valueForKey:propertyName];
@@ -271,12 +277,7 @@ static const short _base64DecodingTable[256] = {
                 [newObject setValue:[formatter dateFromString:[dict objectForKey:key]] forKey:propertyName];
             }
             else {
-                if ([dict objectForKey:key] != [NSNull null]) {
-                    [newObject setValue:[dict objectForKey:key] forKey:propertyName];
-                }
-                else {
-                    [newObject setValue:nil forKey:propertyName];
-                }
+                [newObject setValue:[dict objectForKey:key] forKey:propertyName];
             }
         }
     }
@@ -293,7 +294,6 @@ static const short _base64DecodingTable[256] = {
 
 static const char * getPropertyType(objc_property_t property) {
     const char *attributes = property_getAttributes(property);
-    printf("attributes=%s\n", attributes);
     char buffer[1 + strlen(attributes)];
     strcpy(buffer, attributes);
     char *state = buffer, *attribute;
@@ -341,6 +341,12 @@ static const char * getPropertyType(objc_property_t property) {
             
             // Iterate through each key, create objects for each
             for (NSString *newKey in [nestedArray[xx] allKeys]) {
+                // If it's null, move on
+                if ([nestedArray[xx] objectForKey:newKey] == [NSNull null]) {
+                    [nestedObj setValue:nil forKey:newKey];
+                    continue;
+                }
+                
                 // If it's an Array, recur
                 if ([[nestedArray[xx] objectForKey:newKey] isKindOfClass:[NSArray class]]) {
                     NSString *propertyType = [nestedObj valueForKeyPath:[NSString stringWithFormat:@"propertyArrayMap.%@", newKey]];
@@ -501,6 +507,10 @@ static const char * getPropertyType(objc_property_t property) {
     
     for (int i = 0; i < propertiesArray.count; i++) {
         NSString *key = propertiesArray[i];
+        
+        if (![obj valueForKey:key]) {
+            continue;
+        }
         
         if ([self isArray:obj key:key]) {
             [dict setObject:[self arrayForObject:[obj valueForKey:key]] forKey:key];

@@ -87,8 +87,6 @@
     SingleObject *testSingleObject = [[SingleObject alloc] init];
     SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromJSONData:[testSingleObject JSONData]];
     
-    NSString *string = [testSingleObject JSONString];
-    
     // Test
     [self testObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testMissingProperties" dataType:DataTypeJSON];
 }
