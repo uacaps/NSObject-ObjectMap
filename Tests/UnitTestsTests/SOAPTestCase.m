@@ -9,7 +9,7 @@
 #import "XCTestCase+ObjectMapTestCategory.h"
 #import "SingleObject.h"
 #import "NestedObject.h"
-#import "ObjectWithArray.h"
+#import "ObjectWithSingleObjectsArray.h"
 
 @interface SOAPTestCase : XCTestCase
 

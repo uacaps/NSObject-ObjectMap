@@ -8,7 +8,8 @@
 
 #import "SingleObject.h"
 #import "NestedObject.h"
-#import "ObjectWithArray.h"
+#import "ObjectWithSingleObjectsArray.h"
+#import "ObjectWithNestedObjectsArray.h"
 #import "XCTestCase+ObjectMapTestCategory.h"
 
 @interface JSONTestCase : XCTestCase
@@ -68,12 +69,12 @@
 
 - (void)testObjectWithArrayOfObjects {
     // Create Single Object Array
-    ObjectWithArray *testSingleObjectArray = [ObjectWithArray newObjectWithArrayOfSingleObjects];
-    SingleObject *deserializedSingleObjectArray = [NSObject objectOfClass:@"ObjectWithArray" fromJSONData:[testSingleObjectArray JSONData]];
+    ObjectWithSingleObjectsArray *testSingleObjectArray = [ObjectWithSingleObjectsArray newObjectWithArrayOfSingleObjects];
+    SingleObject *deserializedSingleObjectArray = [NSObject objectOfClass:@"ObjectWithSingleObjectsArray" fromJSONData:[testSingleObjectArray JSONData]];
     
     // Create Nested Object Array
-    ObjectWithArray *testNestedObjectArray = [ObjectWithArray newObjectWithArrayOfNestedObjects];
-    NestedObject *deserializedNestedObjectArray = [NSObject objectOfClass:@"ObjectWithArray" fromJSONData:[testNestedObjectArray JSONData]];
+    ObjectWithNestedObjectsArray *testNestedObjectArray = [ObjectWithNestedObjectsArray newObjectWithArrayOfNestedObjects];
+    NestedObject *deserializedNestedObjectArray = [NSObject objectOfClass:@"ObjectWithNestedObjectsArray" fromJSONData:[testNestedObjectArray JSONData]];
     
     // Test Arrays
     [self testObject:testSingleObjectArray withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Single" dataType:DataTypeXML];

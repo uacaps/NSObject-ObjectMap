@@ -9,7 +9,7 @@
 #import "XCTestCase+ObjectMapTestCategory.h"
 #import "SingleObject.h"
 #import "NestedObject.h"
-#import "ObjectWithArray.h"
+#import "ObjectWithSingleObjectsArray.h"
 
 @interface XMLTestCase : XCTestCase
 
@@ -57,10 +57,10 @@
 
 -(void)testObjectWithArrayOfObjects{
     //Create test Object
-    ObjectWithArray *testObject = [ObjectWithArray newObjectWithArrayOfSingleObjects];
+    ObjectWithSingleObjectsArray *testObject = [ObjectWithSingleObjectsArray newObjectWithArrayOfSingleObjects];
     
     //Serialize object, then deserialize it back to an object
-    ObjectWithArray *deserializedObject = [NSObject objectOfClass:@"ObjectWithArray" fromXML:[testObject XMLString]];
+    ObjectWithSingleObjectsArray *deserializedObject = [NSObject objectOfClass:@"ObjectWithArray" fromXML:[testObject XMLString]];
     
     //Test all properties recursively
     [self testObject:testObject withDeserializedVersion:deserializedObject forMethodNamed:@"testObjectWithArrayOfObjects" dataType:DataTypeXML];

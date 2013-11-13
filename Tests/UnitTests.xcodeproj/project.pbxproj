@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		1E00A4BF183428AA00638251 /* XCTestCase+ObjectMapTestCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E00A4BE183428AA00638251 /* XCTestCase+ObjectMapTestCategory.m */; };
 		1EAA2A9E18341FB90091DB64 /* NestedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA2A9D18341FB90091DB64 /* NestedObject.m */; };
-		1EAA2AA1183420010091DB64 /* ObjectWithArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA2AA0183420010091DB64 /* ObjectWithArray.m */; };
+		1EAA2AA1183420010091DB64 /* ObjectWithSingleObjectsArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA2AA0183420010091DB64 /* ObjectWithSingleObjectsArray.m */; };
 		1EAA2AA9183423430091DB64 /* SOAPTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA2AA8183423430091DB64 /* SOAPTestCase.m */; };
-		1EAA2AAA183426E30091DB64 /* ObjectWithArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA2AA0183420010091DB64 /* ObjectWithArray.m */; };
+		1EAA2AAA183426E30091DB64 /* ObjectWithSingleObjectsArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA2AA0183420010091DB64 /* ObjectWithSingleObjectsArray.m */; };
 		1EAA2AAB183426E60091DB64 /* NestedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA2A9D18341FB90091DB64 /* NestedObject.m */; };
 		1FA6C2111834122B008C5B8D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA6C2101834122B008C5B8D /* Foundation.framework */; };
 		1FA6C2131834122B008C5B8D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA6C2121834122B008C5B8D /* CoreGraphics.framework */; };
@@ -32,6 +32,7 @@
 		1FD4B3A118341DBF00C769B5 /* XMLTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD4B3A018341DBF00C769B5 /* XMLTestCase.m */; };
 		1FD4B3A418341E5800C769B5 /* NSObject+ObjectMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD4B3A318341E5800C769B5 /* NSObject+ObjectMap.m */; };
 		1FD4B3A518341E5800C769B5 /* NSObject+ObjectMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD4B3A318341E5800C769B5 /* NSObject+ObjectMap.m */; };
+		1FF57F1D183433AD00FEFB1B /* ObjectWithNestedObjectsArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF57F1C183433AD00FEFB1B /* ObjectWithNestedObjectsArray.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,8 +50,8 @@
 		1E00A4BE183428AA00638251 /* XCTestCase+ObjectMapTestCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+ObjectMapTestCategory.m"; sourceTree = "<group>"; };
 		1EAA2A9C18341FB90091DB64 /* NestedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NestedObject.h; sourceTree = "<group>"; };
 		1EAA2A9D18341FB90091DB64 /* NestedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NestedObject.m; sourceTree = "<group>"; };
-		1EAA2A9F183420010091DB64 /* ObjectWithArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectWithArray.h; sourceTree = "<group>"; };
-		1EAA2AA0183420010091DB64 /* ObjectWithArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectWithArray.m; sourceTree = "<group>"; };
+		1EAA2A9F183420010091DB64 /* ObjectWithSingleObjectsArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectWithSingleObjectsArray.h; sourceTree = "<group>"; };
+		1EAA2AA0183420010091DB64 /* ObjectWithSingleObjectsArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectWithSingleObjectsArray.m; sourceTree = "<group>"; };
 		1EAA2AA8183423430091DB64 /* SOAPTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOAPTestCase.m; sourceTree = "<group>"; };
 		1FA6C20D1834122B008C5B8D /* UnitTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnitTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA6C2101834122B008C5B8D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -76,6 +77,8 @@
 		1FD4B3A018341DBF00C769B5 /* XMLTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLTestCase.m; sourceTree = "<group>"; };
 		1FD4B3A218341E5800C769B5 /* NSObject+ObjectMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+ObjectMap.h"; path = "../../NSObject-ObjectMap/NSObject+ObjectMap.h"; sourceTree = "<group>"; };
 		1FD4B3A318341E5800C769B5 /* NSObject+ObjectMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+ObjectMap.m"; path = "../../NSObject-ObjectMap/NSObject+ObjectMap.m"; sourceTree = "<group>"; };
+		1FF57F1B183433AD00FEFB1B /* ObjectWithNestedObjectsArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectWithNestedObjectsArray.h; sourceTree = "<group>"; };
+		1FF57F1C183433AD00FEFB1B /* ObjectWithNestedObjectsArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectWithNestedObjectsArray.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,8 +172,10 @@
 				1FA6C2461834123B008C5B8D /* SingleObject.m */,
 				1EAA2A9C18341FB90091DB64 /* NestedObject.h */,
 				1EAA2A9D18341FB90091DB64 /* NestedObject.m */,
-				1EAA2A9F183420010091DB64 /* ObjectWithArray.h */,
-				1EAA2AA0183420010091DB64 /* ObjectWithArray.m */,
+				1EAA2A9F183420010091DB64 /* ObjectWithSingleObjectsArray.h */,
+				1EAA2AA0183420010091DB64 /* ObjectWithSingleObjectsArray.m */,
+				1FF57F1B183433AD00FEFB1B /* ObjectWithNestedObjectsArray.h */,
+				1FF57F1C183433AD00FEFB1B /* ObjectWithNestedObjectsArray.m */,
 				1FA6C2361834122B008C5B8D /* Supporting Files */,
 				1E00A4BD183428AA00638251 /* XCTestCase+ObjectMapTestCategory.h */,
 				1E00A4BE183428AA00638251 /* XCTestCase+ObjectMapTestCategory.m */,
@@ -289,7 +294,7 @@
 				1EAA2AAB183426E60091DB64 /* NestedObject.m in Sources */,
 				1FA6C2211834122B008C5B8D /* AppDelegate.m in Sources */,
 				1FA6C2471834123B008C5B8D /* SingleObject.m in Sources */,
-				1EAA2AAA183426E30091DB64 /* ObjectWithArray.m in Sources */,
+				1EAA2AAA183426E30091DB64 /* ObjectWithSingleObjectsArray.m in Sources */,
 				1FA6C21D1834122B008C5B8D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,7 +308,8 @@
 				1FD4B3A118341DBF00C769B5 /* XMLTestCase.m in Sources */,
 				1FD4B39F18341DB100C769B5 /* JSONTestCase.m in Sources */,
 				1EAA2A9E18341FB90091DB64 /* NestedObject.m in Sources */,
-				1EAA2AA1183420010091DB64 /* ObjectWithArray.m in Sources */,
+				1FF57F1D183433AD00FEFB1B /* ObjectWithNestedObjectsArray.m in Sources */,
+				1EAA2AA1183420010091DB64 /* ObjectWithSingleObjectsArray.m in Sources */,
 				1FD4B3A518341E5800C769B5 /* NSObject+ObjectMap.m in Sources */,
 				1E00A4BF183428AA00638251 /* XCTestCase+ObjectMapTestCategory.m in Sources */,
 			);
