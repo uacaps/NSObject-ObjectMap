@@ -205,25 +205,32 @@ static const short _base64DecodingTable[256] = {
     
     return nil;
 }
-#pragma mark - JSONData to Object
 
-+(id)objectOfClass:(NSString *)object fromJSONData:(NSData *)jsonData {
+
+#pragma mark - JSONData to Object
++ (id)objectOfClass:(NSString *)object fromJSONData:(NSData *)jsonData {
     NSError *error;
-    id rtn = nil;
-    id val = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
-    if([val isKindOfClass:[NSDictionary class]] ){
-        rtn = [NSObject objectOfClass:object fromJSON:val];
-    } else if([val isKindOfClass:[NSArray class]]){
-        int length = [((NSArray*) val) count];
+    id newObject = nil;
+    id jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
+    
+    // If jsonObject is a top-level object already
+    if([jsonObject isKindOfClass:[NSDictionary class]]) {
+        newObject = [NSObject objectOfClass:object fromJSON:jsonObject];
+    }
+    // Else it is an array of objects
+    else if([jsonObject isKindOfClass:[NSArray class]]){
+        int length = [((NSArray*) jsonObject) count];
         NSMutableArray *resultArray = [NSMutableArray arrayWithCapacity:length];
-        for(int i=0 ;i<length; i++){
-            [resultArray addObject:[NSObject objectOfClass:object fromJSON:[(NSArray*)val objectAtIndex:i]]];
+        for(int i = 0; i < length; i++){
+            [resultArray addObject:[NSObject objectOfClass:object fromJSON:[(NSArray*)jsonObject objectAtIndex:i]]];
         }
-        rtn = [[NSArray alloc] initWithArray:resultArray];
+        newObject = [[NSArray alloc] initWithArray:resultArray];
     }
     
-    return rtn;
+    return newObject;
 }
+
+
 #pragma mark - Dictionary to Object
 +(id)objectOfClass:(NSString *)object fromJSON:(NSDictionary *)dict {
     id newObject = [[NSClassFromString(object) alloc] init];
@@ -469,22 +476,21 @@ static const char * getPropertyType(objc_property_t property) {
     return [[NSString alloc] initWithData:JSONData encoding:NSUTF8StringEncoding];
 }
 
-+(id) jsonDataObjects:(id)obj{
-    id rtn = nil;
-    if([self isArray:obj]){
-        int length =[(NSArray*) obj count];
-        rtn = [NSMutableArray arrayWithCapacity:length];
-        for(int i=0;i<length;i++){
-            [rtn addObject:[NSObject dictionaryWithPropertiesOfObject:[(NSArray*) obj objectAtIndex:i]]];
-            
++ (id)jsonDataObjects:(id)obj {
+    id returnProperties = nil;
+    if([self isArray:obj]) {
+        int length =[(NSArray*)obj count];
+        returnProperties = [NSMutableArray arrayWithCapacity:length];
+        for(int i = 0; i < length; i++){
+            [returnProperties addObject:[NSObject dictionaryWithPropertiesOfObject:[(NSArray*)obj objectAtIndex:i]]];
         }
-        
-    }else{
-        rtn = [NSObject dictionaryWithPropertiesOfObject:obj];
+    }
+    else {
+        returnProperties = [NSObject dictionaryWithPropertiesOfObject:obj];
         
     }
     
-    return rtn;
+    return returnProperties;
 }
 
 +(NSDictionary *)dictionaryWithPropertiesOfObject:(id)obj
