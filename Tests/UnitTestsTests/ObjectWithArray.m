@@ -18,4 +18,17 @@
     return self;
 }
 
++ (ObjectWithArray *)newObjectWithArrayOfSingleObjects {
+    ObjectWithArray *newObject = [[ObjectWithArray alloc] init];
+    newObject.arrayOfObjects = @[[SingleObject newSingleObject],[SingleObject newSingleObject],[SingleObject newSingleObject],[SingleObject newSingleObject],[SingleObject newSingleObject]];
+    return newObject;
+}
+
+
++ (ObjectWithArray *)newObjectWithArrayOfNestedObjects {
+    ObjectWithArray *newObject = [[ObjectWithArray alloc] init];
+    newObject.arrayOfObjects = @[[NestedObject newNestedObject],[NestedObject newNestedObject],[NestedObject newNestedObject],[NestedObject newNestedObject],[NestedObject newNestedObject]];
+    return newObject;
+}
+
 @end

@@ -34,11 +34,7 @@
 - (void)testSingleObject
 {
     //Create object to be serialized
-    SingleObject *testSingleObject = [[SingleObject alloc] init];
-    testSingleObject.testString = @"This is a test";
-    testSingleObject.testBoolean = @YES;
-    testSingleObject.testNumber = @123;
-    testSingleObject.testDate = [NSDate date];
+    SingleObject *testSingleObject = [SingleObject newSingleObject];
     
     //Serialize object, then deserialize it back to an object
     SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromJSONData:[testSingleObject JSONData]];
@@ -50,11 +46,7 @@
 
 - (void)testNestedObject {
     // Create single object
-    SingleObject *newSingleObject = [[SingleObject alloc] init];
-    newSingleObject.testString = @"Hello World";
-    newSingleObject.testBoolean = @YES;
-    newSingleObject.testNumber = @12345;
-    newSingleObject.testDate = [NSDate date];
+    SingleObject *newSingleObject = [SingleObject newSingleObject];
     
     // Create nested object
     

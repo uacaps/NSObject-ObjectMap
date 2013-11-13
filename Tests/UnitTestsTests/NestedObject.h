@@ -13,4 +13,6 @@
 
 @property (nonatomic, retain) SingleObject *singleObject;
 
++ (NestedObject *)newNestedObject;
+
 @end

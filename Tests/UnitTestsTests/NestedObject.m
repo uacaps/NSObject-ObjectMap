@@ -10,4 +10,10 @@
 
 @implementation NestedObject
 
++ (NestedObject *)newNestedObject {
+    NestedObject *newNestedObject = [[NestedObject alloc] init];
+    newNestedObject.singleObject = [SingleObject newSingleObject];
+    return newNestedObject;
+}
+
 @end

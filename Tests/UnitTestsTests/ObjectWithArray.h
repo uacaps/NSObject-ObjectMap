@@ -7,9 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SingleObject.h"
+#import "NestedObject.h"
 
 @interface ObjectWithArray : NSObject
 
 @property (nonatomic, retain) NSArray *arrayOfObjects;
+
++ (ObjectWithArray *)newObjectWithArrayOfSingleObjects;
++ (ObjectWithArray *)newObjectWithArrayOfNestedObjects;
 
 @end
