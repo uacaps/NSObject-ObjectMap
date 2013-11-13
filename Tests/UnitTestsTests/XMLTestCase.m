@@ -10,6 +10,7 @@
 #import "SingleObject.h"
 #import "NestedObject.h"
 #import "ObjectWithSingleObjectsArray.h"
+#import "ObjectWithNestedObjectsArray.h"
 
 @interface XMLTestCase : XCTestCase
 
@@ -51,24 +52,30 @@
     [self testObject:testObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNestedObject" dataType:DataTypeXML];
 }
 
--(void)testTopLevelArray{
-    
-}
-
 -(void)testObjectWithArrayOfObjects{
-    //Create test Object
-    ObjectWithSingleObjectsArray *testObject = [ObjectWithSingleObjectsArray newObjectWithArrayOfSingleObjects];
+    // Create Single Object Array
+    ObjectWithSingleObjectsArray *testSingleObjectArray = [ObjectWithSingleObjectsArray newObjectWithArrayOfSingleObjects];
+    SingleObject *deserializedSingleObjectArray = [NSObject objectOfClass:@"ObjectWithSingleObjectsArray" fromXML:[testSingleObjectArray XMLString]];
     
-    //Serialize object, then deserialize it back to an object
-    ObjectWithSingleObjectsArray *deserializedObject = [NSObject objectOfClass:@"ObjectWithArray" fromXML:[testObject XMLString]];
+    // Create Nested Object Array
+    ObjectWithNestedObjectsArray *testNestedObjectArray = [ObjectWithNestedObjectsArray newObjectWithArrayOfNestedObjects];
+    NestedObject *deserializedNestedObjectArray = [NSObject objectOfClass:@"ObjectWithNestedObjectsArray" fromXML:[testNestedObjectArray XMLString]];
     
-    //Test all properties recursively
-    [self testObject:testObject withDeserializedVersion:deserializedObject forMethodNamed:@"testObjectWithArrayOfObjects" dataType:DataTypeXML];
+    // Test Arrays
+    [self testObject:testSingleObjectArray withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Single" dataType:DataTypeXML];
+    [self testObject:testNestedObjectArray withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Nested" dataType:DataTypeXML];
 }
 
+/*
 -(void)testMissingProperties{
+    // Create Single Object with no Properties filled in
+    SingleObject *testSingleObject = [[SingleObject alloc] init];
+    SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromJSONData:[testSingleObject JSONData]];
     
+    // Test
+    [self testObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNilProperties" dataType:DataTypeXML];
 }
+ */
 
 -(void)testExtraProperties{
     
