@@ -8,6 +8,7 @@
 
 #import "TestHelpers.h"
 #import "NSObject+ObjectMap.h"
+#import <XCTest/XCTest.h>
 
 @implementation TestHelpers
 

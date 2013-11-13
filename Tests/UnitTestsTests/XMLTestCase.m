@@ -11,6 +11,7 @@
 #import "SingleObject.h"
 #import "NestedObject.h"
 #import "ObjectWithArray.h"
+#import "TestHelpers.h"
 
 @interface XMLTestCase : XCTestCase
 
@@ -38,14 +39,7 @@
     SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromXML:[testSingleObject XMLString]];
     
     //Test all properties
-    for (NSString *propertyName in [deserializedObject propertyDictionary]) {
-        if ([[deserializedObject valueForKey:propertyName] isKindOfClass:[NSDate class]]) {
-            XCTAssertEqualWithAccuracy([[testSingleObject valueForKey:propertyName] timeIntervalSince1970], [[deserializedObject valueForKey:propertyName] timeIntervalSince1970], 0.01, @"Failed single object JSON serialization/deserialization test. Failed on property %@" ,propertyName);
-        }
-        else {
-            XCTAssertEqualObjects([testSingleObject valueForKey:propertyName], [deserializedObject valueForKey:propertyName], @"Failed single object JSON serialization/deserialization test. Failed on property %@", propertyName);
-        }
-    }
+    [TestHelpers testObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testSingleObject" dataType:DataTypeXML];
 }
 
 -(void)testNestedObject{
