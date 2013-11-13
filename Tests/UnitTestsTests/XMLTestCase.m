@@ -56,7 +56,14 @@
 }
 
 -(void)testObjectWithArrayOfObjects{
+    //Create test Object
+    ObjectWithArray *testObject = [ObjectWithArray newObjectWithArrayOfSingleObjects];
     
+    //Serialize object, then deserialize it back to an object
+    ObjectWithArray *deserializedObject = [NSObject objectOfClass:@"ObjectWithArray" fromXML:[testObject XMLString]];
+    
+    //Test all properties recursively
+    [self testObject:testObject withDeserializedVersion:deserializedObject forMethodNamed:@"testObjectWithArrayOfObjects" dataType:DataTypeXML];
 }
 
 -(void)testNilProperties{
