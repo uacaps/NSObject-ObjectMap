@@ -43,11 +43,12 @@
 
 
 - (void)testNestedObject {
-    // Create single object
-    SingleObject *newSingleObject = [SingleObject newSingleObject];
-    
     // Create nested object
+    NestedObject *testObject = [NestedObject newNestedObject];
+    NestedObject *deserializedObject = [NSObject objectOfClass:@"NestedObject" fromJSONData:[testObject JSONData]];
     
+    // Test Nested Object
+    [self testObject:testObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNestedObject" dataType:DataTypeXML];
 }
 
 
