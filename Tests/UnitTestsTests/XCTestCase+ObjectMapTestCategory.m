@@ -13,15 +13,24 @@
 - (void)testObject:(id)obj withDeserializedVersion:(id)deserializedObj forMethodNamed:(NSString *)methodName dataType:(DataType)type {
     //Test all properties
     for (NSString *propertyName in [deserializedObj propertyDictionary]) {
-        if ([[deserializedObj valueForKey:propertyName] isKindOfClass:[NSDate class]]) {
+        
+        //Get instance of property
+        id propertyInstance = [deserializedObj valueForKey:propertyName];
+        
+        if ([propertyInstance isKindOfClass:[NSDate class]]) {
             XCTAssertEqualWithAccuracy([[obj valueForKey:propertyName] timeIntervalSince1970], [[deserializedObj valueForKey:propertyName] timeIntervalSince1970], 0.01, @"Failed %@ serialization/deserialization test for method named: %@. Failed on property %@", [self stringForType:type], methodName, propertyName);
         }
-        else {
+        else if ([propertyInstance isKindOfClass:[NSString class]] || [propertyInstance isKindOfClass:[NSNumber class]]){
             XCTAssertEqualObjects([obj valueForKey:propertyName], [deserializedObj valueForKey:propertyName], @"Failed %@ serialization/deserialization test for method named: %@. Failed on property %@", [self stringForType:type], methodName, propertyName);
+        }
+        else if ([propertyInstance isKindOfClass:[NSArray class]]) {
+            
+        }
+        else { //It's a complex object of some kind
+            [self testObject:[obj valueForKey:propertyName] withDeserializedVersion:propertyInstance forMethodNamed:methodName dataType:type];
         }
     }
 }
-
 
 - (NSString *)stringForType:(DataType)type {
     switch (type) {

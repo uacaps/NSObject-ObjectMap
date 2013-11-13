@@ -46,7 +46,7 @@
     
     NestedObject *deserializedObject = [NSObject objectOfClass:@"NestedObject" fromXML:[testObject XMLString]];
     
-    [self testObject:testObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNestedObject" dataType:DataTypeXML];
+    [self testObject:testObject.singleObject withDeserializedVersion:deserializedObject.singleObject forMethodNamed:@"testNestedObject" dataType:DataTypeXML];
 }
 
 -(void)testTopLevelArray{
