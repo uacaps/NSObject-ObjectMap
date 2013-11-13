@@ -205,7 +205,25 @@ static const short _base64DecodingTable[256] = {
     
     return nil;
 }
+#pragma mark - JSONData to Object
 
++(id)objectOfClass:(NSString *)object fromJSONData:(NSData *)jsonData {
+    NSError *error;
+    id rtn = nil;
+    id val = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
+    if([val isKindOfClass:[NSDictionary class]] ){
+        rtn = [NSObject objectOfClass:object fromJSON:val];
+    } else if([val isKindOfClass:[NSArray class]]){
+        int length = [((NSArray*) val) count];
+        NSMutableArray *resultArray = [NSMutableArray arrayWithCapacity:length];
+        for(int i=0 ;i<length; i++){
+            [resultArray addObject:[NSObject objectOfClass:object fromJSON:[(NSArray*)val objectAtIndex:i]]];
+        }
+        rtn = [[NSArray alloc] initWithArray:resultArray];
+    }
+    
+    return rtn;
+}
 #pragma mark - Dictionary to Object
 +(id)objectOfClass:(NSString *)object fromJSON:(NSDictionary *)dict {
     id newObject = [[NSClassFromString(object) alloc] init];

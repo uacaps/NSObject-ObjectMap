@@ -40,6 +40,10 @@
 -(NSDictionary *)propertyDictionary;
 -(NSString *)nameOfClass;
 
+//jsondata -> Objects
++(id)objectOfClass:(NSString *)object fromJSONData:(NSData *)jsonData;
+
+
 // id -> Object
 +(id)objectOfClass:(NSString *)object fromJSON:(NSDictionary *)dict;
 +(NSArray *)arrayFromJSON:(NSArray *)jsonArray ofObjects:(NSString *)obj;
