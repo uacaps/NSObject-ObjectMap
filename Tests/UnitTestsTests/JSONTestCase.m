@@ -29,8 +29,7 @@
     [super tearDown];
 }
 
-- (void)testSingleObject
-{
+- (void)testSingleObject {
     //Create object to be serialized
     SingleObject *testSingleObject = [SingleObject newSingleObject];
     
@@ -53,13 +52,32 @@
 
 
 - (void)testTopLevelArray {
-    // Create Array
+    // Create Arrays
+    NSArray *arrayOfSingleObjects = @[[SingleObject newSingleObject],[SingleObject newSingleObject],[SingleObject newSingleObject],[SingleObject newSingleObject],[SingleObject newSingleObject]];
+    NSArray *arrayOfNestedObjects = @[[NestedObject newNestedObject],[NestedObject newNestedObject],[NestedObject newNestedObject],[NestedObject newNestedObject],[NestedObject newNestedObject]];
     
+    // Create deserializedObjects
+    NSArray *deserializedSingleObjectArray = [NSObject objectOfClass:@"SingleObject" fromJSONData:[arrayOfSingleObjects JSONData]];
+    NSArray *deserializedNestedObjectArray = [NSObject objectOfClass:@"NestedObject" fromJSONData:[arrayOfNestedObjects JSONData]];
+    
+    // Test Arrays
+    [self testObject:arrayOfSingleObjects withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:@"testTopLevelArray-Single" dataType:DataTypeXML];
+    [self testObject:arrayOfNestedObjects withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:@"testTopLevelArray-Nested" dataType:DataTypeXML];
 }
 
 
 - (void)testObjectWithArrayOfObjects {
+    // Create Single Object Array
+    ObjectWithArray *testSingleObjectArray = [ObjectWithArray newObjectWithArrayOfSingleObjects];
+    NestedObject *deserializedSingleObjectArray = [NSObject objectOfClass:@"ObjectWithArray" fromJSONData:[testSingleObjectArray JSONData]];
     
+    // Create Nested Object Array
+    ObjectWithArray *testNestedObjectArray = [ObjectWithArray newObjectWithArrayOfNestedObjects];
+    NestedObject *deserializedNestedObjectArray = [NSObject objectOfClass:@"ObjectWithArray" fromJSONData:[testNestedObjectArray JSONData]];
+    
+    // Test Arrays
+    [self testObject:testSingleObjectArray withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Single" dataType:DataTypeXML];
+    [self testObject:testNestedObjectArray withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Nested" dataType:DataTypeXML];
 }
 
 
