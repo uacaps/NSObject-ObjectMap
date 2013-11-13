@@ -11,9 +11,9 @@
 #import "SingleObject.h"
 #import "NestedObject.h"
 #import "ObjectWithArray.h"
-#import "TestHelpers.h"
+#import "ObjectMapTestCase.m"
 
-@interface JSONTestCase : XCTestCase
+@interface JSONTestCase : ObjectMapTestCase
 
 @end
 
@@ -40,7 +40,7 @@
     SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromJSONData:[testSingleObject JSONData]];
     
     //Test all properties
-    [TestHelpers testObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testSingleObject" dataType:DataTypeJSON];
+    [self testObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testSingleObject" dataType:DataTypeJSON];
 }
 
 

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		1EAA2A9E18341FB90091DB64 /* NestedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA2A9D18341FB90091DB64 /* NestedObject.m */; };
 		1EAA2AA1183420010091DB64 /* ObjectWithArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA2AA0183420010091DB64 /* ObjectWithArray.m */; };
-		1EAA2AA4183422230091DB64 /* TestHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA2AA3183422230091DB64 /* TestHelpers.m */; };
+		1EAA2AA4183422230091DB64 /* ObjectMapTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA2AA3183422230091DB64 /* ObjectMapTestCase.m */; };
 		1EAA2AA9183423430091DB64 /* SOAPTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA2AA8183423430091DB64 /* SOAPTestCase.m */; };
 		1FA6C2111834122B008C5B8D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA6C2101834122B008C5B8D /* Foundation.framework */; };
 		1FA6C2131834122B008C5B8D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA6C2121834122B008C5B8D /* CoreGraphics.framework */; };
@@ -47,8 +47,7 @@
 		1EAA2A9D18341FB90091DB64 /* NestedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NestedObject.m; sourceTree = "<group>"; };
 		1EAA2A9F183420010091DB64 /* ObjectWithArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectWithArray.h; sourceTree = "<group>"; };
 		1EAA2AA0183420010091DB64 /* ObjectWithArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectWithArray.m; sourceTree = "<group>"; };
-		1EAA2AA2183422230091DB64 /* TestHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestHelpers.h; sourceTree = "<group>"; };
-		1EAA2AA3183422230091DB64 /* TestHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestHelpers.m; sourceTree = "<group>"; };
+		1EAA2AA3183422230091DB64 /* ObjectMapTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectMapTestCase.m; sourceTree = "<group>"; };
 		1EAA2AA8183423430091DB64 /* SOAPTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOAPTestCase.m; sourceTree = "<group>"; };
 		1FA6C20D1834122B008C5B8D /* UnitTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnitTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA6C2101834122B008C5B8D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -160,6 +159,7 @@
 		1FA6C2351834122B008C5B8D /* UnitTestsTests */ = {
 			isa = PBXGroup;
 			children = (
+				1EAA2AA3183422230091DB64 /* ObjectMapTestCase.m */,
 				1FD4B39E18341DB100C769B5 /* JSONTestCase.m */,
 				1FD4B3A018341DBF00C769B5 /* XMLTestCase.m */,
 				1EAA2AA8183423430091DB64 /* SOAPTestCase.m */,
@@ -170,8 +170,6 @@
 				1EAA2A9F183420010091DB64 /* ObjectWithArray.h */,
 				1EAA2AA0183420010091DB64 /* ObjectWithArray.m */,
 				1FA6C2361834122B008C5B8D /* Supporting Files */,
-				1EAA2AA2183422230091DB64 /* TestHelpers.h */,
-				1EAA2AA3183422230091DB64 /* TestHelpers.m */,
 			);
 			path = UnitTestsTests;
 			sourceTree = "<group>";
@@ -301,7 +299,7 @@
 				1EAA2A9E18341FB90091DB64 /* NestedObject.m in Sources */,
 				1EAA2AA1183420010091DB64 /* ObjectWithArray.m in Sources */,
 				1FD4B3A518341E5800C769B5 /* NSObject+ObjectMap.m in Sources */,
-				1EAA2AA4183422230091DB64 /* TestHelpers.m in Sources */,
+				1EAA2AA4183422230091DB64 /* ObjectMapTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
