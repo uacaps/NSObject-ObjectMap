@@ -16,4 +16,6 @@
 @property (nonatomic, retain) NSDate *testDate;
 
 +(SingleObject *)newSingleObject;
+- (NSString *)jsonStringWithExtraParameters;
+
 @end

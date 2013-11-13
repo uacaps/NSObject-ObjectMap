@@ -7,6 +7,7 @@
 //
 
 #import "SingleObject.h"
+#import "NSObject+ObjectMap.h"
 
 @implementation SingleObject
 
@@ -26,4 +27,16 @@
     
     return testSingleObject;
 }
+
+- (NSString *)jsonStringWithExtraParameters {
+    NSScanner *scanner = [NSScanner scannerWithString:[self JSONString]];
+    NSString *newJSONString = @"";
+    NSString *remainingJSONString = @"";
+    [scanner scanUpToString:@"," intoString:&newJSONString];
+    newJSONString = [newJSONString stringByAppendingString:@", \"Hello\":\"World\""];
+    [scanner scanUpToString:@"END_OF_STRING" intoString:&remainingJSONString];
+    newJSONString = [newJSONString stringByAppendingString:remainingJSONString];
+    return newJSONString;
+}
+
 @end
