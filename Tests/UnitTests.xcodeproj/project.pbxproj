@@ -200,8 +200,8 @@
 		1FA6C2351834122B008C5B8D /* UnitTestsTests */ = {
 			isa = PBXGroup;
 			children = (
-				1E3AB2E9183582EC0057E527 /* Test Objects */,
 				1E3AB2E8183582E60057E527 /* Test Cases */,
+				1E3AB2E9183582EC0057E527 /* Test Objects */,
 				1FA6C2361834122B008C5B8D /* Supporting Files */,
 			);
 			path = UnitTestsTests;
