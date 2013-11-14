@@ -105,6 +105,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E3AB2E8183582E60057E527 /* Test Cases */ = {
+			isa = PBXGroup;
+			children = (
+				1E3AB2EA183582FD0057E527 /* ObjectMap Test Case Category */,
+				1FD4B39E18341DB100C769B5 /* JSONTestCase.m */,
+				1FD4B3A018341DBF00C769B5 /* XMLTestCase.m */,
+				1EAA2AA8183423430091DB64 /* SOAPTestCase.m */,
+			);
+			name = "Test Cases";
+			sourceTree = "<group>";
+		};
+		1E3AB2E9183582EC0057E527 /* Test Objects */ = {
+			isa = PBXGroup;
+			children = (
+				1FA6C2451834123B008C5B8D /* SingleObject.h */,
+				1FA6C2461834123B008C5B8D /* SingleObject.m */,
+				1EAA2A9C18341FB90091DB64 /* NestedObject.h */,
+				1EAA2A9D18341FB90091DB64 /* NestedObject.m */,
+				1EAA2A9F183420010091DB64 /* ObjectWithSingleObjectsArray.h */,
+				1EAA2AA0183420010091DB64 /* ObjectWithSingleObjectsArray.m */,
+				1FF57F1B183433AD00FEFB1B /* ObjectWithNestedObjectsArray.h */,
+				1FF57F1C183433AD00FEFB1B /* ObjectWithNestedObjectsArray.m */,
+			);
+			name = "Test Objects";
+			sourceTree = "<group>";
+		};
+		1E3AB2EA183582FD0057E527 /* ObjectMap Test Case Category */ = {
+			isa = PBXGroup;
+			children = (
+				1E00A4BD183428AA00638251 /* XCTestCase+ObjectMapTestCategory.h */,
+				1E00A4BE183428AA00638251 /* XCTestCase+ObjectMapTestCategory.m */,
+			);
+			name = "ObjectMap Test Case Category";
+			sourceTree = "<group>";
+		};
 		1FA6C2041834122B008C5B8D = {
 			isa = PBXGroup;
 			children = (
@@ -165,20 +200,9 @@
 		1FA6C2351834122B008C5B8D /* UnitTestsTests */ = {
 			isa = PBXGroup;
 			children = (
-				1FD4B39E18341DB100C769B5 /* JSONTestCase.m */,
-				1FD4B3A018341DBF00C769B5 /* XMLTestCase.m */,
-				1EAA2AA8183423430091DB64 /* SOAPTestCase.m */,
-				1FA6C2451834123B008C5B8D /* SingleObject.h */,
-				1FA6C2461834123B008C5B8D /* SingleObject.m */,
-				1EAA2A9C18341FB90091DB64 /* NestedObject.h */,
-				1EAA2A9D18341FB90091DB64 /* NestedObject.m */,
-				1EAA2A9F183420010091DB64 /* ObjectWithSingleObjectsArray.h */,
-				1EAA2AA0183420010091DB64 /* ObjectWithSingleObjectsArray.m */,
-				1FF57F1B183433AD00FEFB1B /* ObjectWithNestedObjectsArray.h */,
-				1FF57F1C183433AD00FEFB1B /* ObjectWithNestedObjectsArray.m */,
+				1E3AB2E9183582EC0057E527 /* Test Objects */,
+				1E3AB2E8183582E60057E527 /* Test Cases */,
 				1FA6C2361834122B008C5B8D /* Supporting Files */,
-				1E00A4BD183428AA00638251 /* XCTestCase+ObjectMapTestCategory.h */,
-				1E00A4BE183428AA00638251 /* XCTestCase+ObjectMapTestCategory.m */,
 			);
 			path = UnitTestsTests;
 			sourceTree = "<group>";
