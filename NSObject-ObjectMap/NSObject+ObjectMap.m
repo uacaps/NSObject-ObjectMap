@@ -233,6 +233,10 @@ static const short _base64DecodingTable[256] = {
 
 #pragma mark - Dictionary to Object
 +(id)objectOfClass:(NSString *)object fromJSON:(NSDictionary *)dict {
+    if([object isEqualToString:@"NSDictionary"]){
+        return dict;
+    }
+    
     id newObject = [[NSClassFromString(object) alloc] init];
     NSDictionary *mapDictionary = [newObject propertyDictionary];
     
