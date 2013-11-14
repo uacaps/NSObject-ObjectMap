@@ -106,7 +106,7 @@ static const short _base64DecodingTable[256] = {
 
 -(id)getNodeValue:(NSString *)node fromXML:(NSString *)xml {
     NSString *trash = @"";
-    NSString *value = @"";
+    NSString *value = nil;
     NSScanner *xmlScanner = [NSScanner scannerWithString:xml];
     [xmlScanner scanUpToString:[NSString stringWithFormat:@"<%@", node] intoString:&trash];
     [xmlScanner scanUpToString:@">" intoString:&trash];
@@ -170,7 +170,12 @@ static const short _base64DecodingTable[256] = {
             return [NSNumber numberWithBool:NO];
         }
         
-        return [NSNumber numberWithFloat:[value floatValue]];
+        if (value) {
+            return [NSNumber numberWithFloat:[value floatValue]];
+        }
+        else {
+            return nil;
+        }
     }
     
     // Self is a string

@@ -66,16 +66,20 @@
     [self testObject:testNestedObjectArray withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Nested" dataType:DataTypeXML];
 }
 
-/*
+
 -(void)testMissingProperties{
     // Create Single Object with no Properties filled in
     SingleObject *testSingleObject = [[SingleObject alloc] init];
-    SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromJSONData:[testSingleObject JSONData]];
+    NSString *string = [testSingleObject XMLString];
+    SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromXML:string];
     
     // Test
     [self testObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNilProperties" dataType:DataTypeXML];
 }
- */
+
+- (void)testExtraPropertiesInNestedArray {
+    
+}
 
 -(void)testExtraProperties{
     
