@@ -92,8 +92,21 @@
     [self testObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNilProperties" dataType:DataTypeXML];
 }
 
-- (void)testExtraPropertiesInNestedArray {
+- (void)testTopLevelArray {
+    ObjectWithSingleObjectsArray *testSingleObjectArray = [ObjectWithSingleObjectsArray newObjectWithArrayOfSingleObjects];
+    NSString *string = [testSingleObjectArray XMLString];
+    string = [string stringByReplacingOccurrencesOfString:@"<ObjectWithSingleObjectsArray>" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"</ObjectWithSingleObjectsArray>" withString:@""];
     
+    ObjectWithSingleObjectsArray *deserializedSingleObjectArray = [NSObject objectOfClass:@"ObjectWithSingleObjectsArray" fromXML:string];
+    
+    // Create Nested Object Array
+    ObjectWithNestedObjectsArray *testNestedObjectArray = [ObjectWithNestedObjectsArray newObjectWithArrayOfNestedObjects];
+    NestedObject *deserializedNestedObjectArray = [NSObject objectOfClass:@"ObjectWithNestedObjectsArray" fromXML:[testNestedObjectArray XMLString]];
+    
+    // Test Arrays
+    [self testObject:testSingleObjectArray withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Single" dataType:DataTypeXML];
+    [self testObject:testNestedObjectArray withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Nested" dataType:DataTypeXML];
 }
 
 -(void)testExtraProperties{
