@@ -77,6 +77,21 @@
     [self testObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNilProperties" dataType:DataTypeXML];
 }
 
+-(void)testClosingTagNilObject{
+    //Test Object
+    SingleObject *testSingleObject = [[SingleObject alloc] init];
+    testSingleObject.testString = @"This is a test";
+    
+    //Build test string with closing tag nil object
+    NSString *closingTagNilObjectString = @"<SingleObject><testString>This is a test</testString><testBoolean /></SingleObject>";
+    
+    //Deserialized object into SingleObject
+    SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromXML:closingTagNilObjectString];
+    
+    // Test
+    [self testObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNilProperties" dataType:DataTypeXML];
+}
+
 - (void)testExtraPropertiesInNestedArray {
     
 }
