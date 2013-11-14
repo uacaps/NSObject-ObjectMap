@@ -33,6 +33,7 @@
 - (void)testSingleObject {
     //Create object to be serialized
     SingleObject *testSingleObject = [SingleObject newSingleObject];
+    testSingleObject.testString = nil;
     
     //Serialize object, then deserialize it back to an object
     SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromJSONData:[testSingleObject JSONData]];
@@ -99,6 +100,21 @@
     
     // Test
     [self testObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testExtraProperties" dataType:DataTypeJSON];
+}
+
+- (void)testExtraPropertiesInNestedArray {
+    // Create Single Object with no Properties filled in
+    SingleObject *testSingleObject = [SingleObject newSingleObject];
+    NSArray *extraPropertiesArray = @[[SingleObject newSingleObject],[SingleObject newSingleObject],[SingleObject newSingleObject]];
+    NSString *jsonArray = [NSString stringWithFormat:@"[%@,%@,%@]", [testSingleObject jsonStringWithExtraParameters], [testSingleObject jsonStringWithExtraParameters], [testSingleObject jsonStringWithExtraParameters]];
+    NSArray *deserializedExtraPropertiesArray = [NSObject objectOfClass:@"SingleObject" fromJSONData:[jsonArray dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    // Test
+    [self testObject:extraPropertiesArray withDeserializedVersion:deserializedExtraPropertiesArray forMethodNamed:@"testExtraPropertiesInNestedArray" dataType:DataTypeJSON];
+}
+
+- (void)testMalformedSerializedString {
+    
 }
 
 

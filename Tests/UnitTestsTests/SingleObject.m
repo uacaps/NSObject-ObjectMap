@@ -40,4 +40,25 @@
     return newJSONString;
 }
 
++ (SingleObject *)malformedSingleObject {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS"];
+    
+    NSDate *currentDate = [NSDate date];
+    
+    //Create object to be serialized
+    SingleObject *testSingleObject = [[SingleObject alloc] init];
+    testSingleObject.testBoolean = @YES;
+    testSingleObject.testNumber = @123.5;
+    testSingleObject.testDate = currentDate;
+    testSingleObject.testDict = @{@"Hello":@"World"};
+    
+    return testSingleObject;
+}
+
++ (NSString *)malformedJSONString {
+    return @"";
+}
+
 @end
