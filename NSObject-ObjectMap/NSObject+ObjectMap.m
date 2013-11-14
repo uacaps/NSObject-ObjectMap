@@ -274,17 +274,20 @@ static const short _base64DecodingTable[256] = {
         // Add to property name, because it is a type already
         else {
             objc_property_t property = class_getProperty([newObject class], [propertyName UTF8String]);
-            NSString *classType = [newObject typeFromProperty:property];
             
-            // check if NSDate or not
-            if ([classType isEqualToString:@"T@\"NSDate\""]) {
-                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                [formatter setDateFormat:OMDateFormat];
-                [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:OMTimeZone]];
-                [newObject setValue:[formatter dateFromString:[dict objectForKey:key]] forKey:propertyName];
-            }
-            else {
-                [newObject setValue:[dict objectForKey:key] forKey:propertyName];
+            if (property) {
+                NSString *classType = [newObject typeFromProperty:property];
+                
+                // check if NSDate or not
+                if ([classType isEqualToString:@"T@\"NSDate\""]) {
+                    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                    [formatter setDateFormat:OMDateFormat];
+                    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:OMTimeZone]];
+                    [newObject setValue:[formatter dateFromString:[dict objectForKey:key]] forKey:propertyName];
+                }
+                else {
+                    [newObject setValue:[dict objectForKey:key] forKey:propertyName];
+                }
             }
         }
     }
@@ -369,17 +372,21 @@ static const char * getPropertyType(objc_property_t property) {
                 // Else, it is an object
                 else {
                     objc_property_t property = class_getProperty([NSClassFromString(propertyName) class], [newKey UTF8String]);
-                    NSString *classType = [self typeFromProperty:property];
-                    // check if NSDate or not
-                    if ([classType isEqualToString:@"T@\"NSDate\""]) {
-                        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                        [formatter setDateFormat:OMDateFormat];
-                        [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:OMTimeZone]];
-                        [nestedObj setValue:[formatter dateFromString:[nestedArray[xx] objectForKey:newKey]] forKey:newKey];
+                    
+                    if (property) {
+                        NSString *classType = [self typeFromProperty:property];
+                        // check if NSDate or not
+                        if ([classType isEqualToString:@"T@\"NSDate\""]) {
+                            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                            [formatter setDateFormat:OMDateFormat];
+                            [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:OMTimeZone]];
+                            [nestedObj setValue:[formatter dateFromString:[nestedArray[xx] objectForKey:newKey]] forKey:newKey];
+                        }
+                        else {
+                            [nestedObj setValue:[nestedArray[xx] objectForKey:newKey] forKey:newKey];
+                        }
                     }
-                    else {
-                        [nestedObj setValue:[nestedArray[xx] objectForKey:newKey] forKey:newKey];
-                    }
+                    
                 }
             }
             
