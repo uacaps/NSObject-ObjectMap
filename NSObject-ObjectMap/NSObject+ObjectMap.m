@@ -89,6 +89,9 @@ static const short _base64DecodingTable[256] = {
             else if ([className isEqualToString:@"NSData"]){
                 objForKey = [[NSData alloc] init];
             }
+            else if ([className isEqualToString:@"NSDictionary"]) {
+                continue;
+            }
             else {
                 objForKey = [[NSClassFromString(className) alloc] init];
             }
@@ -710,6 +713,11 @@ static const char * getPropertyType(objc_property_t property) {
 #pragma mark - XMLString for Self (The Meat of the Operation)
 // Doesn't include <xml> or <soap> cruft - just the inside material
 - (NSString *)xmlStringForSelfNamed:(NSString *)name {
+    // XML doesn't handle NSDictionaries (to SPEC)
+    if ([self isKindOfClass:[NSDictionary class]]) {
+        return @"";
+    }
+    
     NSMutableString *xmlString = [[NSMutableString alloc] initWithString:@""];
     NSString *className = name ? name : [NSString stringWithFormat:@"%s", class_getName([self class])];
     className = [className stringByReplacingOccurrencesOfString:@"ArrayOf" withString:@""];

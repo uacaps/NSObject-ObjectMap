@@ -24,6 +24,7 @@
     testSingleObject.testBoolean = @YES;
     testSingleObject.testNumber = @123.5;
     testSingleObject.testDate = currentDate;
+    testSingleObject.testDict = @{@"Hello":@"World"};
     
     return testSingleObject;
 }

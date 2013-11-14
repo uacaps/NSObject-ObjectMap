@@ -32,6 +32,10 @@
                 [self testObject:[(NSArray *)testPropertyInstance objectAtIndex:idx] withDeserializedVersion:[(NSArray *)deserializedPropertyInstance objectAtIndex:idx] forMethodNamed:methodName dataType:type];
             }];
         }
+        else if ([deserializedPropertyInstance isKindOfClass:[NSDictionary class]] && (type == DataTypeXML || type == DataTypeSOAP)) {
+            // XML/SOAP doesn't have the concept of Dictionary - everything is an object, an array, or a type of some sort
+            continue;
+        }
         else { //It's a complex object of some kind
             [self testObject:[testObj valueForKey:propertyName] withDeserializedVersion:deserializedPropertyInstance forMethodNamed:methodName dataType:type];
         }
