@@ -2,5 +2,7 @@ language: objective-c
 
 before_script: 
 - chmod a+x travis/script.sh
+- brew update
+- brew install xctool
 
 script: travis/script.sh
