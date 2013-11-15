@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1E00A4BF183428AA00638251 /* XCTestCase+ObjectMapTestCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E00A4BE183428AA00638251 /* XCTestCase+ObjectMapTestCategory.m */; };
-		1E3AB2EC1836831A0057E527 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E3AB2EB1836831A0057E527 /* ViewController.xib */; };
 		1EAA2A9E18341FB90091DB64 /* NestedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA2A9D18341FB90091DB64 /* NestedObject.m */; };
 		1EAA2AA1183420010091DB64 /* ObjectWithSingleObjectsArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA2AA0183420010091DB64 /* ObjectWithSingleObjectsArray.m */; };
 		1EAA2AA9183423430091DB64 /* SOAPTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA2AA8183423430091DB64 /* SOAPTestCase.m */; };
@@ -20,7 +19,6 @@
 		1FA6C21B1834122B008C5B8D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1FA6C2191834122B008C5B8D /* InfoPlist.strings */; };
 		1FA6C21D1834122B008C5B8D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA6C21C1834122B008C5B8D /* main.m */; };
 		1FA6C2211834122B008C5B8D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA6C2201834122B008C5B8D /* AppDelegate.m */; };
-		1FA6C2271834122B008C5B8D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA6C2261834122B008C5B8D /* ViewController.m */; };
 		1FA6C2291834122B008C5B8D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FA6C2281834122B008C5B8D /* Images.xcassets */; };
 		1FA6C2301834122B008C5B8D /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA6C22F1834122B008C5B8D /* XCTest.framework */; };
 		1FA6C2311834122B008C5B8D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA6C2101834122B008C5B8D /* Foundation.framework */; };
@@ -48,7 +46,6 @@
 /* Begin PBXFileReference section */
 		1E00A4BD183428AA00638251 /* XCTestCase+ObjectMapTestCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+ObjectMapTestCategory.h"; sourceTree = "<group>"; };
 		1E00A4BE183428AA00638251 /* XCTestCase+ObjectMapTestCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+ObjectMapTestCategory.m"; sourceTree = "<group>"; };
-		1E3AB2EB1836831A0057E527 /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
 		1EAA2A9C18341FB90091DB64 /* NestedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NestedObject.h; sourceTree = "<group>"; };
 		1EAA2A9D18341FB90091DB64 /* NestedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NestedObject.m; sourceTree = "<group>"; };
 		1EAA2A9F183420010091DB64 /* ObjectWithSingleObjectsArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectWithSingleObjectsArray.h; sourceTree = "<group>"; };
@@ -64,8 +61,6 @@
 		1FA6C21E1834122B008C5B8D /* UnitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix.pch"; sourceTree = "<group>"; };
 		1FA6C21F1834122B008C5B8D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1FA6C2201834122B008C5B8D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		1FA6C2251834122B008C5B8D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		1FA6C2261834122B008C5B8D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		1FA6C2281834122B008C5B8D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1FA6C22E1834122B008C5B8D /* UnitTestsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTestsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA6C22F1834122B008C5B8D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -177,9 +172,6 @@
 				1FD4B3A318341E5800C769B5 /* NSObject+ObjectMap.m */,
 				1FA6C21F1834122B008C5B8D /* AppDelegate.h */,
 				1FA6C2201834122B008C5B8D /* AppDelegate.m */,
-				1FA6C2251834122B008C5B8D /* ViewController.h */,
-				1FA6C2261834122B008C5B8D /* ViewController.m */,
-				1E3AB2EB1836831A0057E527 /* ViewController.xib */,
 				1FA6C2281834122B008C5B8D /* Images.xcassets */,
 				1FA6C2171834122B008C5B8D /* Supporting Files */,
 			);
@@ -293,7 +285,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FA6C2291834122B008C5B8D /* Images.xcassets in Resources */,
-				1E3AB2EC1836831A0057E527 /* ViewController.xib in Resources */,
 				1FA6C21B1834122B008C5B8D /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -314,7 +305,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FD4B3A418341E5800C769B5 /* NSObject+ObjectMap.m in Sources */,
-				1FA6C2271834122B008C5B8D /* ViewController.m in Sources */,
 				1EAA2AAB183426E60091DB64 /* NestedObject.m in Sources */,
 				1FA6C2211834122B008C5B8D /* AppDelegate.m in Sources */,
 				1FA6C2471834123B008C5B8D /* SingleObject.m in Sources */,
