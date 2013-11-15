@@ -18,7 +18,11 @@ typedef NS_ENUM(NSInteger, DataType) {
 
 @interface XCTestCase (ObjectMapTestCategory)
 
-- (void)testObject:(id)testObj withDeserializedVersion:(id)deserializedObj forMethodNamed:(NSString *)methodName dataType:(DataType)type;
+// Testing Options
+- (void)testEqualityOfObject:(id)testObj withDeserializedVersion:(id)deserializedObj forMethodNamed:(NSString *)methodName dataType:(DataType)type;
+- (void)testInequalityOfObject:(id)testObj withDeserializedVersion:(id)deserializedObj forMethodNamed:(NSString *)methodName dataType:(DataType)type;
+
+// Auxiliary Methods
 - (NSString *)stringForType:(DataType)type;
 
 @end

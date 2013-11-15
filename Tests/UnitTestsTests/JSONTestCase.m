@@ -39,7 +39,7 @@
     SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromJSONData:[testSingleObject JSONData]];
     
     //Test all properties
-    [self testObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testSingleObject" dataType:DataTypeJSON];
+    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testSingleObject" dataType:DataTypeJSON];
 }
 
 
@@ -49,7 +49,7 @@
     NestedObject *deserializedObject = [NSObject objectOfClass:@"NestedObject" fromJSONData:[testObject JSONData]];
     
     // Test Nested Object
-    [self testObject:testObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNestedObject" dataType:DataTypeJSON];
+    [self testEqualityOfObject:testObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNestedObject" dataType:DataTypeJSON];
 }
 
 
@@ -63,8 +63,8 @@
     NSArray *deserializedNestedObjectArray = [NSObject objectOfClass:@"NestedObject" fromJSONData:[arrayOfNestedObjects JSONData]];
     
     // Test Arrays
-    [self testObject:arrayOfSingleObjects withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:@"testTopLevelArray-Single" dataType:DataTypeJSON];
-    [self testObject:arrayOfNestedObjects withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:@"testTopLevelArray-Nested" dataType:DataTypeJSON];
+    [self testEqualityOfObject:arrayOfSingleObjects withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:@"testTopLevelArray-Single" dataType:DataTypeJSON];
+    [self testEqualityOfObject:arrayOfNestedObjects withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:@"testTopLevelArray-Nested" dataType:DataTypeJSON];
 }
 
 
@@ -78,43 +78,49 @@
     NestedObject *deserializedNestedObjectArray = [NSObject objectOfClass:@"ObjectWithNestedObjectsArray" fromJSONData:[testNestedObjectArray JSONData]];
     
     // Test Arrays
-    [self testObject:testSingleObjectArray withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Single" dataType:DataTypeJSON];
-    [self testObject:testNestedObjectArray withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Nested" dataType:DataTypeJSON];
+    [self testEqualityOfObject:testSingleObjectArray withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Single" dataType:DataTypeJSON];
+    [self testEqualityOfObject:testNestedObjectArray withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Nested" dataType:DataTypeJSON];
 }
 
 
 - (void)testMissingProperties {
-    // Create Single Object with no Properties filled in
+    // Create serializaed/deserialized Objects
     SingleObject *testSingleObject = [[SingleObject alloc] init];
     SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromJSONData:[testSingleObject JSONData]];
     
     // Test
-    [self testObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testMissingProperties" dataType:DataTypeJSON];
+    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testMissingProperties" dataType:DataTypeJSON];
 }
 
 
 - (void)testExtraProperties {
-    // Create Single Object with no Properties filled in
+    // Create serializaed/deserialized Objects
     SingleObject *testSingleObject = [SingleObject newSingleObject];
     SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromJSONData:[[testSingleObject jsonStringWithExtraParameters] dataUsingEncoding:NSUTF8StringEncoding]];
     
     // Test
-    [self testObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testExtraProperties" dataType:DataTypeJSON];
+    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testExtraProperties" dataType:DataTypeJSON];
 }
 
 - (void)testExtraPropertiesInNestedArray {
-    // Create Single Object with no Properties filled in
+    // Create serializaed/deserialized Objects
     SingleObject *testSingleObject = [SingleObject newSingleObject];
     NSArray *extraPropertiesArray = @[[SingleObject newSingleObject],[SingleObject newSingleObject],[SingleObject newSingleObject]];
     NSString *jsonArray = [NSString stringWithFormat:@"[%@,%@,%@]", [testSingleObject jsonStringWithExtraParameters], [testSingleObject jsonStringWithExtraParameters], [testSingleObject jsonStringWithExtraParameters]];
     NSArray *deserializedExtraPropertiesArray = [NSObject objectOfClass:@"SingleObject" fromJSONData:[jsonArray dataUsingEncoding:NSUTF8StringEncoding]];
     
     // Test
-    [self testObject:extraPropertiesArray withDeserializedVersion:deserializedExtraPropertiesArray forMethodNamed:@"testExtraPropertiesInNestedArray" dataType:DataTypeJSON];
+    [self testEqualityOfObject:extraPropertiesArray withDeserializedVersion:deserializedExtraPropertiesArray forMethodNamed:@"testExtraPropertiesInNestedArray" dataType:DataTypeJSON];
 }
 
 - (void)testMalformedSerializedString {
+    // Create serializaed/deserialized Objects
+    SingleObject *testSingleObject = [SingleObject newSingleObject];
+    // Add character to JSON string
+    SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromJSONData:[[[testSingleObject JSONString] stringByAppendingString:@"{"] dataUsingEncoding:NSUTF8StringEncoding]];
     
+    // Test
+    [self testInequalityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testMalformedSerializedString" dataType:DataTypeJSON];
 }
 
 

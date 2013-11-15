@@ -38,7 +38,7 @@
     SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromXML:[testSingleObject XMLString]];
     
     //Test all properties
-    [self testObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testSingleObject" dataType:DataTypeXML];
+    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testSingleObject" dataType:DataTypeXML];
 }
 
 -(void)testNestedObject{
@@ -49,7 +49,7 @@
     NestedObject *deserializedObject = [NSObject objectOfClass:@"NestedObject" fromXML:[testObject XMLString]];
     
     //Test all properties recursively
-    [self testObject:testObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNestedObject" dataType:DataTypeXML];
+    [self testEqualityOfObject:testObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNestedObject" dataType:DataTypeXML];
 }
 
 -(void)testObjectWithArrayOfObjects{
@@ -62,8 +62,8 @@
     NestedObject *deserializedNestedObjectArray = [NSObject objectOfClass:@"ObjectWithNestedObjectsArray" fromXML:[testNestedObjectArray XMLString]];
     
     // Test Arrays
-    [self testObject:testSingleObjectArray withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Single" dataType:DataTypeXML];
-    [self testObject:testNestedObjectArray withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Nested" dataType:DataTypeXML];
+    [self testEqualityOfObject:testSingleObjectArray withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Single" dataType:DataTypeXML];
+    [self testEqualityOfObject:testNestedObjectArray withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Nested" dataType:DataTypeXML];
 }
 
 
@@ -74,7 +74,7 @@
     SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromXML:string];
     
     // Test
-    [self testObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNilProperties" dataType:DataTypeXML];
+    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNilProperties" dataType:DataTypeXML];
 }
 
 -(void)testClosingTagNilObject{
@@ -89,7 +89,7 @@
     SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromXML:closingTagNilObjectString];
     
     // Test
-    [self testObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNilProperties" dataType:DataTypeXML];
+    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNilProperties" dataType:DataTypeXML];
 }
 
 - (void)testTopLevelArray {
@@ -105,12 +105,24 @@
     NestedObject *deserializedNestedObjectArray = [NSObject objectOfClass:@"ObjectWithNestedObjectsArray" fromXML:[testNestedObjectArray XMLString]];
     
     // Test Arrays
-    [self testObject:testSingleObjectArray withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Single" dataType:DataTypeXML];
-    [self testObject:testNestedObjectArray withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Nested" dataType:DataTypeXML];
+    [self testEqualityOfObject:testSingleObjectArray withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Single" dataType:DataTypeXML];
+    [self testEqualityOfObject:testNestedObjectArray withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Nested" dataType:DataTypeXML];
 }
 
 -(void)testExtraProperties{
     
+}
+
+- (void)testMalformedSerializedString {
+    // Create serializaed/deserialized Objects
+    SingleObject *testSingleObject = [SingleObject newSingleObject];
+    // Add character to XML string
+    NSString *badXML = [[testSingleObject XMLString] stringByReplacingOccurrencesOfString:@"Bool" withString:@"<"];
+    SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromXML:badXML];
+    //SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromXML:[testSingleObject XMLString]];
+    
+    // Test
+    [self testInequalityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testMalformedSerializedString" dataType:DataTypeXML];
 }
 
 
