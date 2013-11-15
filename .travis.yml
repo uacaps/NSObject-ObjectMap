@@ -1,5 +1,3 @@
-# .travis.yml
-
 language: objective-c
 
   before_script: TravisCI/before_script.sh
