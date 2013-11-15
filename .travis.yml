@@ -1,6 +1,6 @@
 language: objective-c
 
 before_script: 
-- chmod +x travis
-- chmod +x Tests
+- chmod a+x travis/script.sh
+
 script: travis/script.sh
