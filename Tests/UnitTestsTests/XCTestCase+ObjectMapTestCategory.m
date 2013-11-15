@@ -26,6 +26,7 @@
 
 #pragma mark - Are Objects Equal Method
 - (BOOL)testObject:(id)testObj isEqualToDeserializedObject:(id)deserializedObj forType:(DataType)type {
+    // Set Up
     BOOL isEqual;
     
     // Test for one's nilness and the other's non-nilness
@@ -44,7 +45,7 @@
             if (deserializedPropertyInstance && testPropertyInstance) {
                 int date1TimeInt = [[testObj valueForKey:propertyName] timeIntervalSince1970];
                 int date2TimeInt = [[deserializedObj valueForKey:propertyName] timeIntervalSince1970];
-                isEqual = abs(date1TimeInt-date2TimeInt) == 0;
+                isEqual = date1TimeInt-date2TimeInt == 0;
             }
         }
         else if ([deserializedPropertyInstance isKindOfClass:[NSString class]]) {

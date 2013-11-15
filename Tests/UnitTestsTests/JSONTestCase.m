@@ -33,7 +33,6 @@
 - (void)testSingleObject {
     //Create object to be serialized
     SingleObject *testSingleObject = [SingleObject newSingleObject];
-    testSingleObject.testString = nil;
     
     //Serialize object, then deserialize it back to an object
     SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromJSONData:[testSingleObject JSONData]];
@@ -86,6 +85,7 @@
 - (void)testMissingProperties {
     // Create serializaed/deserialized Objects
     SingleObject *testSingleObject = [[SingleObject alloc] init];
+    testSingleObject.testString = nil;
     SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromJSONData:[testSingleObject JSONData]];
     
     // Test
