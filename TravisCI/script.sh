@@ -1,4 +1,4 @@
 #!/bin/sh
 set -e
 
-xctool -project UnitTests.xcodeproj -scheme UnitTests -sdk iphonesimulator test
+xctool -project Tests/UnitTests.xcodeproj -scheme UnitTests -sdk iphonesimulator test
