@@ -125,5 +125,15 @@
     [self testInequalityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testMalformedSerializedString" dataType:DataTypeXML];
 }
 
+-(void)testCustomInit{
+    //Create object to be serialized
+    SingleObject *testSingleObject = [SingleObject newSingleObject];
+    
+    //Serialize object, then deserialize it back to an object
+    SingleObject *deserializedObject = [[SingleObject alloc] initWithXMLData:[testSingleObject XMLData]];
+    
+    //Test all properties
+    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testSingleObject" dataType:DataTypeXML];
+}
 
 @end

@@ -40,6 +40,10 @@
 -(NSDictionary *)propertyDictionary;
 -(NSString *)nameOfClass;
 
+//Custom inits
+-(instancetype)initWithJSONData:(NSData *)data;
+-(instancetype)initWithXMLData:(NSData *)data;
+
 //jsondata -> Objects
 +(id)objectOfClass:(NSString *)object fromJSONData:(NSData *)jsonData;
 

@@ -123,6 +123,15 @@
     [self testInequalityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testMalformedSerializedString" dataType:DataTypeJSON];
 }
 
-
+-(void)testCustomInit{
+    //Create object to be serialized
+    SingleObject *testSingleObject = [SingleObject newSingleObject];
+    
+    //Serialize object, then deserialize it back to an object
+    SingleObject *deserializedObject = [[SingleObject alloc] initWithJSONData:[testSingleObject JSONData]];
+    
+    //Test all properties
+    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testSingleObject" dataType:DataTypeJSON];
+}
 
 @end

@@ -53,6 +53,16 @@ static const short _base64DecodingTable[256] = {
 
 @implementation NSObject (ObjectMap)
 
+#pragma mark - Init Methods
+
+-(instancetype)initWithJSONData:(NSData *)data{
+    return [NSObject objectOfClass:NSStringFromClass([self class]) fromJSON:[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil]];
+}
+
+-(instancetype)initWithXMLData:(NSData *)data{
+    return [NSObject objectOfClass:NSStringFromClass([self class]) fromXML:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
+}
+
 #pragma mark - XML to Object
 +(id)objectOfClass:(NSString *)object fromXML:(NSString *)xml {
     
