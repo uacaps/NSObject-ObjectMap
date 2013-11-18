@@ -3,6 +3,8 @@ NSObject+ObjectMap
 
 This is a drop-in category of NSObject that makes it easy to initialize custom objects from JSON or XML (SOAP included), and to serialize those objects back into JSON/XML. It only requires a little bit of set-up - and then you never have to fuss with creating your own serialization and initialization methods for each custom NSObject ever again.
 
+**Version:** 2.0
+
 ![ScreenShot](https://raw.github.com/uacaps/NSObject-ObjectMap/master/Screenshots/screen1-01.png)
 
 --------------------
@@ -122,17 +124,15 @@ At this point, you should have your custom NSObjects created and your JSON data 
 // Turn that JSON into an NSDictionary, then into your Person object
 // - jsonData is the NSData equivalent of the JSON snippet above.
 NSData *jsonData;
-NSError *error;
-NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
 
 // Now to create the Person object
-Person *newPerson = [NSObject objectOfClass:@"Person" fromJSON:jsonDict];
+Person *newPerson = [[Person alloc] initWithJSONData:jsonData];
 ```
 
 Using an array almost the exact same, but instead of an NSDictionary returning from the JSON deserialization, you've received an NSArray. If this NSArray contains a bunch of Person objects, use the following method to create this array:
 
 ```objc
-NSArray *peopleArray = [NSObject arrayFromJSON:jsonArray ofObjects:@"Person"];
+NSArray *peopleArray = [NSObject arrayOfType:[Person class] fromJSONData:jsonData];
 ```
 
 **Serializing Object to JSON**
@@ -208,8 +208,11 @@ NSString *xmlString = @"<MyObject>
 	<Championships>15</Championships>
 <MyObject>";
 
+// XML Data
+NSData *xmlData = [xmlString dataUsingEncoding:NSUTF8StringEncoding];
+
 // Create MyObject
-MyObject *customObject = [NSObject objectOfClass:@"MyObject" fromXML:xmlString];
+MyObject *customObject = [[MyObject alloc] initWithXMLData:xmlData];
 ```
 
 **Note on SOAP:** At this point, only simple, tag-driven SOAP is supported. Support for more complex namespace and attribute handling will come if the need arises. Feel free to make a pull request if you find a great way to handle more complex SOAP.
