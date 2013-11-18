@@ -54,20 +54,44 @@ static const short _base64DecodingTable[256] = {
 @implementation NSObject (ObjectMap)
 
 #pragma mark - Init Methods
-
--(instancetype)initWithJSONData:(NSData *)data{
-    return [NSObject objectOfClass:NSStringFromClass([self class]) fromJSON:[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil]];
+- (instancetype)initWithJSONData:(NSData *)data{
+    return [self initWithObjectData:data type:CAPSDataTypeJSON];
 }
 
--(instancetype)initWithXMLData:(NSData *)data{
-    return [NSObject objectOfClass:NSStringFromClass([self class]) fromXML:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
+- (instancetype)initWithXMLData:(NSData *)data{
+    return [self initWithObjectData:data type:CAPSDataTypeXML];
 }
+
+- (instancetype)initWithSOAPData:(NSData *)data{
+    return [self initWithObjectData:data type:CAPSDataTypeSOAP];
+}
+
+- (instancetype)initWithObjectData:(NSData *)data type:(CAPSDataType)type {
+    switch (type) {
+        case CAPSDataTypeJSON:
+            return [NSObject objectOfClass:[self class] fromJSONData:data];
+            break;
+        case CAPSDataTypeXML:
+            return [NSObject objectOfClass:[self class] fromXML:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
+            break;
+        case CAPSDataTypeSOAP:
+            return [NSObject objectOfClass:[self class] fromXML:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
+            break;
+        default:
+            return nil;
+            break;
+    }
+}
+
++ (NSArray *)arrayOfType:(Class)objectClass FromJSONData:(NSData *)data {
+    return [NSObject objectOfClass:objectClass fromJSONData:data];
+}
+
 
 #pragma mark - XML to Object
-+(id)objectOfClass:(NSString *)object fromXML:(NSString *)xml {
-    
++(id)objectOfClass:(Class)objectClass fromXML:(NSString *)xml {
     //Create new instance of desired object
-    id newObject = [[NSClassFromString(object) alloc] init];
+    id newObject = [[objectClass alloc] init];
     
     //Get all properties for that new object
     NSDictionary *mapDictionary = [newObject propertyDictionary];
@@ -154,7 +178,7 @@ static const short _base64DecodingTable[256] = {
                 [objArray addObject:[NSNumber numberWithDouble:((NSString *)newValue).doubleValue]];
             }
             else {
-                id object = [NSObject objectOfClass:filteredArrayObj fromXML:newValue];
+                id object = [NSObject objectOfClass:NSClassFromString(filteredArrayObj) fromXML:newValue];
                 if (object){
                     [objArray addObject:object];
                 }
@@ -213,12 +237,12 @@ static const short _base64DecodingTable[256] = {
     //If it has the same name as the object type
     else if ([self isKindOfClass:[NSClassFromString(node) class]]) {
         [xmlScanner scanUpToString:[NSString stringWithFormat:@"</%@", node] intoString:&value];
-        return [NSObject objectOfClass:node fromXML:value];
+        return [NSObject objectOfClass:NSClassFromString(node) fromXML:value];
     }
     //If the type name is different from the object name
     else {
         [xmlScanner scanUpToString:[NSString stringWithFormat:@"</%@", node] intoString:&value];
-        return [NSObject objectOfClass:NSStringFromClass([self class]) fromXML:value];
+        return [NSObject objectOfClass:[self class] fromXML:value];
     }
     
     return nil;
@@ -226,21 +250,21 @@ static const short _base64DecodingTable[256] = {
 
 
 #pragma mark - JSONData to Object
-+ (id)objectOfClass:(NSString *)object fromJSONData:(NSData *)jsonData {
++ (id)objectOfClass:(Class)objectClass fromJSONData:(NSData *)jsonData {
     NSError *error;
     id newObject = nil;
     id jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
     
     // If jsonObject is a top-level object already
     if([jsonObject isKindOfClass:[NSDictionary class]]) {
-        newObject = [NSObject objectOfClass:object fromJSON:jsonObject];
+        newObject = [NSObject objectOfClass:objectClass fromJSON:jsonObject];
     }
     // Else it is an array of objects
     else if([jsonObject isKindOfClass:[NSArray class]]){
         int length = [((NSArray*) jsonObject) count];
         NSMutableArray *resultArray = [NSMutableArray arrayWithCapacity:length];
         for(int i = 0; i < length; i++){
-            [resultArray addObject:[NSObject objectOfClass:object fromJSON:[(NSArray*)jsonObject objectAtIndex:i]]];
+            [resultArray addObject:[NSObject objectOfClass:objectClass fromJSON:[(NSArray*)jsonObject objectAtIndex:i]]];
         }
         newObject = [[NSArray alloc] initWithArray:resultArray];
     }
@@ -250,12 +274,12 @@ static const short _base64DecodingTable[256] = {
 
 
 #pragma mark - Dictionary to Object
-+(id)objectOfClass:(NSString *)object fromJSON:(NSDictionary *)dict {
-    if([object isEqualToString:@"NSDictionary"]){
++(id)objectOfClass:(Class)objectClass fromJSON:(NSDictionary *)dict {
+    if([NSStringFromClass(objectClass) isEqualToString:@"NSDictionary"]){
         return dict;
     }
     
-    id newObject = [[NSClassFromString(object) alloc] init];
+    id newObject = [[objectClass alloc] init];
     NSDictionary *mapDictionary = [newObject propertyDictionary];
     
     for (NSString *key in [dict allKeys]) {
@@ -275,7 +299,7 @@ static const short _base64DecodingTable[256] = {
         if ([[dict objectForKey:key] isKindOfClass:[NSDictionary class]]) {
             //id newObjectProperty = [newObject valueForKey:propertyName];
             NSString *propertyType = [newObject classOfPropertyNamed:propertyName];
-            id nestedObj = [NSObject objectOfClass:propertyType fromJSON:[dict objectForKey:key]];
+            id nestedObj = [NSObject objectOfClass:NSClassFromString(propertyType) fromJSON:[dict objectForKey:key]];
             [newObject setValue:nestedObj forKey:propertyName];
         }
         
@@ -380,8 +404,7 @@ static const char * getPropertyType(objc_property_t property) {
                 // If it's a Dictionary, create an object, and send to [self objectFromJSON]
                 else if ([[nestedArray[xx] objectForKey:newKey] isKindOfClass:[NSDictionary class]]) {
                     NSString *type = [nestedObj classOfPropertyNamed:newKey];
-                    
-                    id nestedDictObj = [NSObject objectOfClass:type fromJSON:[nestedArray[xx] objectForKey:newKey]];
+                    id nestedDictObj = [NSObject objectOfClass:NSClassFromString(type) fromJSON:[nestedArray[xx] objectForKey:newKey]];
                     [nestedObj setValue:nestedDictObj forKey:newKey];
                 }
                 // Else, it is an object

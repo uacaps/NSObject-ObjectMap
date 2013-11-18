@@ -32,17 +32,13 @@
 - (void)testSingleObject
 {
     //Create object to be serialized
-    SingleObject *testSingleObject = [[SingleObject alloc] init];
-    testSingleObject.testString = @"This is a test";
-    testSingleObject.testBoolean = @YES;
-    testSingleObject.testNumber = @123;
-    testSingleObject.testDate = [NSDate date];
+    SingleObject *testSingleObject = [SingleObject newSingleObject];
     
     //Serialize object, then deserialize it back to an object
-    SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromJSONData:[testSingleObject JSONData]];
+    SingleObject *deserializedObject = [[SingleObject alloc] initWithXMLData:[testSingleObject XMLData]];
     
     //Test all properties
-    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testSingleObject" dataType:DataTypeJSON];
+    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testSingleObject" dataType:CAPSDataTypeSOAP];
 }
 
 

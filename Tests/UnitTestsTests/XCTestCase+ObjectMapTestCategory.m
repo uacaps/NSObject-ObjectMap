@@ -12,20 +12,20 @@
 
 
 #pragma mark - TEST: Equality
-- (void)testEqualityOfObject:(id)testObj withDeserializedVersion:(id)deserializedObj forMethodNamed:(NSString *)methodName dataType:(DataType)type {
+- (void)testEqualityOfObject:(id)testObj withDeserializedVersion:(id)deserializedObj forMethodNamed:(NSString *)methodName dataType:(CAPSDataType)type {
     XCTAssert([self testObject:testObj isEqualToDeserializedObject:deserializedObj forType:type], @"Failed %@ equality of serialization/deserialization test for method named: %@.", [self stringForType:type], methodName);
 }
 
 
 #pragma mark - TEST: Inequality
-- (void)testInequalityOfObject:(id)testObj withDeserializedVersion:(id)deserializedObj forMethodNamed:(NSString *)methodName dataType:(DataType)type {
+- (void)testInequalityOfObject:(id)testObj withDeserializedVersion:(id)deserializedObj forMethodNamed:(NSString *)methodName dataType:(CAPSDataType)type {
     XCTAssertFalse([self testObject:testObj isEqualToDeserializedObject:deserializedObj forType:type], @"Failed %@ inequality of serialization/deserialization test for method named: %@.", [self stringForType:type], methodName);
 }
 
 
 
 #pragma mark - Are Objects Equal Method
-- (BOOL)testObject:(id)testObj isEqualToDeserializedObject:(id)deserializedObj forType:(DataType)type {
+- (BOOL)testObject:(id)testObj isEqualToDeserializedObject:(id)deserializedObj forType:(CAPSDataType)type {
     // Set Up
     BOOL isEqual;
     
@@ -67,7 +67,7 @@
             // Finally set isEqual
             isEqual = isEqualBlock;
         }
-        else if ([testPropertyInstance isKindOfClass:[NSDictionary class]] && (type == DataTypeXML || type == DataTypeSOAP)) {
+        else if ([testPropertyInstance isKindOfClass:[NSDictionary class]] && (type == CAPSDataTypeXML || type == CAPSDataTypeSOAP)) {
             // XML/SOAP doesn't have the concept of Dictionary - everything is an object, an array, or a type of some sort
             isEqual = YES;
             continue;
@@ -89,15 +89,15 @@
 
 
 #pragma mark - String for Type
-- (NSString *)stringForType:(DataType)type {
+- (NSString *)stringForType:(CAPSDataType)type {
     switch (type) {
-        case DataTypeXML:
+        case CAPSDataTypeXML:
             return @"XML";
             break;
-        case DataTypeJSON:
+        case CAPSDataTypeJSON:
             return @"JSON";
             break;
-        case DataTypeSOAP:
+        case CAPSDataTypeSOAP:
             return @"SOAP";
             break;
         default:
