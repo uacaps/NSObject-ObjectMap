@@ -3,7 +3,7 @@ NSObject+ObjectMap
 
 This is a drop-in category of NSObject that makes it easy to initialize custom objects from JSON or XML (SOAP included), and to serialize those objects back into JSON/XML. It only requires a little bit of set-up - and then you never have to fuss with creating your own serialization and initialization methods for each custom NSObject ever again.
 
-**Version:** 2.0
+**Version:** 2.0 - [![Build Status](https://travis-ci.org/uacaps/NSObject-ObjectMap.png?branch=master)](https://travis-ci.org/uacaps/NSObject-ObjectMap)
 
 ![ScreenShot](https://raw.github.com/uacaps/NSObject-ObjectMap/master/Screenshots/screen1-01.png)
 
