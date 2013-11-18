@@ -233,11 +233,16 @@ To see NSObject+ObjectMap in action, check out one of our many sample Xcode proj
 ![screenshot](https://raw.github.com/uacaps/NSObject-ObjectMap/master/Screenshots/google_screen.png)   ![screenshot](https://raw.github.com/uacaps/NSObject-ObjectMap/master/Screenshots/weather_screen.png)
 
 --------------------
+## Unit Tests ##
+
+We have an entire new Unit Testing suite to make sure ObjectMap is actually working after any changes to it. You can run this by opening the <code>UnitTests.xcodeproj</code> under the Tests folder. Just hit <code>Cmd - U</code> on the keyboard to run them and watch to see if it says "Tests Succeeded" on screen. Sometimes it will say "Tests Failed", but if you look in each of the TestCase classes, you will see green or red diamonds by each method. A green diamond means it passed, and a red diamond means it failed.
+
+--------------------
 ## Cocoapods ##
 
 Cocoapods is a dependency manager for Objective-C code, and is wonderful for setting up your projects from the start and maintaing them through different versions. When NSObject+ObjectMap.{h,m} updates, you can always get the newest version by changing your podspec file to include the following line to make sure your project stays up to date:
 
-<code>pod 'NSObject-ObjectMap', '~> 1.0.2'</code>
+<code>pod 'NSObject-ObjectMap', '~> 2.0'</code>
 
 --------------------
 ## License ##
