@@ -36,7 +36,7 @@
     SingleObject *deserializedObject = [[SingleObject alloc] initWithJSONData:[testSingleObject JSONData]];
     
     //Test all properties
-    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testSingleObject" dataType:CAPSDataTypeJSON];
+    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeJSON];
 }
 
 
@@ -46,7 +46,7 @@
     NestedObject *deserializedObject = [[NestedObject alloc] initWithJSONData:[testObject JSONData]];
     
     // Test Nested Object
-    [self testEqualityOfObject:testObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNestedObject" dataType:CAPSDataTypeJSON];
+    [self testEqualityOfObject:testObject withDeserializedVersion:deserializedObject forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeJSON];
 }
 
 
@@ -60,8 +60,8 @@
     NSArray *deserializedNestedObjectArray = [NSObject arrayOfType:[NestedObject class] FromJSONData:[arrayOfNestedObjects JSONData]];
     
     // Test Arrays
-    [self testEqualityOfObject:arrayOfSingleObjects withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:@"testTopLevelArray-Single" dataType:CAPSDataTypeJSON];
-    [self testEqualityOfObject:arrayOfNestedObjects withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:@"testTopLevelArray-Nested" dataType:CAPSDataTypeJSON];
+    [self testEqualityOfObject:arrayOfSingleObjects withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeJSON];
+    [self testEqualityOfObject:arrayOfNestedObjects withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeJSON];
 }
 
 
@@ -75,8 +75,8 @@
     ObjectWithNestedObjectsArray *deserializedNestedObjectArray = [[ObjectWithNestedObjectsArray alloc] initWithJSONData:[testNestedObjectArray JSONData]];
     
     // Test Arrays
-    [self testEqualityOfObject:testSingleObjectArray withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Single" dataType:CAPSDataTypeJSON];
-    [self testEqualityOfObject:testNestedObjectArray withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Nested" dataType:CAPSDataTypeJSON];
+    [self testEqualityOfObject:testSingleObjectArray withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeJSON];
+    [self testEqualityOfObject:testNestedObjectArray withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeJSON];
 }
 
 
@@ -87,7 +87,7 @@
     SingleObject *deserializedObject = [[SingleObject alloc] initWithJSONData:[testSingleObject JSONData]];
     
     // Test
-    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testMissingProperties" dataType:CAPSDataTypeJSON];
+    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeJSON];
 }
 
 
@@ -97,7 +97,7 @@
     SingleObject *deserializedObject = [[SingleObject alloc] initWithJSONData:[[testSingleObject jsonStringWithExtraParameters] dataUsingEncoding:NSUTF8StringEncoding]];
     
     // Test
-    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testExtraProperties" dataType:CAPSDataTypeJSON];
+    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeJSON];
 }
 
 - (void)testExtraPropertiesInNestedArray {
@@ -108,7 +108,7 @@
     NSArray *deserializedExtraPropertiesArray = [NSObject arrayOfType:[SingleObject class] FromJSONData:[jsonArray dataUsingEncoding:NSUTF8StringEncoding]];
     
     // Test
-    [self testEqualityOfObject:extraPropertiesArray withDeserializedVersion:deserializedExtraPropertiesArray forMethodNamed:@"testExtraPropertiesInNestedArray" dataType:CAPSDataTypeJSON];
+    [self testEqualityOfObject:extraPropertiesArray withDeserializedVersion:deserializedExtraPropertiesArray forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeJSON];
 }
 
 - (void)testMalformedSerializedString {
@@ -118,7 +118,7 @@
     SingleObject *deserializedObject = [[SingleObject alloc] initWithJSONData:[[[testSingleObject JSONString] stringByAppendingString:@"{"] dataUsingEncoding:NSUTF8StringEncoding]];
     
     // Test
-    [self testInequalityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testMalformedSerializedString" dataType:CAPSDataTypeJSON];
+    [self testInequalityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeJSON];
 }
 
 -(void)testCustomInit{
@@ -129,7 +129,7 @@
     SingleObject *deserializedObject = [[SingleObject alloc] initWithJSONData:[testSingleObject JSONData]];
     
     //Test all properties
-    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testSingleObject" dataType:CAPSDataTypeJSON];
+    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeJSON];
 }
 
 @end

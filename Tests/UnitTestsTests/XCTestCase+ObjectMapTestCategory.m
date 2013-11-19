@@ -12,14 +12,14 @@
 
 
 #pragma mark - TEST: Equality
-- (void)testEqualityOfObject:(id)testObj withDeserializedVersion:(id)deserializedObj forMethodNamed:(NSString *)methodName dataType:(CAPSDataType)type {
-    XCTAssert([self testObject:testObj isEqualToDeserializedObject:deserializedObj forType:type], @"Failed %@ equality of serialization/deserialization test for method named: %@.", [self stringForType:type], methodName);
+- (void)testEqualityOfObject:(id)testObj withDeserializedVersion:(id)deserializedObj forMethodNamed:(const char*)methodName dataType:(CAPSDataType)type {
+    XCTAssert([self testObject:testObj isEqualToDeserializedObject:deserializedObj forType:type], @"Failed %@ equality of serialization/deserialization test for method named: %s.", [self stringForType:type], methodName);
 }
 
 
 #pragma mark - TEST: Inequality
-- (void)testInequalityOfObject:(id)testObj withDeserializedVersion:(id)deserializedObj forMethodNamed:(NSString *)methodName dataType:(CAPSDataType)type {
-    XCTAssertFalse([self testObject:testObj isEqualToDeserializedObject:deserializedObj forType:type], @"Failed %@ inequality of serialization/deserialization test for method named: %@.", [self stringForType:type], methodName);
+- (void)testInequalityOfObject:(id)testObj withDeserializedVersion:(id)deserializedObj forMethodNamed:(const char*)methodName dataType:(CAPSDataType)type {
+    XCTAssertFalse([self testObject:testObj isEqualToDeserializedObject:deserializedObj forType:type], @"Failed %@ inequality of serialization/deserialization test for method named: %s.", [self stringForType:type], methodName);
 }
 
 

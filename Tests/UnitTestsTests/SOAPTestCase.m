@@ -38,7 +38,7 @@
     SingleObject *deserializedObject = [[SingleObject alloc] initWithXMLData:[testSingleObject XMLData]];
     
     //Test all properties
-    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testSingleObject" dataType:CAPSDataTypeSOAP];
+    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeSOAP];
 }
 
 

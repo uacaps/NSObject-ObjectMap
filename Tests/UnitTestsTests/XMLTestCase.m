@@ -38,7 +38,7 @@
     SingleObject *deserializedObject = [[SingleObject alloc] initWithXMLData:[testSingleObject XMLData]];
     
     //Test all properties
-    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testSingleObject" dataType:CAPSDataTypeXML];
+    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeXML];
 }
 
 -(void)testNestedObject{
@@ -49,7 +49,7 @@
     NestedObject *deserializedObject = [[NestedObject alloc] initWithXMLData:[testObject XMLData]];
     
     //Test all properties recursively
-    [self testEqualityOfObject:testObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNestedObject" dataType:CAPSDataTypeXML];
+    [self testEqualityOfObject:testObject withDeserializedVersion:deserializedObject forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeXML];
 }
 
 -(void)testObjectWithArrayOfObjects{
@@ -62,8 +62,8 @@
     ObjectWithNestedObjectsArray *deserializedNestedObjectArray = [[ObjectWithNestedObjectsArray alloc] initWithXMLData:[testNestedObjectArray XMLData]];
     
     // Test Arrays
-    [self testEqualityOfObject:testSingleObjectArray withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Single" dataType:CAPSDataTypeXML];
-    [self testEqualityOfObject:testNestedObjectArray withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Nested" dataType:CAPSDataTypeXML];
+    [self testEqualityOfObject:testSingleObjectArray withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeXML];
+    [self testEqualityOfObject:testNestedObjectArray withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeXML];
 }
 
 
@@ -74,7 +74,7 @@
     SingleObject *deserializedObject = [[SingleObject alloc] initWithXMLData:[string dataUsingEncoding:NSUTF8StringEncoding]];
     
     // Test
-    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNilProperties" dataType:CAPSDataTypeXML];
+    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeXML];
 }
 
 -(void)testClosingTagNilObject{
@@ -89,7 +89,7 @@
     SingleObject *deserializedObject = [[SingleObject alloc] initWithXMLData:[closingTagNilObjectString dataUsingEncoding:NSUTF8StringEncoding]];
     
     // Test
-    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testNilProperties" dataType:CAPSDataTypeXML];
+    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeXML];
 }
 
 - (void)testTopLevelArray {
@@ -105,8 +105,8 @@
     ObjectWithNestedObjectsArray *deserializedNestedObjectArray = [[ObjectWithNestedObjectsArray alloc] initWithXMLData:[testNestedObjectArray XMLData]];
     
     // Test Arrays
-    [self testEqualityOfObject:testSingleObjectArray withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Single" dataType:CAPSDataTypeXML];
-    [self testEqualityOfObject:testNestedObjectArray withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:@"testObjectWithArrayOfObjects-Nested" dataType:CAPSDataTypeXML];
+    [self testEqualityOfObject:testSingleObjectArray withDeserializedVersion:deserializedSingleObjectArray forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeXML];
+    [self testEqualityOfObject:testNestedObjectArray withDeserializedVersion:deserializedNestedObjectArray forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeXML];
 }
 
 -(void)testExtraProperties{
@@ -122,7 +122,7 @@
     //SingleObject *deserializedObject = [NSObject objectOfClass:@"SingleObject" fromXML:[testSingleObject XMLString]];
     
     // Test
-    [self testInequalityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testMalformedSerializedString" dataType:CAPSDataTypeXML];
+    [self testInequalityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeXML];
 }
 
 -(void)testCustomInit{
@@ -133,7 +133,7 @@
     SingleObject *deserializedObject = [[SingleObject alloc] initWithXMLData:[testSingleObject XMLData]];
     
     //Test all properties
-    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:@"testSingleObject" dataType:CAPSDataTypeXML];
+    [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeXML];
 }
 
 @end
