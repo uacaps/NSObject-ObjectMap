@@ -50,6 +50,78 @@ static const short _base64DecodingTable[256] = {
     -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2
 };
 
+@implementation NSScanner (XMLScan)
+
+-(BOOL)isAtEndOfTag:(NSString *)tag {
+    int scanPos = [self scanLocation];
+    NSString *trash = @"";
+    [self scanUpToString:[NSString stringWithFormat:@"</%@", tag] intoString:&trash];
+    if (trash.length > 0) {
+        [self setScanLocation:scanPos];
+        return NO;
+    }
+    else {
+        [self setScanLocation:scanPos];
+        return YES;
+    }
+}
+
+-(NSString *)nextXMLTag {
+    NSString *trash = @"", *tag = @"";
+    int scanPos = [self scanLocation];
+    [self scanUpToString:@"<" intoString:&trash];
+    [self scanString:@"<" intoString:&trash];
+    if ([[self nextCharacter] isEqualToString:@"/"]) {
+        [self scanUpToString:@">" intoString:&trash];
+        scanPos = [self scanLocation];
+        [self scanUpToString:@"<" intoString:&trash];
+        [self scanString:@"<" intoString:&trash];
+    }
+    [self scanUpToString:@">" intoString:&tag];
+    [self setScanLocation:scanPos];
+    tag = [tag stringByReplacingOccurrencesOfString:@"/" withString:@""];
+    return tag;
+}
+
+-(NSString *)nextCharacter {
+    int scanPos = [self scanLocation];
+    if (scanPos < [self string].length - 1) {
+        return [[self string] substringWithRange:NSMakeRange(scanPos+1, 1)];
+    }
+    return nil;
+}
+
+-(void)skipTag:(NSString *)tag {
+    NSString *trash = @"";
+    if ([tag rangeOfString:@" "].location != NSNotFound) {
+        [self scanUpToString:@">" intoString:&trash];
+        [self scanString:@">" intoString:&trash];
+    }
+    else if([tag rangeOfString:@"/"].location != NSNotFound){
+        [self scanUpToString:@"/" intoString:&trash];
+        [self scanString:@"/" intoString:&trash];
+    }
+    else
+    {
+        [self scanUpToString:[NSString stringWithFormat:@"</%@", tag] intoString:&trash];
+        [self scanString:[NSString stringWithFormat:@"</%@", tag] intoString:&trash];
+        [self scanUpToString:@">" intoString:&trash];
+        [self scanString:@">" intoString:&trash];
+    }
+}
+
+-(NSString *)getNextValue {
+    NSString *trash = @"", *value = @"";
+    [self scanUpToString:@">" intoString:&trash];
+    [self scanString:@">" intoString:&trash];
+    [self scanUpToString:@"<" intoString:&value];
+    return value;
+}
+
+@end
+
+//////////
+
 
 @implementation NSObject (ObjectMap)
 
@@ -72,10 +144,10 @@ static const short _base64DecodingTable[256] = {
             return [NSObject objectOfClass:[self class] fromJSONData:data];
             break;
         case CAPSDataTypeXML:
-            return [NSObject objectOfClass:[self class] fromXML:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
+            return [NSObject objectOfClass:NSStringFromClass([self class]) fromXML:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
             break;
         case CAPSDataTypeSOAP:
-            return [NSObject objectOfClass:[self class] fromXML:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
+            return [NSObject objectOfClass:NSStringFromClass([self class]) fromXML:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
             break;
         default:
             return nil;
@@ -89,163 +161,137 @@ static const short _base64DecodingTable[256] = {
 
 
 #pragma mark - XML to Object
-+(id)objectOfClass:(Class)objectClass fromXML:(NSString *)xml {
-    //Create new instance of desired object
-    id newObject = [[objectClass alloc] init];
++(id)objectOfClass:(NSString *)object fromXML:(NSString *)xml {
+    // Create your object
+    id newObject = [[NSClassFromString(object) alloc] init];
     
-    //Get all properties for that new object
-    NSDictionary *mapDictionary = [newObject propertyDictionary];
+    // Create NSScanner from XML
+    // - Use it to remove crap from beginning
+    NSScanner *scanner = [NSScanner scannerWithString:xml];
+    NSString *trash = @"";
+    [scanner scanUpToString:[NSString stringWithFormat:@"%@", object] intoString:&trash];
+    [scanner scanUpToString:@">" intoString:&trash];
+    [scanner scanString:@">" intoString:&trash];
     
-    //Iterate over all properties and read in their values recursively
-    for (NSString *key in [mapDictionary allKeys]) {
-        //Get class name
-        objc_property_t property = class_getProperty([newObject class], [key UTF8String]);
-        NSString *className = [[newObject typeFromProperty:property] substringWithRange:NSMakeRange(3, [newObject typeFromProperty:property].length - 4)];
-        
-        //If the key is a primitive or for some reason there was a problem getting the class name, go ahead and skip this property, else get it's node value
-        if (className) {
-            //Create blank object to be filled by type
-            id objForKey;
-            
-            // Check Types
-            if ([className isEqualToString:@"NSString"]) {
-                objForKey = [[NSString alloc] init];
-            }
-            else if ([className isEqualToString:@"NSDate"]) {
-                objForKey = [NSDate date];
-            }
-            else if ([className isEqualToString:@"NSNumber"]) {
-                objForKey = [[NSNumber alloc] initWithFloat:0.00];
-            }
-            else if ([className isEqualToString:@"NSArray"]) {
-                objForKey = [[NSArray alloc] init];
-            }
-            else if ([className isEqualToString:@"NSData"]){
-                objForKey = [[NSData alloc] init];
-            }
-            else if ([className isEqualToString:@"NSDictionary"]) {
-                continue;
-            }
-            else {
-                objForKey = [[NSClassFromString(className) alloc] init];
-            }
-            
-            // Create
-            [newObject setValue:[objForKey getNodeValue:key fromXML:xml] forKey:key];
-        }
-    }
+    // Create your object from the XML using the scanner
+    newObject = [newObject newObjectFromXMLScanner:scanner];
     
+    // Return the object
     return newObject;
 }
 
--(id)getNodeValue:(NSString *)node fromXML:(NSString *)xml {
-    NSString *trash = @"";
-    NSString *value = nil;
-    NSScanner *xmlScanner = [NSScanner scannerWithString:xml];
-    [xmlScanner scanUpToString:[NSString stringWithFormat:@"<%@", node] intoString:&trash];
-    [xmlScanner scanUpToString:@">" intoString:&trash];
-    [xmlScanner scanString:@">" intoString:&trash];
-    
-    // Check property type
-    if ([self isKindOfClass:[NSArray class]]) {
-        // Set up a new scanner for xml substring
-        [xmlScanner scanUpToString:[NSString stringWithFormat:@"</%@", node] intoString:&value];
-        NSString *filteredArrayObj = @"";
-        NSScanner *checkTypeScanner = [NSScanner scannerWithString:value];
-        [checkTypeScanner scanString:@"<" intoString:&trash];
-        [checkTypeScanner scanUpToString:@">" intoString:&filteredArrayObj];
-        NSScanner *insideArrayScanner = [NSScanner scannerWithString:value];
-        NSString *newValue = @"";
-        NSMutableArray *objArray = [@[] mutableCopy];
+-(id)newObjectFromXMLScanner:(NSScanner *)scanner {
+    // Scan the object and create properties of the object
+    // until the scanner has reached the end tag
+    while (![scanner isAtEndOfTag:[self nameOfClass]]) {
+        NSDictionary *mapDictionary = [self propertyDictionary];
+        NSString *nextTag = [scanner nextXMLTag];
         
-        // Scan and create objects until you can't no mo'
-        while (![insideArrayScanner isAtEnd]) {
-            //Remove additional XML attributes from parsing
-            if ([filteredArrayObj rangeOfString:@" "].location != NSNotFound) {
-                filteredArrayObj = [filteredArrayObj substringToIndex:[filteredArrayObj rangeOfString:@" "].location];
+        // If the upcoming tag is a property of the object: create it.
+        // Else: Skip it.
+        if (mapDictionary[nextTag]) {
+            if ([nextTag rangeOfString:@" /"].location != NSNotFound) {
+                [scanner skipTag:nextTag];
+                continue;
             }
-            
-            [insideArrayScanner scanUpToString:[NSString stringWithFormat:@"<%@", filteredArrayObj] intoString:&trash];
-            [insideArrayScanner scanUpToString:@">" intoString:&trash];
-            [insideArrayScanner scanString:@">" intoString:&trash];
-            [insideArrayScanner scanUpToString:[NSString stringWithFormat:@"</%@", filteredArrayObj] intoString:&newValue];
-            
-            // Create Object
-            if ([filteredArrayObj isEqualToString:@"string"]) {
-                [objArray addObject:(NSString *)newValue];
-            }
-            else if ([filteredArrayObj isEqualToString:@"int"] || [filteredArrayObj isEqualToString:@"float"] || [filteredArrayObj isEqualToString:@"double"] || [filteredArrayObj isEqualToString:@"long"]){
-                [objArray addObject:[NSNumber numberWithDouble:((NSString *)newValue).doubleValue]];
-            }
-            else {
-                id object = [NSObject objectOfClass:NSClassFromString(filteredArrayObj) fromXML:newValue];
-                if (object){
-                    [objArray addObject:object];
-                }
-            }
-            
-            // Scan until nextNode
-            [insideArrayScanner scanString:[NSString stringWithFormat:@"</%@", filteredArrayObj] intoString:&trash];
-            [insideArrayScanner scanUpToString:@">" intoString:&trash];
-            [insideArrayScanner scanString:@">" intoString:&trash];
-        }
-        
-        // Return the array
-        return objArray;
-    }
-    
-    // Self is a number
-    else if ([self isKindOfClass:[NSNumber class]]) {
-        [xmlScanner scanUpToString:@"</" intoString:&value];
-        if ([value isEqualToString:@"true"]) {
-            return [NSNumber numberWithBool:YES];
-        }
-        else if ([value isEqualToString:@"false"]){
-            return [NSNumber numberWithBool:NO];
-        }
-        
-        if (value) {
-            return [NSNumber numberWithFloat:[value floatValue]];
+            [self setValue:[self nextXMLValueForTag:nextTag withScanner:scanner] forKey:nextTag];
         }
         else {
-            return nil;
+            [scanner skipTag:nextTag];
         }
     }
     
-    // Self is a string
-    else if ([self isKindOfClass:[NSString class]]) {
-        [xmlScanner scanUpToString:@"</" intoString:&value];
-        return value;
-    }
+    return self;
+}
+
+-(id)nextXMLValueForTag:(NSString *)tag withScanner:(NSScanner *)scanner {
+    // Get the name of the class to check type
+    objc_property_t property = class_getProperty([self class], [tag UTF8String]);
+    NSString *className = [[self typeFromProperty:property] substringWithRange:NSMakeRange(3, [self typeFromProperty:property].length - 4)];
     
-    // Self is a date
-    else if ([self isKindOfClass:[NSDate class]]) {
-        [xmlScanner scanUpToString:@"</" intoString:&value];
+    // Get the value from the Scanner
+    NSString *value = [scanner getNextValue];
+    
+    // Create your object
+    id objForKey;
+    
+    // Check Types / Assign *value accordingly
+    if ([className isEqualToString:@"NSString"]) {
+        objForKey = value;
+    }
+    else if ([className isEqualToString:@"NSDate"]) {
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:OMDateFormat];
         [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:OMTimeZone]];
-        return [formatter dateFromString:value];
+        objForKey = [formatter dateFromString:value];
     }
-    
-    // Self is Data
-    else if ([self isKindOfClass:[NSData class]]){
-        [xmlScanner scanUpToString:@"</" intoString:&value];
-        return [NSObject base64DataFromString:value];
+    else if ([className isEqualToString:@"NSNumber"]) {
+        if ([value isEqualToString:@"true"]) {
+            objForKey = @(YES);
+        }
+        else if ([value isEqualToString:@"false"]){
+            objForKey = @(NO);
+        }
+        else {
+            objForKey = @([value floatValue]);
+        }
     }
-    
-    // Custom NSObject
-    //If it has the same name as the object type
-    else if ([self isKindOfClass:[NSClassFromString(node) class]]) {
-        [xmlScanner scanUpToString:[NSString stringWithFormat:@"</%@", node] intoString:&value];
-        return [NSObject objectOfClass:NSClassFromString(node) fromXML:value];
+    else if ([className isEqualToString:@"NSArray"]) {
+        NSMutableArray *oArray = [@[] mutableCopy];
+        NSString *nextTag = [scanner nextXMLTag];
+        while (![scanner isAtEndOfTag:tag]) {
+            [oArray addObject:[self nextArrayValueForTag:nextTag fromScanner:scanner]];
+        }
+        objForKey = oArray;
     }
-    //If the type name is different from the object name
+    else if ([className isEqualToString:@"NSData"]){
+        objForKey = [NSObject base64DataFromString:value];
+    }
     else {
-        [xmlScanner scanUpToString:[NSString stringWithFormat:@"</%@", node] intoString:&value];
-        return [NSObject objectOfClass:[self class] fromXML:value];
+        objForKey = [[NSClassFromString(className) alloc] init];
+        objForKey = [objForKey newObjectFromXMLScanner:scanner];
     }
     
-    return nil;
+    
+    // Scan until start of next Tag
+    [scanner skipTag:tag];
+    
+    // Return the object
+    return objForKey;
+}
+
+-(id)nextArrayValueForTag:(NSString *)tag fromScanner:(NSScanner *)scanner {
+    // Get the value from the Scanner
+    NSString *value = [scanner getNextValue];
+    
+    // Create the object
+    id returnObj;
+    
+    // Check types / Assign *value to object
+    if ([tag isEqualToString:@"string"]) {
+        returnObj = (NSString *)value;
+    }
+    else if ([tag isEqualToString:@"boolean"]) {
+        if ([value isEqualToString:@"true"]) {
+            returnObj = @(YES);
+        }
+        else {
+            returnObj = @(NO);
+        }
+    }
+    else if ([tag isEqualToString:@"decimal"] || [tag isEqualToString:@"float"] || [tag isEqualToString:@"double"]) {
+        returnObj = @([value floatValue]);
+    }
+    else {
+        returnObj = [[NSClassFromString(tag) alloc] init];
+        returnObj = [returnObj newObjectFromXMLScanner:scanner];
+    }
+    
+    // Scan until start of next Tag
+    [scanner skipTag:tag];
+    
+    // Return the object
+    return returnObj;
 }
 
 
