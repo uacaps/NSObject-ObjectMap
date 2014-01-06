@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F0AF90B187B0E1300B33E49 /* NSObject+ObjectMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0AF90A187B0E1300B33E49 /* NSObject+ObjectMap.m */; };
 		40114E8F17B41A09000B80A8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40114E8E17B41A09000B80A8 /* UIKit.framework */; };
 		40114E9117B41A09000B80A8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40114E9017B41A09000B80A8 /* Foundation.framework */; };
 		40114E9317B41A09000B80A8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40114E9217B41A09000B80A8 /* CoreGraphics.framework */; };
@@ -19,11 +20,12 @@
 		40114EA817B41A09000B80A8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40114EA717B41A09000B80A8 /* ViewController.m */; };
 		40114EAB17B41A09000B80A8 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40114EA917B41A09000B80A8 /* ViewController_iPhone.xib */; };
 		40114EAE17B41A09000B80A8 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40114EAC17B41A09000B80A8 /* ViewController_iPad.xib */; };
-		40114EB617B41A1F000B80A8 /* NSObject+ObjectMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 40114EB517B41A1F000B80A8 /* NSObject+ObjectMap.m */; };
 		40114EB917B41A6B000B80A8 /* TestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 40114EB817B41A6B000B80A8 /* TestObject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F0AF909187B0E1300B33E49 /* NSObject+ObjectMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+ObjectMap.h"; path = "../../../NSObject-ObjectMap/NSObject+ObjectMap.h"; sourceTree = "<group>"; };
+		1F0AF90A187B0E1300B33E49 /* NSObject+ObjectMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+ObjectMap.m"; path = "../../../NSObject-ObjectMap/NSObject+ObjectMap.m"; sourceTree = "<group>"; };
 		40114E8B17B41A09000B80A8 /* MapTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40114E8E17B41A09000B80A8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		40114E9017B41A09000B80A8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -41,8 +43,6 @@
 		40114EA717B41A09000B80A8 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		40114EAA17B41A09000B80A8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
 		40114EAD17B41A09000B80A8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
-		40114EB417B41A1F000B80A8 /* NSObject+ObjectMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ObjectMap.h"; sourceTree = "<group>"; };
-		40114EB517B41A1F000B80A8 /* NSObject+ObjectMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ObjectMap.m"; sourceTree = "<group>"; };
 		40114EB717B41A6B000B80A8 /* TestObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestObject.h; sourceTree = "<group>"; };
 		40114EB817B41A6B000B80A8 /* TestObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestObject.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -91,10 +91,10 @@
 		40114E9417B41A09000B80A8 /* MapTest */ = {
 			isa = PBXGroup;
 			children = (
+				1F0AF909187B0E1300B33E49 /* NSObject+ObjectMap.h */,
+				1F0AF90A187B0E1300B33E49 /* NSObject+ObjectMap.m */,
 				40114EB717B41A6B000B80A8 /* TestObject.h */,
 				40114EB817B41A6B000B80A8 /* TestObject.m */,
-				40114EB417B41A1F000B80A8 /* NSObject+ObjectMap.h */,
-				40114EB517B41A1F000B80A8 /* NSObject+ObjectMap.m */,
 				40114E9D17B41A09000B80A8 /* AppDelegate.h */,
 				40114E9E17B41A09000B80A8 /* AppDelegate.m */,
 				40114EA617B41A09000B80A8 /* ViewController.h */,
@@ -187,10 +187,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F0AF90B187B0E1300B33E49 /* NSObject+ObjectMap.m in Sources */,
 				40114E9B17B41A09000B80A8 /* main.m in Sources */,
 				40114E9F17B41A09000B80A8 /* AppDelegate.m in Sources */,
 				40114EA817B41A09000B80A8 /* ViewController.m in Sources */,
-				40114EB617B41A1F000B80A8 /* NSObject+ObjectMap.m in Sources */,
 				40114EB917B41A6B000B80A8 /* TestObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

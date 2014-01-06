@@ -25,7 +25,7 @@
     
     //Parse back object
     TestObject *object = [[TestObject alloc] init];
-    object = [NSObject objectOfClass:@"TestObject" fromXML:xmlString];
+    object = [[TestObject alloc] initWithXMLData:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
     
     //Print out results
     NSLog(@"Test String: %@", object.TestString);
