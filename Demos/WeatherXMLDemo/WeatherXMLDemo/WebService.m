@@ -27,8 +27,7 @@
     __weak WeatherOperation *weakOp = operation;
     [operation setRequestWithSearch:searchTerm completion:^{
         if (weakOp.responseData) {
-            NSString *xmlString = [[NSString alloc] initWithData:weakOp.responseData encoding:NSUTF8StringEncoding];
-            data *weatherData = [NSObject objectOfClass:@"data" fromXML:xmlString];
+            data *weatherData = [[data alloc] initWithXMLData:weakOp.responseData];
             if (weatherData) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     sBlock(weatherData);

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B6F7E06D18C61FCE00EBD65F /* NSObject+ObjectMap.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F7E06C18C61FCE00EBD65F /* NSObject+ObjectMap.m */; };
 		BBCCAC3617AA97A6008EA33B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBCCAC3517AA97A6008EA33B /* UIKit.framework */; };
 		BBCCAC3817AA97A6008EA33B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBCCAC3717AA97A6008EA33B /* Foundation.framework */; };
 		BBCCAC3A17AA97A6008EA33B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBCCAC3917AA97A6008EA33B /* CoreGraphics.framework */; };
@@ -18,7 +19,6 @@
 		BBCCAC4C17AA97A6008EA33B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBCCAC4B17AA97A6008EA33B /* Default-568h@2x.png */; };
 		BBCCAC4F17AA97A6008EA33B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCCAC4E17AA97A6008EA33B /* ViewController.m */; };
 		BBCCAC5217AA97A6008EA33B /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBCCAC5017AA97A6008EA33B /* ViewController.xib */; };
-		BBCCAC5B17AA97E1008EA33B /* NSObject+ObjectMap.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCCAC5A17AA97E1008EA33B /* NSObject+ObjectMap.m */; };
 		BBCCAC6017AA98E3008EA33B /* WebService.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCCAC5F17AA98E3008EA33B /* WebService.m */; };
 		BBCCAC6317AA9FDF008EA33B /* current_condition.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCCAC6217AA9FDF008EA33B /* current_condition.m */; };
 		BBCCAC6617AAA0D4008EA33B /* request.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCCAC6517AAA0D4008EA33B /* request.m */; };
@@ -28,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B6F7E06B18C61FCE00EBD65F /* NSObject+ObjectMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+ObjectMap.h"; path = "../../../NSObject-ObjectMap/NSObject+ObjectMap.h"; sourceTree = "<group>"; };
+		B6F7E06C18C61FCE00EBD65F /* NSObject+ObjectMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+ObjectMap.m"; path = "../../../NSObject-ObjectMap/NSObject+ObjectMap.m"; sourceTree = "<group>"; };
 		BBCCAC3217AA97A6008EA33B /* WeatherXMLDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherXMLDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBCCAC3517AA97A6008EA33B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BBCCAC3717AA97A6008EA33B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -44,8 +46,6 @@
 		BBCCAC4D17AA97A6008EA33B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		BBCCAC4E17AA97A6008EA33B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		BBCCAC5117AA97A6008EA33B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
-		BBCCAC5917AA97E1008EA33B /* NSObject+ObjectMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ObjectMap.h"; sourceTree = "<group>"; };
-		BBCCAC5A17AA97E1008EA33B /* NSObject+ObjectMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ObjectMap.m"; sourceTree = "<group>"; };
 		BBCCAC5E17AA98E3008EA33B /* WebService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebService.h; sourceTree = "<group>"; };
 		BBCCAC5F17AA98E3008EA33B /* WebService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebService.m; sourceTree = "<group>"; };
 		BBCCAC6117AA9FDF008EA33B /* current_condition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = current_condition.h; sourceTree = "<group>"; };
@@ -134,8 +134,8 @@
 		BBCCAC5817AA97B6008EA33B /* NSObject+ObjectMap */ = {
 			isa = PBXGroup;
 			children = (
-				BBCCAC5917AA97E1008EA33B /* NSObject+ObjectMap.h */,
-				BBCCAC5A17AA97E1008EA33B /* NSObject+ObjectMap.m */,
+				B6F7E06B18C61FCE00EBD65F /* NSObject+ObjectMap.h */,
+				B6F7E06C18C61FCE00EBD65F /* NSObject+ObjectMap.m */,
 			);
 			name = "NSObject+ObjectMap";
 			sourceTree = "<group>";
@@ -234,12 +234,12 @@
 				BBCCAC4217AA97A6008EA33B /* main.m in Sources */,
 				BBCCAC4617AA97A6008EA33B /* AppDelegate.m in Sources */,
 				BBCCAC4F17AA97A6008EA33B /* ViewController.m in Sources */,
-				BBCCAC5B17AA97E1008EA33B /* NSObject+ObjectMap.m in Sources */,
 				BBCCAC6017AA98E3008EA33B /* WebService.m in Sources */,
 				BBCCAC6317AA9FDF008EA33B /* current_condition.m in Sources */,
 				BBCCAC6617AAA0D4008EA33B /* request.m in Sources */,
 				BBCCAC6917AAA0FF008EA33B /* weather.m in Sources */,
 				BBCCAC6C17AAA171008EA33B /* data.m in Sources */,
+				B6F7E06D18C61FCE00EBD65F /* NSObject+ObjectMap.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

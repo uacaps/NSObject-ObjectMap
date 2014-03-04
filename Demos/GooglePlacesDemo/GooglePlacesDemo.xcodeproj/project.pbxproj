@@ -35,11 +35,11 @@
 		40E75FBE1796E90100AEC295 /* GooglePlacesWebservice.m in Sources */ = {isa = PBXBuildFile; fileRef = 40E75FBD1796E90100AEC295 /* GooglePlacesWebservice.m */; };
 		40E75FC01796EBC500AEC295 /* SearchIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 40E75FBF1796EBC500AEC295 /* SearchIcon.png */; };
 		40E75FC41796EFDC00AEC295 /* MapPin.png in Resources */ = {isa = PBXBuildFile; fileRef = 40E75FC21796EFDC00AEC295 /* MapPin.png */; };
-		40E75FC71796F10300AEC295 /* NSObject+ObjectMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 40E75FC61796F10300AEC295 /* NSObject+ObjectMap.m */; };
 		40E75FCA1796F26500AEC295 /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 40E75FC91796F26500AEC295 /* MapAnnotation.m */; };
 		40E75FCC17970BCE00AEC295 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40E75FCB17970BCE00AEC295 /* MapKit.framework */; };
 		40E75FCE17970D7D00AEC295 /* MapPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 40E75FCD17970D7D00AEC295 /* MapPin@2x.png */; };
 		40E75FD7179710C100AEC295 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40E75FD6179710C100AEC295 /* CoreLocation.framework */; };
+		B6F7E06A18C61F9500EBD65F /* NSObject+ObjectMap.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F7E06918C61F9500EBD65F /* NSObject+ObjectMap.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,13 +91,13 @@
 		40E75FBD1796E90100AEC295 /* GooglePlacesWebservice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GooglePlacesWebservice.m; sourceTree = "<group>"; };
 		40E75FBF1796EBC500AEC295 /* SearchIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SearchIcon.png; sourceTree = "<group>"; };
 		40E75FC21796EFDC00AEC295 /* MapPin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MapPin.png; sourceTree = "<group>"; };
-		40E75FC51796F10300AEC295 /* NSObject+ObjectMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ObjectMap.h"; sourceTree = "<group>"; };
-		40E75FC61796F10300AEC295 /* NSObject+ObjectMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ObjectMap.m"; sourceTree = "<group>"; };
 		40E75FC81796F26500AEC295 /* MapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapAnnotation.h; sourceTree = "<group>"; };
 		40E75FC91796F26500AEC295 /* MapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapAnnotation.m; sourceTree = "<group>"; };
 		40E75FCB17970BCE00AEC295 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		40E75FCD17970D7D00AEC295 /* MapPin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MapPin@2x.png"; sourceTree = "<group>"; };
 		40E75FD6179710C100AEC295 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B6F7E06818C61F9500EBD65F /* NSObject+ObjectMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+ObjectMap.h"; path = "../../../NSObject-ObjectMap/NSObject+ObjectMap.h"; sourceTree = "<group>"; };
+		B6F7E06918C61F9500EBD65F /* NSObject+ObjectMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+ObjectMap.m"; path = "../../../NSObject-ObjectMap/NSObject+ObjectMap.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,8 +148,8 @@
 		40E75F731796E88E00AEC295 /* GooglePlacesDemo */ = {
 			isa = PBXGroup;
 			children = (
-				40E75FC51796F10300AEC295 /* NSObject+ObjectMap.h */,
-				40E75FC61796F10300AEC295 /* NSObject+ObjectMap.m */,
+				B6F7E06818C61F9500EBD65F /* NSObject+ObjectMap.h */,
+				B6F7E06918C61F9500EBD65F /* NSObject+ObjectMap.m */,
 				40E75F931796E8C500AEC295 /* Google Places */,
 				40E75F7C1796E88E00AEC295 /* AppDelegate.h */,
 				40E75F7D1796E88E00AEC295 /* AppDelegate.m */,
@@ -309,9 +309,9 @@
 				40E75FB81796E8F400AEC295 /* GooglePlaceDetails.m in Sources */,
 				40E75FB91796E8F400AEC295 /* GoogleAddressComponent.m in Sources */,
 				40E75FBA1796E8F400AEC295 /* GoogleReview.m in Sources */,
+				B6F7E06A18C61F9500EBD65F /* NSObject+ObjectMap.m in Sources */,
 				40E75FBB1796E8F400AEC295 /* GoogleReviewAspect.m in Sources */,
 				40E75FBE1796E90100AEC295 /* GooglePlacesWebservice.m in Sources */,
-				40E75FC71796F10300AEC295 /* NSObject+ObjectMap.m in Sources */,
 				40E75FCA1796F26500AEC295 /* MapAnnotation.m in Sources */,
 				11CD5EB317AA96BF00CF3BDD /* GPOperation.m in Sources */,
 			);

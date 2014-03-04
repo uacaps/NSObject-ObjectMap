@@ -53,7 +53,7 @@ static const short _base64DecodingTable[256] = {
 @implementation NSScanner (XMLScan)
 
 -(BOOL)isAtEndOfTag:(NSString *)tag {
-    int scanPos = [self scanLocation];
+    NSInteger scanPos = [self scanLocation];
     NSString *trash = @"";
     [self scanUpToString:[NSString stringWithFormat:@"</%@", tag] intoString:&trash];
     if (trash.length > 0) {
@@ -68,7 +68,7 @@ static const short _base64DecodingTable[256] = {
 
 -(NSString *)nextXMLTag {
     NSString *trash = @"", *tag = @"";
-    int scanPos = [self scanLocation];
+    NSInteger scanPos = [self scanLocation];
     [self scanUpToString:@"<" intoString:&trash];
     [self scanString:@"<" intoString:&trash];
     if ([[self nextCharacter] isEqualToString:@"/"]) {
@@ -84,7 +84,7 @@ static const short _base64DecodingTable[256] = {
 }
 
 -(NSString *)nextCharacter {
-    int scanPos = [self scanLocation];
+    NSInteger scanPos = [self scanLocation];
     if (scanPos < [self string].length - 1) {
         return [[self string] substringWithRange:NSMakeRange(scanPos+1, 1)];
     }
@@ -307,9 +307,9 @@ static const short _base64DecodingTable[256] = {
     }
     // Else it is an array of objects
     else if([jsonObject isKindOfClass:[NSArray class]]){
-        int length = [((NSArray*) jsonObject) count];
+        NSInteger length = [((NSArray*) jsonObject) count];
         NSMutableArray *resultArray = [NSMutableArray arrayWithCapacity:length];
-        for(int i = 0; i < length; i++){
+        for(NSInteger i = 0; i < length; i++){
             [resultArray addObject:[NSObject objectOfClass:objectClass fromJSON:[(NSArray*)jsonObject objectAtIndex:i]]];
         }
         newObject = [[NSArray alloc] initWithArray:resultArray];
@@ -428,7 +428,7 @@ static const char * getPropertyType(objc_property_t property) {
     NSMutableArray *objectsArray = [@[] mutableCopy];
     
     // Create objects
-    for (int xx = 0; xx < nestedArray.count; xx++) {
+    for (NSInteger xx = 0; xx < nestedArray.count; xx++) {
         // If it's an NSDictionary
         if ([nestedArray[xx] isKindOfClass:[NSDictionary class]]) {
             // Create object of filteredProperty type
@@ -498,7 +498,7 @@ static const char * getPropertyType(objc_property_t property) {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     unsigned count;
     objc_property_t *properties = class_copyPropertyList([self class], &count);
-    for (int i = 0; i < count; i++) {
+    for (NSInteger i = 0; i < count; i++) {
         NSString *key = [NSString stringWithUTF8String:property_getName(properties[i])];
         [dict setObject:key forKey:key];
     }
@@ -583,9 +583,9 @@ static const char * getPropertyType(objc_property_t property) {
 + (id)jsonDataObjects:(id)obj {
     id returnProperties = nil;
     if([self isArray:obj]) {
-        int length =[(NSArray*)obj count];
+        NSInteger length =[(NSArray*)obj count];
         returnProperties = [NSMutableArray arrayWithCapacity:length];
-        for(int i = 0; i < length; i++){
+        for(NSInteger i = 0; i < length; i++){
             [returnProperties addObject:[NSObject dictionaryWithPropertiesOfObject:[(NSArray*)obj objectAtIndex:i]]];
         }
     }
@@ -603,7 +603,7 @@ static const char * getPropertyType(objc_property_t property) {
     
     NSMutableArray *propertiesArray = [NSObject propertiesArrayFromObject:obj];
     
-    for (int i = 0; i < propertiesArray.count; i++) {
+    for (NSInteger i = 0; i < propertiesArray.count; i++) {
         NSString *key = propertiesArray[i];
         
         if (![obj valueForKey:key]) {
@@ -640,7 +640,7 @@ static const char * getPropertyType(objc_property_t property) {
     
     unsigned count;
     objc_property_t *properties = class_copyPropertyList([obj class], &count);
-    for (int i = 0; i < count; i++) {
+    for (NSInteger i = 0; i < count; i++) {
         [props addObject:[NSString stringWithUTF8String:property_getName(properties[i])]];
     }
     
@@ -713,7 +713,7 @@ static const char * getPropertyType(objc_property_t property) {
 +(NSArray *)arrayForObject:(id)obj{
     NSArray *ContentArray = (NSArray *)obj;
     NSMutableArray *objectsArray = [[NSMutableArray alloc] init];
-    for (int ii = 0; ii < ContentArray.count; ii++) {
+    for (NSInteger ii = 0; ii < ContentArray.count; ii++) {
         if ([self isArray:ContentArray[ii]]) {
             [objectsArray addObject:[self arrayForObject:[ContentArray objectAtIndex:ii]]];
         }
@@ -965,7 +965,7 @@ static const char * getPropertyType(objc_property_t property) {
     char * strResult;
     
     // Get the Raw Data length and ensure we actually have data
-    int intLength = [objData length];
+    NSInteger intLength = [objData length];
     if (intLength == 0) return nil;
     
     // Setup the String-based Result placeholder and pointer within that placeholder
