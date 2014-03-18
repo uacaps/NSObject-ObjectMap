@@ -445,7 +445,10 @@ static const char * getPropertyType(objc_property_t property) {
                 // If it's an Array, recur
                 if ([[nestedArray[xx] objectForKey:newKey] isKindOfClass:[NSArray class]]) {
                     NSString *propertyType = [nestedObj valueForKeyPath:[NSString stringWithFormat:@"propertyArrayMap.%@", newKey]];
-                    [nestedObj setValue:[NSObject arrayMapFromArray:[nestedArray[xx] objectForKey:newKey]  forPropertyName:propertyType] forKey:newKey];
+                    
+                    if (propertyType) {
+                        [nestedObj setValue:[NSObject arrayMapFromArray:[nestedArray[xx] objectForKey:newKey]  forPropertyName:propertyType] forKey:newKey];
+                    }
                 }
                 // If it's a Dictionary, create an object, and send to [self objectFromJSON]
                 else if ([[nestedArray[xx] objectForKey:newKey] isKindOfClass:[NSDictionary class]]) {
