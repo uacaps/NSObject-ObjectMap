@@ -366,7 +366,7 @@ static const char _base64EncodingTable[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefgh
 -(NSString *)classOfPropertyNamed:(NSString *)propName {
     objc_property_t theProperty = class_getProperty([self class], [propName UTF8String]);
     NSString *className = [NSString stringWithFormat:@"%s", getPropertyType(theProperty)];
-    return className;
+    return [className stringByTrimmingCharactersInSet:[[NSCharacterSet alphanumericCharacterSet] invertedSet]];
 }
 
 
