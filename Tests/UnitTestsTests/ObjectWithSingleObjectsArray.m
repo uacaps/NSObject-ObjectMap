@@ -10,13 +10,29 @@
 
 @implementation ObjectWithSingleObjectsArray
 
-- (instancetype)init{
+- (instancetype)init {
     if (self = [super init]) {
         // Set Property Type
         [self setValue:@"SingleObject" forKeyPath:@"propertyArrayMap.arrayOfObjects"];
     }
     
     return self;
+}
+
++ (NSString *)mappedPropertyForPropertyName:(NSString *)propertyName {
+    if ([propertyName isEqualToString:@"array_of_objects"]) {
+        return @"arrayOfObjects";
+    }
+    
+    return nil;
+}
+
++ (Class)classForArrayProperty:(NSString *)propertyName {
+    if ([propertyName isEqualToString:@"arrayOfObjects"]) {
+        return [SingleObject class];
+    }
+    
+    return nil;
 }
 
 + (ObjectWithSingleObjectsArray *)newObjectWithArrayOfSingleObjects {
