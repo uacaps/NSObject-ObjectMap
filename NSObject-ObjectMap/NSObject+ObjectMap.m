@@ -634,6 +634,10 @@ static const char _base64EncodingTable[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefgh
     if (![superClassName isEqualToString:@"NSObject"]) {
         [props addObjectsFromArray:[NSObject propertiesArrayFromObject:[[NSClassFromString(superClassName) alloc] init]]];
     }
+    else if([props containsObject:@"superclass"]) {
+         // At this point we know superclass is NSObject, so remove superclass property if present. Needed because iOS 8+ automatically adds superclass property to classes that implement protocols. 
+        [props removeObject:@"superclass"];
+    }
     
     return props;
 }
