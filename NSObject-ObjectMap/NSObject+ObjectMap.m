@@ -590,7 +590,7 @@ static const char _base64EncodingTable[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefgh
     for (NSInteger i = 0; i < propertiesArray.count; i++) {
         NSString *key = propertiesArray[i];
         
-        if (![obj valueForKey:key]) {
+        if (![obj valueForKey:key] || [self isSystemReservedProperty:obj key:key]) {
             continue;
         }
         
@@ -613,6 +613,7 @@ static const char _base64EncodingTable[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefgh
     
     return [NSDictionary dictionaryWithDictionary:dict];
 }
+
 
 +(NSMutableArray *)propertiesArrayFromObject:(id)obj {
     
@@ -637,6 +638,18 @@ static const char _base64EncodingTable[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefgh
     
     return props;
 }
+
+// Needed because iOS 8 automatically adds properties that can't be properly serialized
+-(BOOL)isSystemReservedProperty:(id)obj key:(NSString *)key
+{
+    // properties set by iOS
+    if ([key isEqualToString:@"description"] || [key isEqualToString:@"debugDescription"] || [key isEqualToString:@"hash"] || [key isEqualToString:@"superclass"]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
 
 -(BOOL)isSystemObject:(id)obj key:(NSString *)key{
     if ([[obj valueForKey:key] isKindOfClass:[NSString class]] || [[obj valueForKey:key] isKindOfClass:[NSNumber class]] || [[obj valueForKey:key] isKindOfClass:[NSDictionary class]]) {
