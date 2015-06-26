@@ -18,11 +18,11 @@
 #import "ObjectWithNestedObjectsArray.h"
 #import "XCTestCase+ObjectMapTestCategory.h"
 
-@interface WPObjectMapperExampleTests : XCTestCase
+@interface NSObject_ObjectMapTests : XCTestCase
 
 @end
 
-@implementation WPObjectMapperExampleTests
+@implementation NSObject_ObjectMapTests
 
 - (void)setUp
 {

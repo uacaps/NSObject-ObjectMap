@@ -18,6 +18,7 @@
 		8D89945B1B3D8A9400C3D822 /* SingleObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8994541B3D8A9400C3D822 /* SingleObject.m */; };
 		8D89945C1B3D8A9400C3D822 /* SingleObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8994541B3D8A9400C3D822 /* SingleObject.m */; };
 		8D8994611B3D8AA300C3D822 /* XCTestCase+ObjectMapTestCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D89945F1B3D8AA300C3D822 /* XCTestCase+ObjectMapTestCategory.m */; };
+		8DE520FC1B3DA7A1006B117D /* NSObject-AutoDescriptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE520FB1B3DA7A1006B117D /* NSObject-AutoDescriptionTests.m */; };
 		D80384D31B3C5C7300EF9A19 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D80384D21B3C5C7300EF9A19 /* main.m */; };
 		D80384D61B3C5C7300EF9A19 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D80384D51B3C5C7300EF9A19 /* AppDelegate.m */; };
 		D80384D91B3C5C7300EF9A19 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D80384D81B3C5C7300EF9A19 /* MasterViewController.m */; };
@@ -25,7 +26,7 @@
 		D80384DF1B3C5C7300EF9A19 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D80384DD1B3C5C7300EF9A19 /* Main.storyboard */; };
 		D80384E11B3C5C7300EF9A19 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D80384E01B3C5C7300EF9A19 /* Images.xcassets */; };
 		D80384E41B3C5C7300EF9A19 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D80384E21B3C5C7300EF9A19 /* LaunchScreen.xib */; };
-		D80384F01B3C5C7400EF9A19 /* WPObjectMapperExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D80384EF1B3C5C7400EF9A19 /* WPObjectMapperExampleTests.m */; };
+		D80384F01B3C5C7400EF9A19 /* NSObject-ObjectMapTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D80384EF1B3C5C7400EF9A19 /* NSObject-ObjectMapTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		8D8994541B3D8A9400C3D822 /* SingleObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleObject.m; sourceTree = "<group>"; };
 		8D89945E1B3D8AA300C3D822 /* XCTestCase+ObjectMapTestCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+ObjectMapTestCategory.h"; sourceTree = "<group>"; };
 		8D89945F1B3D8AA300C3D822 /* XCTestCase+ObjectMapTestCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+ObjectMapTestCategory.m"; sourceTree = "<group>"; };
+		8DE520FB1B3DA7A1006B117D /* NSObject-AutoDescriptionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject-AutoDescriptionTests.m"; sourceTree = "<group>"; };
 		C01DE9FCB96AD29F5C108557 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D80384CD1B3C5C7300EF9A19 /* WPObjectMapperExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WPObjectMapperExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D80384D11B3C5C7300EF9A19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -72,7 +74,7 @@
 		D80384E31B3C5C7300EF9A19 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		D80384E91B3C5C7300EF9A19 /* WPObjectMapperExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WPObjectMapperExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D80384EE1B3C5C7400EF9A19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D80384EF1B3C5C7400EF9A19 /* WPObjectMapperExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WPObjectMapperExampleTests.m; sourceTree = "<group>"; };
+		D80384EF1B3C5C7400EF9A19 /* NSObject-ObjectMapTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject-ObjectMapTests.m"; sourceTree = "<group>"; };
 		D80384FA1B3C5CCD00EF9A19 /* NSObject+ObjectMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+ObjectMap.h"; sourceTree = "<group>"; };
 		D80384FB1B3C5CCD00EF9A19 /* NSObject+ObjectMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ObjectMap.m"; sourceTree = "<group>"; };
 		E697B31C9B5ABEC50BDE3A63 /* Pods-WPObjectMapperExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WPObjectMapperExampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WPObjectMapperExampleTests/Pods-WPObjectMapperExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -185,7 +187,8 @@
 		D80384EC1B3C5C7400EF9A19 /* WPObjectMapperExampleTests */ = {
 			isa = PBXGroup;
 			children = (
-				D80384EF1B3C5C7400EF9A19 /* WPObjectMapperExampleTests.m */,
+				D80384EF1B3C5C7400EF9A19 /* NSObject-ObjectMapTests.m */,
+				8DE520FB1B3DA7A1006B117D /* NSObject-AutoDescriptionTests.m */,
 				D80384ED1B3C5C7400EF9A19 /* Supporting Files */,
 			);
 			path = WPObjectMapperExampleTests;
@@ -398,10 +401,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D80384F01B3C5C7400EF9A19 /* WPObjectMapperExampleTests.m in Sources */,
+				D80384F01B3C5C7400EF9A19 /* NSObject-ObjectMapTests.m in Sources */,
 				8D8994561B3D8A9400C3D822 /* NestedObject.m in Sources */,
 				8D8994581B3D8A9400C3D822 /* ObjectWithNestedObjectsArray.m in Sources */,
 				8D89945C1B3D8A9400C3D822 /* SingleObject.m in Sources */,
+				8DE520FC1B3DA7A1006B117D /* NSObject-AutoDescriptionTests.m in Sources */,
 				8D89945A1B3D8A9400C3D822 /* ObjectWithSingleObjectsArray.m in Sources */,
 				8D8994611B3D8AA300C3D822 /* XCTestCase+ObjectMapTestCategory.m in Sources */,
 			);
