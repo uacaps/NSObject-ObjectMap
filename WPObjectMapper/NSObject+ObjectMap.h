@@ -1,39 +1,44 @@
-//Copyright (c) 2012 The Board of Trustees of The University of Alabama
-//All rights reserved.
-//
-//Redistribution and use in source and binary forms, with or without
-//modification, are permitted provided that the following conditions
-//are met:
-//
-//1. Redistributions of source code must retain the above copyright
-//notice, this list of conditions and the following disclaimer.
-//2. Redistributions in binary form must reproduce the above copyright
-//notice, this list of conditions and the following disclaimer in the
-//documentation and/or other materials provided with the distribution.
-//3. Neither the name of the University nor the names of the contributors
-//may be used to endorse or promote products derived from this software
-//without specific prior written permission.
-//
-//THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-//"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-//LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-//FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
-//THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-//INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-//(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-//HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-//STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-//ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-//OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2012 The Board of Trustees of The University of Alabama
+//  All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions
+// are met:
+// 
+// 1. Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+// 2. Redistributions in binary form must reproduce the above copyright
+// notice, this list of conditions and the following disclaimer in the
+// documentation and/or other materials provided with the distribution.
+// 3. Neither the name of the University nor the names of the contributors
+// may be used to endorse or promote products derived from this software
+// without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+// THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+//  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+// HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+// STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+// OF THE POSSIBILITY OF SUCH DAMAGE.
 
+// 12/18/2013 - Modified heavily by Sean Soper for use in The Washington Post iPad Flagship app
+// 6/26/2015 - Forking NSObject-ObjectMap repo and bringing into WaPo Cocoapods ecosystem
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+
 #import <objc/runtime.h>
+#import "NSObject+AutoDescription.h"
 
 #define OMDateFormat @"yyyy-MM-dd'T'HH:mm:ss.SSS"
 #define OMTimeZone @"UTC"
-
+#define WaPoDateFormat @"yyyy-MM-dd'T'HH:mm:ssZZZ"
+#define TwitterDateFormat @"eee MMM dd HH:mm:ss ZZZZ yyyy"
 
 typedef NS_ENUM(NSInteger, CAPSDataType) {
     CAPSDataTypeJSON,
@@ -43,7 +48,7 @@ typedef NS_ENUM(NSInteger, CAPSDataType) {
 
 @interface NSObject (ObjectMap)
 
-// Universal Method
+//  Universal Method
 -(NSDictionary *)propertyDictionary;
 -(NSString *)nameOfClass;
 
@@ -89,6 +94,7 @@ typedef NS_ENUM(NSInteger, CAPSDataType) {
  */
 - (instancetype)initWithObjectData:(NSData *)data type:(CAPSDataType)type;
 
+- (instancetype)initWithDictionary:(NSDictionary *) dictionary;
 
 
 #pragma mark - Top Level Array from JSON
@@ -126,4 +132,5 @@ typedef NS_ENUM(NSInteger, CAPSDataType) {
 @interface SOAPObject : NSObject
 @property (nonatomic, retain) id Header;
 @property (nonatomic, retain) id Body;
+
 @end

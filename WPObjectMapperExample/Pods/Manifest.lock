@@ -1,0 +1,20 @@
+PODS:
+  - MBFaker (0.1.3)
+  - WPFaker (0.0.3):
+    - MBFaker (= 0.1.3)
+  - WPObjectMapper (0.0.1)
+
+DEPENDENCIES:
+  - WPFaker (~> 0.0.1)
+  - WPObjectMapper (from `..`)
+
+EXTERNAL SOURCES:
+  WPObjectMapper:
+    :path: ..
+
+SPEC CHECKSUMS:
+  MBFaker: 4b73b5f9587b55ec30ba0a76174e9c7ab0936533
+  WPFaker: 0e09ab823408eadededb78e6b79f0ac68785485d
+  WPObjectMapper: 65382baa504f9f671502711d5c9a6a7bec2eac23
+
+COCOAPODS: 0.35.0

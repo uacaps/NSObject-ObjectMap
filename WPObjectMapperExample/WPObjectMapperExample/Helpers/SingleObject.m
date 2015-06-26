@@ -6,26 +6,29 @@
 //  Copyright (c) 2013 Center for Advanced Public Safety. All rights reserved.
 //
 
+#import <WPObjectMapper/NSObject+ObjectMap.h>
+#import <WPFaker/WPFaker.h>
+
 #import "SingleObject.h"
-#import "NSObject+ObjectMap.h"
 
 @implementation SingleObject
 
 +(SingleObject *)newSingleObject{
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
-    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS"];
-    
-    NSDate *currentDate = [NSDate date];
-    
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+//    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS"];
+//    
+//    NSDate *currentDate = [NSDate date];
+    RandomNumber *random = [[RandomNumber alloc] init];
+
     //Create object to be serialized
     SingleObject *testSingleObject = [[SingleObject alloc] init];
-    testSingleObject.testString = @"This is a test";
-    testSingleObject.testBoolean = @YES;
-    testSingleObject.testNumber = @123.5;
-    testSingleObject.testDate = currentDate;
-    testSingleObject.testDict = @{@"Hello":@"World"};
-    
+    testSingleObject.testString = [MBFakerLorem words: 5];
+    testSingleObject.testBoolean = [random inRange: 0 high: 500].integerValue > 250 ? @YES : @NO;
+    testSingleObject.testNumber = [random inRange: 0 high: 500];
+    testSingleObject.testDate = [[[Dates alloc] init] minutesAgoAsDate: [random inRange: 0 high: 60].integerValue];
+    testSingleObject.testDict = @{[MBFakerLorem word]: [MBFakerLorem paragraph]};
+
     return testSingleObject;
 }
 

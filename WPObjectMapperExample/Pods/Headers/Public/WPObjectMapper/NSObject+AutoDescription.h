@@ -1,0 +1,1 @@
+../../../../../WPObjectMapper/NSObject+AutoDescription.h

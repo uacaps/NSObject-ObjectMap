@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		578B9573C553FCADAA0613E0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EEF8399254F6FA80C97F9BE9 /* libPods.a */; };
+		8D8994551B3D8A9400C3D822 /* NestedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D89944E1B3D8A9400C3D822 /* NestedObject.m */; };
+		8D8994561B3D8A9400C3D822 /* NestedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D89944E1B3D8A9400C3D822 /* NestedObject.m */; };
+		8D8994571B3D8A9400C3D822 /* ObjectWithNestedObjectsArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8994501B3D8A9400C3D822 /* ObjectWithNestedObjectsArray.m */; };
+		8D8994581B3D8A9400C3D822 /* ObjectWithNestedObjectsArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8994501B3D8A9400C3D822 /* ObjectWithNestedObjectsArray.m */; };
+		8D8994591B3D8A9400C3D822 /* ObjectWithSingleObjectsArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8994521B3D8A9400C3D822 /* ObjectWithSingleObjectsArray.m */; };
+		8D89945A1B3D8A9400C3D822 /* ObjectWithSingleObjectsArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8994521B3D8A9400C3D822 /* ObjectWithSingleObjectsArray.m */; };
+		8D89945B1B3D8A9400C3D822 /* SingleObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8994541B3D8A9400C3D822 /* SingleObject.m */; };
+		8D89945C1B3D8A9400C3D822 /* SingleObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8994541B3D8A9400C3D822 /* SingleObject.m */; };
+		8D8994611B3D8AA300C3D822 /* XCTestCase+ObjectMapTestCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D89945F1B3D8AA300C3D822 /* XCTestCase+ObjectMapTestCategory.m */; };
 		D80384D31B3C5C7300EF9A19 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D80384D21B3C5C7300EF9A19 /* main.m */; };
 		D80384D61B3C5C7300EF9A19 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D80384D51B3C5C7300EF9A19 /* AppDelegate.m */; };
 		D80384D91B3C5C7300EF9A19 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D80384D81B3C5C7300EF9A19 /* MasterViewController.m */; };
@@ -28,6 +38,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1FCAEC8C71BAC2ADF916A0D2 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		8D8994471B3D7FF800C3D822 /* NSString+Inflections.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Inflections.h"; sourceTree = "<group>"; };
+		8D8994481B3D7FF800C3D822 /* NSString+Inflections.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Inflections.m"; sourceTree = "<group>"; };
+		8D8994491B3D832D00C3D822 /* NSObject+AutoDescription.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+AutoDescription.h"; sourceTree = "<group>"; };
+		8D89944A1B3D832D00C3D822 /* NSObject+AutoDescription.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AutoDescription.m"; sourceTree = "<group>"; };
+		8D89944B1B3D834300C3D822 /* ClangHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClangHelper.h; sourceTree = "<group>"; };
+		8D89944D1B3D8A9400C3D822 /* NestedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NestedObject.h; sourceTree = "<group>"; };
+		8D89944E1B3D8A9400C3D822 /* NestedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NestedObject.m; sourceTree = "<group>"; };
+		8D89944F1B3D8A9400C3D822 /* ObjectWithNestedObjectsArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectWithNestedObjectsArray.h; sourceTree = "<group>"; };
+		8D8994501B3D8A9400C3D822 /* ObjectWithNestedObjectsArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectWithNestedObjectsArray.m; sourceTree = "<group>"; };
+		8D8994511B3D8A9400C3D822 /* ObjectWithSingleObjectsArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectWithSingleObjectsArray.h; sourceTree = "<group>"; };
+		8D8994521B3D8A9400C3D822 /* ObjectWithSingleObjectsArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectWithSingleObjectsArray.m; sourceTree = "<group>"; };
+		8D8994531B3D8A9400C3D822 /* SingleObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleObject.h; sourceTree = "<group>"; };
+		8D8994541B3D8A9400C3D822 /* SingleObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleObject.m; sourceTree = "<group>"; };
+		8D89945E1B3D8AA300C3D822 /* XCTestCase+ObjectMapTestCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+ObjectMapTestCategory.h"; sourceTree = "<group>"; };
+		8D89945F1B3D8AA300C3D822 /* XCTestCase+ObjectMapTestCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+ObjectMapTestCategory.m"; sourceTree = "<group>"; };
+		C01DE9FCB96AD29F5C108557 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D80384CD1B3C5C7300EF9A19 /* WPObjectMapperExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WPObjectMapperExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D80384D11B3C5C7300EF9A19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D80384D21B3C5C7300EF9A19 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -45,6 +72,7 @@
 		D80384EF1B3C5C7400EF9A19 /* WPObjectMapperExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WPObjectMapperExampleTests.m; sourceTree = "<group>"; };
 		D80384FA1B3C5CCD00EF9A19 /* NSObject+ObjectMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+ObjectMap.h"; sourceTree = "<group>"; };
 		D80384FB1B3C5CCD00EF9A19 /* NSObject+ObjectMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ObjectMap.m"; sourceTree = "<group>"; };
+		EEF8399254F6FA80C97F9BE9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				578B9573C553FCADAA0613E0 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +94,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		339001EBBDD05FA7D6FD2538 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C01DE9FCB96AD29F5C108557 /* Pods.debug.xcconfig */,
+				1FCAEC8C71BAC2ADF916A0D2 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		6518618276E4B67377D50F6D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EEF8399254F6FA80C97F9BE9 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8D89944C1B3D8A9400C3D822 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				8D89944D1B3D8A9400C3D822 /* NestedObject.h */,
+				8D89944E1B3D8A9400C3D822 /* NestedObject.m */,
+				8D89944F1B3D8A9400C3D822 /* ObjectWithNestedObjectsArray.h */,
+				8D8994501B3D8A9400C3D822 /* ObjectWithNestedObjectsArray.m */,
+				8D8994511B3D8A9400C3D822 /* ObjectWithSingleObjectsArray.h */,
+				8D8994521B3D8A9400C3D822 /* ObjectWithSingleObjectsArray.m */,
+				8D8994531B3D8A9400C3D822 /* SingleObject.h */,
+				8D8994541B3D8A9400C3D822 /* SingleObject.m */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		D80384C41B3C5C7300EF9A19 = {
 			isa = PBXGroup;
 			children = (
@@ -72,6 +133,8 @@
 				D80384CF1B3C5C7300EF9A19 /* WPObjectMapperExample */,
 				D80384EC1B3C5C7400EF9A19 /* WPObjectMapperExampleTests */,
 				D80384CE1B3C5C7300EF9A19 /* Products */,
+				339001EBBDD05FA7D6FD2538 /* Pods */,
+				6518618276E4B67377D50F6D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -87,6 +150,7 @@
 		D80384CF1B3C5C7300EF9A19 /* WPObjectMapperExample */ = {
 			isa = PBXGroup;
 			children = (
+				8D89944C1B3D8A9400C3D822 /* Helpers */,
 				D80384D41B3C5C7300EF9A19 /* AppDelegate.h */,
 				D80384D51B3C5C7300EF9A19 /* AppDelegate.m */,
 				D80384D71B3C5C7300EF9A19 /* MasterViewController.h */,
@@ -122,6 +186,8 @@
 		D80384ED1B3C5C7400EF9A19 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8D89945E1B3D8AA300C3D822 /* XCTestCase+ObjectMapTestCategory.h */,
+				8D89945F1B3D8AA300C3D822 /* XCTestCase+ObjectMapTestCategory.m */,
 				D80384EE1B3C5C7400EF9A19 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -130,8 +196,13 @@
 		D80384F91B3C5CCD00EF9A19 /* WPObjectMapper */ = {
 			isa = PBXGroup;
 			children = (
+				8D8994471B3D7FF800C3D822 /* NSString+Inflections.h */,
+				8D8994481B3D7FF800C3D822 /* NSString+Inflections.m */,
 				D80384FA1B3C5CCD00EF9A19 /* NSObject+ObjectMap.h */,
 				D80384FB1B3C5CCD00EF9A19 /* NSObject+ObjectMap.m */,
+				8D8994491B3D832D00C3D822 /* NSObject+AutoDescription.h */,
+				8D89944A1B3D832D00C3D822 /* NSObject+AutoDescription.m */,
+				8D89944B1B3D834300C3D822 /* ClangHelper.h */,
 			);
 			name = WPObjectMapper;
 			path = ../WPObjectMapper;
@@ -144,9 +215,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D80384F31B3C5C7400EF9A19 /* Build configuration list for PBXNativeTarget "WPObjectMapperExample" */;
 			buildPhases = (
+				BA594E44FB5357642A55D8ED /* Check Pods Manifest.lock */,
 				D80384C91B3C5C7300EF9A19 /* Sources */,
 				D80384CA1B3C5C7300EF9A19 /* Frameworks */,
 				D80384CB1B3C5C7300EF9A19 /* Resources */,
+				2BE9A49CEB7C59A4EBF06ADB /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -232,14 +305,51 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2BE9A49CEB7C59A4EBF06ADB /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BA594E44FB5357642A55D8ED /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D80384C91B3C5C7300EF9A19 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				D80384D61B3C5C7300EF9A19 /* AppDelegate.m in Sources */,
+				8D8994591B3D8A9400C3D822 /* ObjectWithSingleObjectsArray.m in Sources */,
+				8D89945B1B3D8A9400C3D822 /* SingleObject.m in Sources */,
 				D80384D91B3C5C7300EF9A19 /* MasterViewController.m in Sources */,
+				8D8994571B3D8A9400C3D822 /* ObjectWithNestedObjectsArray.m in Sources */,
 				D80384D31B3C5C7300EF9A19 /* main.m in Sources */,
+				8D8994551B3D8A9400C3D822 /* NestedObject.m in Sources */,
 				D80384DC1B3C5C7300EF9A19 /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -249,6 +359,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D80384F01B3C5C7400EF9A19 /* WPObjectMapperExampleTests.m in Sources */,
+				8D8994561B3D8A9400C3D822 /* NestedObject.m in Sources */,
+				8D8994581B3D8A9400C3D822 /* ObjectWithNestedObjectsArray.m in Sources */,
+				8D89945C1B3D8A9400C3D822 /* SingleObject.m in Sources */,
+				8D89945A1B3D8A9400C3D822 /* ObjectWithSingleObjectsArray.m in Sources */,
+				8D8994611B3D8AA300C3D822 /* XCTestCase+ObjectMapTestCategory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +481,7 @@
 		};
 		D80384F41B3C5C7400EF9A19 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C01DE9FCB96AD29F5C108557 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = WPObjectMapperExample/Info.plist;
@@ -376,6 +492,7 @@
 		};
 		D80384F51B3C5C7400EF9A19 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FCAEC8C71BAC2ADF916A0D2 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = WPObjectMapperExample/Info.plist;
@@ -386,6 +503,7 @@
 		};
 		D80384F71B3C5C7400EF9A19 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C01DE9FCB96AD29F5C108557 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -405,6 +523,7 @@
 		};
 		D80384F81B3C5C7400EF9A19 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FCAEC8C71BAC2ADF916A0D2 /* Pods.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -437,6 +556,7 @@
 				D80384F51B3C5C7400EF9A19 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D80384F61B3C5C7400EF9A19 /* Build configuration list for PBXNativeTarget "WPObjectMapperExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -445,6 +565,7 @@
 				D80384F81B3C5C7400EF9A19 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
