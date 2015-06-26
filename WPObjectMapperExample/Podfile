@@ -5,3 +5,7 @@ inhibit_all_warnings!
 
 pod 'WPObjectMapper', :path => '..'
 pod 'WPFaker', '~> 0.0.1'
+
+target 'WPObjectMapperExampleTests', :exclusive => true do
+    pod 'WPFaker', '~> 0.0.1'
+end

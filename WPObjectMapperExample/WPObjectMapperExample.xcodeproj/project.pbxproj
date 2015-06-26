@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3CA80AE719D6EAE327B7248D /* libPods-WPObjectMapperExampleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DF932310C7BFB22D56C43B8 /* libPods-WPObjectMapperExampleTests.a */; };
 		578B9573C553FCADAA0613E0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EEF8399254F6FA80C97F9BE9 /* libPods.a */; };
 		8D8994551B3D8A9400C3D822 /* NestedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D89944E1B3D8A9400C3D822 /* NestedObject.m */; };
 		8D8994561B3D8A9400C3D822 /* NestedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D89944E1B3D8A9400C3D822 /* NestedObject.m */; };
@@ -38,7 +39,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1751F708E3C0666BE2892D01 /* Pods-WPObjectMapperExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WPObjectMapperExampleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WPObjectMapperExampleTests/Pods-WPObjectMapperExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		1FCAEC8C71BAC2ADF916A0D2 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		2DF932310C7BFB22D56C43B8 /* libPods-WPObjectMapperExampleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WPObjectMapperExampleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D8994471B3D7FF800C3D822 /* NSString+Inflections.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Inflections.h"; sourceTree = "<group>"; };
 		8D8994481B3D7FF800C3D822 /* NSString+Inflections.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Inflections.m"; sourceTree = "<group>"; };
 		8D8994491B3D832D00C3D822 /* NSObject+AutoDescription.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+AutoDescription.h"; sourceTree = "<group>"; };
@@ -72,6 +75,7 @@
 		D80384EF1B3C5C7400EF9A19 /* WPObjectMapperExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WPObjectMapperExampleTests.m; sourceTree = "<group>"; };
 		D80384FA1B3C5CCD00EF9A19 /* NSObject+ObjectMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+ObjectMap.h"; sourceTree = "<group>"; };
 		D80384FB1B3C5CCD00EF9A19 /* NSObject+ObjectMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ObjectMap.m"; sourceTree = "<group>"; };
+		E697B31C9B5ABEC50BDE3A63 /* Pods-WPObjectMapperExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WPObjectMapperExampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WPObjectMapperExampleTests/Pods-WPObjectMapperExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EEF8399254F6FA80C97F9BE9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -88,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CA80AE719D6EAE327B7248D /* libPods-WPObjectMapperExampleTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +104,8 @@
 			children = (
 				C01DE9FCB96AD29F5C108557 /* Pods.debug.xcconfig */,
 				1FCAEC8C71BAC2ADF916A0D2 /* Pods.release.xcconfig */,
+				E697B31C9B5ABEC50BDE3A63 /* Pods-WPObjectMapperExampleTests.debug.xcconfig */,
+				1751F708E3C0666BE2892D01 /* Pods-WPObjectMapperExampleTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -107,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				EEF8399254F6FA80C97F9BE9 /* libPods.a */,
+				2DF932310C7BFB22D56C43B8 /* libPods-WPObjectMapperExampleTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -234,9 +242,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D80384F61B3C5C7400EF9A19 /* Build configuration list for PBXNativeTarget "WPObjectMapperExampleTests" */;
 			buildPhases = (
+				3F7618A772E97283355C70D6 /* Check Pods Manifest.lock */,
 				D80384E51B3C5C7300EF9A19 /* Sources */,
 				D80384E61B3C5C7300EF9A19 /* Frameworks */,
 				D80384E71B3C5C7300EF9A19 /* Resources */,
+				8FB86FCFAE36760B0413C4BE /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -319,6 +329,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3F7618A772E97283355C70D6 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8FB86FCFAE36760B0413C4BE /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WPObjectMapperExampleTests/Pods-WPObjectMapperExampleTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BA594E44FB5357642A55D8ED /* Check Pods Manifest.lock */ = {
@@ -503,7 +543,7 @@
 		};
 		D80384F71B3C5C7400EF9A19 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C01DE9FCB96AD29F5C108557 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = E697B31C9B5ABEC50BDE3A63 /* Pods-WPObjectMapperExampleTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -523,7 +563,7 @@
 		};
 		D80384F81B3C5C7400EF9A19 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1FCAEC8C71BAC2ADF916A0D2 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 1751F708E3C0666BE2892D01 /* Pods-WPObjectMapperExampleTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (

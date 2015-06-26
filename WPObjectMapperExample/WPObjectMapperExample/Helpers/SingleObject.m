@@ -49,19 +49,24 @@
     [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS"];
     
     NSDate *currentDate = [NSDate date];
-    
+    RandomNumber *random = [[RandomNumber alloc] init];
+
     //Create object to be serialized
     SingleObject *testSingleObject = [[SingleObject alloc] init];
-    testSingleObject.testBoolean = @YES;
-    testSingleObject.testNumber = @123.5;
-    testSingleObject.testDate = currentDate;
-    testSingleObject.testDict = @{@"Hello":@"World"};
+    testSingleObject.testBoolean = [random inRange: 0 high: 500].integerValue > 250 ? @YES : @NO;
+    testSingleObject.testNumber = [random inRange: 0 high: 500];
+    testSingleObject.testDate = [[[Dates alloc] init] minutesAgoAsDate: [random inRange: 0 high: 60].integerValue];
+    testSingleObject.testDict = @{[MBFakerLorem word]: [MBFakerLorem paragraph]};
     
     return testSingleObject;
 }
 
 + (NSString *)malformedJSONString {
     return @"";
+}
+
+- (NSString *) description {
+    return [self autoDescription];
 }
 
 @end

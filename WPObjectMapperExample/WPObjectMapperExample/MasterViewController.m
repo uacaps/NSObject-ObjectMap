@@ -6,8 +6,11 @@
 //  Copyright (c) 2015 The Washington Post. All rights reserved.
 //
 
+#import <WPObjectMapper/NSObject+ObjectMap.h>
+
 #import "MasterViewController.h"
 #import "DetailViewController.h"
+#import "SingleObject.h"
 
 @interface MasterViewController ()
 
@@ -43,7 +46,12 @@
     if (!self.objects) {
         self.objects = [[NSMutableArray alloc] init];
     }
-    [self.objects insertObject:[NSDate date] atIndex:0];
+
+    // Serialize then Deserialize
+    SingleObject *testSingleObject = [SingleObject newSingleObject];
+    SingleObject *deserializedObject = [[SingleObject alloc] initWithJSONData:[testSingleObject JSONData]];
+
+    [self.objects insertObject: deserializedObject atIndex: 0];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
@@ -74,8 +82,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-    NSDate *object = self.objects[indexPath.row];
-    cell.textLabel.text = [object description];
+    SingleObject *object = self.objects[indexPath.row];
+    cell.textLabel.text = object.testString;
     return cell;
 }
 
