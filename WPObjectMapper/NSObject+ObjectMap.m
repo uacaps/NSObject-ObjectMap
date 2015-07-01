@@ -32,6 +32,8 @@
 #import "NSString+Inflections.h"
 #import "ClangHelper.h"
 
+static const long long EpochBase = 1000000000000;
+
 static const char _base64EncodingTable[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 @implementation NSObject (ObjectMap)
@@ -263,7 +265,11 @@ static const char _base64EncodingTable[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefgh
 + (NSDate *) parseDate:(id) dateValue {
     if ([dateValue isKindOfClass: [NSNumber class]]) {
         NSNumber *epoch = (NSNumber *)dateValue;
-        return [NSDate dateWithTimeIntervalSince1970: [epoch longLongValue]/1000];
+        if (epoch.longLongValue > EpochBase) {
+            epoch = @(epoch.longLongValue/1000);
+        }
+
+        return [NSDate dateWithTimeIntervalSince1970: epoch.doubleValue];
     }
 
     if (![dateValue isKindOfClass: [NSString class]])
