@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "WPObjectMapper"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "This is a drop-in category of NSObject that makes it easy to initialize custom objects from JSON or XML."
   s.description  = <<-DESC
                    This was originally sourced from the NSObject-ObjectMap category. Used mostly in PostKit for ingestion of content.
