@@ -11,6 +11,7 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import <WPFaker/WPFaker.h>
 
 #import "SingleObject.h"
 #import "NestedObject.h"
@@ -24,14 +25,12 @@
 
 @implementation NSObject_ObjectMapTests
 
-- (void)setUp
-{
+- (void)setUp {
     [super setUp];
     // Put setup code here; it will be run once, before the first test case.
 }
 
-- (void)tearDown
-{
+- (void)tearDown {
     // Put teardown code here; it will be run once, after the last test case.
     [super tearDown];
 }
@@ -136,6 +135,36 @@
 
     //Test all properties
     [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeJSON];
+}
+
+- (void) testDateMilliseconds {
+    NSNumber *testDate = [self createDate];
+    NSDictionary *json = @{@"testString" : [MBFakerLorem words: 5],
+                           @"testDate"   : testDate};
+    SingleObject *object = [[SingleObject alloc] initWithDictionary: json];
+    NSTimeInterval parsedDate = [object.testDate timeIntervalSince1970]*1000;
+    NSString *expected = [NSString stringWithFormat: @"%.8g", testDate.doubleValue];
+    NSString *parsed = [NSString stringWithFormat: @"%.8g", parsedDate];
+    XCTAssertEqualObjects(expected, parsed);
+}
+
+- (void) testDateSeconds {
+    NSNumber *testDate = @([self createDate].doubleValue/1000);
+    NSDictionary *json = @{@"testString" : [MBFakerLorem words: 5],
+                           @"testDate"   : testDate};
+    SingleObject *object = [[SingleObject alloc] initWithDictionary: json];
+    NSTimeInterval parsedDate = [object.testDate timeIntervalSince1970];
+    NSString *expected = [NSString stringWithFormat: @"%.8g", testDate.doubleValue];
+    NSString *parsed = [NSString stringWithFormat: @"%.8g", parsedDate];
+    XCTAssertEqualObjects(expected, parsed);
+}
+
+#pragma mark - Helpers
+
+- (NSNumber *) createDate {
+    Dates *dates = [[Dates alloc] init];
+    RandomNumber *number = [[RandomNumber alloc] init];
+    return [dates minutesAgoAsEpoch: [number inRange: 10 high: 50].unsignedIntegerValue];
 }
 
 @end
