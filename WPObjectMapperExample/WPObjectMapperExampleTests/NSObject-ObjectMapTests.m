@@ -137,6 +137,33 @@
     [self testEqualityOfObject:testSingleObject withDeserializedVersion:deserializedObject forMethodNamed:__PRETTY_FUNCTION__ dataType:CAPSDataTypeJSON];
 }
 
+- (void) testDateFormats {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation: OMTimeZone]];
+
+    [@[OMDateFormat, TwitterDateFormat, WaPoDateFormat] enumerateObjectsUsingBlock:^(NSString *dateFormat, NSUInteger idx, BOOL *stop) {
+        [formatter setDateFormat: dateFormat];
+
+        NSDate *testDate = [WPFakerDate minutesAgoAsDate:20];
+        NSString *testDateString = [formatter stringFromDate:testDate];
+
+        NSDictionary *json = @{@"testString" : [MBFakerLorem words: 5],
+                               @"testDate"   : testDateString};
+
+        SingleObject *object = [[SingleObject alloc] initWithDictionary: json];
+
+        NSDate *returnDate = object.testDate;
+        NSString *end = [NSDateFormatter localizedStringFromDate:testDate
+                                                       dateStyle:NSDateFormatterShortStyle
+                                                       timeStyle:NSDateFormatterShortStyle];
+
+        NSString *current = [NSDateFormatter localizedStringFromDate:returnDate
+                                                           dateStyle:NSDateFormatterShortStyle
+                                                           timeStyle:NSDateFormatterShortStyle];
+        XCTAssertEqualObjects(current, end);
+    }];
+}
+
 - (void) testDateMilliseconds {
     NSNumber *testDate = [self createDate];
     NSDictionary *json = @{@"testString" : [MBFakerLorem words: 5],

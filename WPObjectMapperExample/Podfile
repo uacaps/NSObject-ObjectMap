@@ -4,8 +4,8 @@ source 'https://github.com/WPMedia/Podspecs.git'
 inhibit_all_warnings!
 
 pod 'WPObjectMapper', :path => '..'
-pod 'WPFaker', '~> 0.0.1'
+pod 'WPFaker', '~> 0.0.5'
 
 target 'WPObjectMapperExampleTests', :exclusive => true do
-    pod 'WPFaker', '~> 0.0.1'
+    pod 'WPFaker', '~> 0.0.5'
 end
