@@ -9,8 +9,9 @@
 @import Foundation;
 
 #import <MBFaker/MBFaker.h>
-#import "RandomNumber.h"
-#import "Dates.h"
+
+#import "WPFakerNumber.h"
+#import "WPFakerDate.h"
 
 /**
  *  The MBFakerInternet(WP) category defines some additional helper methods on the MBFakerInternet class.

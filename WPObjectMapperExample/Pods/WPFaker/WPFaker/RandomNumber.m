@@ -12,11 +12,15 @@
 
 - (NSNumber *) inRange:(NSUInteger) low
                   high:(NSUInteger) high {
-  return [NSNumber numberWithUnsignedInteger: (arc4random_uniform(high) % ((high + 1) - low)) + low];
+    return [NSNumber numberWithUnsignedInteger: (arc4random_uniform(high) % ((high + 1) - low)) + low];
 }
 
 - (NSString *) twitterIdStr {
-  return [NSString stringWithFormat: @"%u", [[self inRange: 80000000 high: 90000000] unsignedIntegerValue]];
+    return [NSString stringWithFormat: @"%u", [[self inRange: 80000000 high: 90000000] unsignedIntegerValue]];
+}
+
+- (NSNumber *) trueOrFalse {
+    return [self inRange: 0 high: 500] > 250 ? @(YES) : @(NO);
 }
 
 @end

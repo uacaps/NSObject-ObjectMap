@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Washington Post. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 /**
  *  A simple class which provides an easy interface for returning random numbers and some related data.
@@ -30,5 +30,12 @@
  *  @return a random numeric tweet ID, as a string.
  */
 - (NSString *) twitterIdStr;
+
+/**
+ *  Returns true or false, randomly
+ *
+ *  @return Either true or false;
+ */
+- (NSNumber *) trueOrFalse;
 
 @end
