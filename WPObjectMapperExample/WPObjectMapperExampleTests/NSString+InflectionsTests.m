@@ -31,4 +31,5 @@
     NSString *clasify = [str classify];
     XCTAssertEqualObjects(clasify, @"TheQuickBrownFoxJumpedOverTheLazyDog");
 }
+
 @end
