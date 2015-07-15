@@ -27,6 +27,7 @@
 		D80384E11B3C5C7300EF9A19 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D80384E01B3C5C7300EF9A19 /* Images.xcassets */; };
 		D80384E41B3C5C7300EF9A19 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D80384E21B3C5C7300EF9A19 /* LaunchScreen.xib */; };
 		D80384F01B3C5C7400EF9A19 /* NSObject-ObjectMapTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D80384EF1B3C5C7400EF9A19 /* NSObject-ObjectMapTests.m */; };
+		FD82454E1B56EB3500BAC599 /* NSString+InflectionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FD82454D1B56EB3500BAC599 /* NSString+InflectionsTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		D80384FB1B3C5CCD00EF9A19 /* NSObject+ObjectMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ObjectMap.m"; sourceTree = "<group>"; };
 		E697B31C9B5ABEC50BDE3A63 /* Pods-WPObjectMapperExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WPObjectMapperExampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WPObjectMapperExampleTests/Pods-WPObjectMapperExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EEF8399254F6FA80C97F9BE9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD82454D1B56EB3500BAC599 /* NSString+InflectionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+InflectionsTests.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +189,7 @@
 		D80384EC1B3C5C7400EF9A19 /* WPObjectMapperExampleTests */ = {
 			isa = PBXGroup;
 			children = (
+				FD82454D1B56EB3500BAC599 /* NSString+InflectionsTests.m */,
 				D80384EF1B3C5C7400EF9A19 /* NSObject-ObjectMapTests.m */,
 				8DE520FB1B3DA7A1006B117D /* NSObject-AutoDescriptionTests.m */,
 				D80384ED1B3C5C7400EF9A19 /* Supporting Files */,
@@ -403,6 +406,7 @@
 			files = (
 				D80384F01B3C5C7400EF9A19 /* NSObject-ObjectMapTests.m in Sources */,
 				8D8994561B3D8A9400C3D822 /* NestedObject.m in Sources */,
+				FD82454E1B56EB3500BAC599 /* NSString+InflectionsTests.m in Sources */,
 				8D8994581B3D8A9400C3D822 /* ObjectWithNestedObjectsArray.m in Sources */,
 				8D89945C1B3D8A9400C3D822 /* SingleObject.m in Sources */,
 				8DE520FC1B3DA7A1006B117D /* NSObject-AutoDescriptionTests.m in Sources */,
