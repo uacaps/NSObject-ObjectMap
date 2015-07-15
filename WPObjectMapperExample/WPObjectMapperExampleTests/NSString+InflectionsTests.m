@@ -17,17 +17,17 @@
 - (void) testUnderScore{
     NSString * str = @"theQuickBrownFoxJumpedOverTheLazyDog";
     NSString *underScore = [str underscore];
-    XCTAssertEqualObjects(underScore,@"the_quick_brown_fox_jumped_over_the_lazy_dog");
+    XCTAssertEqualObjects(underScore, @"the_quick_brown_fox_jumped_over_the_lazy_dog");
 }
 
 - (void) testCamelCase {
-    NSString *str =@"the_quick_brown_fox_jumped_over_the_lazy_dog";
+    NSString *str = @"the_quick_brown_fox_jumped_over_the_lazy_dog";
     NSString *camelCase = [str camelcase];
     XCTAssertEqualObjects(camelCase, @"theQuickBrownFoxJumpedOverTheLazyDog");
 }
 
-- (void) testClasify {
-    NSString *str =@"the_quick_brown_fox_jumped_over_the_lazy_dog";
+- (void) testClassify {
+    NSString *str = @"the_quick_brown_fox_jumped_over_the_lazy_dog";
     NSString *clasify = [str classify];
     XCTAssertEqualObjects(clasify, @"TheQuickBrownFoxJumpedOverTheLazyDog");
 }
