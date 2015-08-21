@@ -33,10 +33,18 @@
         
 		// For each property we are loading its name
 		const char * property_name = property_getName(property);
-
 		NSString * propertyName = [NSString stringWithCString:property_name encoding:NSASCIIStringEncoding];
+
+        BOOL respondsToProperty = [classType instancesRespondToSelector:NSSelectorFromString(propertyName)];
+
         // And if name is ok, we are getting value using KVC
-		if (propertyName && ![properties containsObject: propertyName]) {
+        if (propertyName
+        && respondsToProperty
+        && ![properties containsObject: propertyName]
+        && ![propertyName isEqualToString:@"debugDescription"]
+        && ![propertyName isEqualToString:@"autoDescription"]
+        && ![propertyName isEqualToString:@"description"]) {
+
 			id value = [self valueForKey:propertyName];
 
 			// Format of result items: p1 = v1; p2 = v2; ...
