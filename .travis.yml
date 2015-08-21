@@ -1,7 +1,0 @@
-language: objective-c
-
-before_script: 
-- chmod a+x travis/script.sh
-- osascript -e 'tell app "iPhone Simulator" to quit'
-
-script: travis/script.sh
